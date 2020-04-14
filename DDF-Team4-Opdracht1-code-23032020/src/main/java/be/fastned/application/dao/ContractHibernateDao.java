@@ -8,6 +8,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import static be.fastned.application.dao.ContractHibernateDao.BEAN_DAO_NAME;
 
+/**
+ * @author TiboVG
+ * @version 6.0
+ */
+
 @Repository(BEAN_DAO_NAME)
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
 
