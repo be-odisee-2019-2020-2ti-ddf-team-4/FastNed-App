@@ -2,39 +2,71 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Interfaces.LaadklantDao;
 import be.fastned.application.domain.Personen.Laadklant;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import static be.fastned.application.dao.LaadklantHibernateDao.BEAN_DAO_NAME;
 
-//@Repository("laadklantDao")
+@Repository(BEAN_DAO_NAME)
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
-public class LaadklantHibernateDao implements LaadklantDao {
-    private SessionFactory sessionFactory;
+public class LaadklantHibernateDao extends BaseHibernateDao implements LaadklantDao {
 
-    @Autowired
-    public void setSessionFactory (SessionFactory sessionFactory){
-        this.sessionFactory = sessionFactory;
+    /* //----------------// -#####----------------------------#####- //----------------// */
+    /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
+    /* //----------------// -#####----------------------------#####- //----------------// */
+
+    /* //----------------// -#####-------------------------#####- //----------------// */
+    /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
+    /* //----------------// -#####-------------------------#####- //----------------// */
+
+    /* //----------------// SECTIE: Constanten //----------------// */
+    public static final String BEAN_DAO_NAME = "laadklantDao";
+    private static final String LAADKLANT_ENTITY_NAME = Laadklant.ENTITY_NAME;
+
+    /* //----------------// -#####--------------------#####- //----------------// */
+    /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
+    /* //----------------// -#####--------------------#####- //----------------// */
+    LaadklantHibernateDao() {
+        configureAbstractOperations();
     }
 
-    private Session currentSession(){
-        return sessionFactory.getCurrentSession();
+    /* //----------------// -#####----------------#####- //----------------// */
+    /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
+    /* //----------------// -#####----------------#####- //----------------// */
+
+    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
+    /* //----------------\\ <||> FUNCTIES Technisch <||> //----------------\\ */
+    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
+    private void configureAbstractOperations(){
+        ENTITY_NAME = LAADKLANT_ENTITY_NAME;
     }
 
+    /* //----------------\\ <||> --------------- <||> //----------------\\ */
+    /* //----------------\\ <||> FUNCTIES Domein <||> //----------------\\ */
+    /* //----------------\\ <||> --------------- <||> //----------------\\ */
+
+    /* //----------------// SECTIE: Create //----------------// */
+    /**
+     * Voegt een instantie van deze klasse aan de DB toe als gepersisteerde entiteit.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Laadklant deleteLaadklant(Laadklant laadklant){
-        return (Laadklant) currentSession().createQuery(String.format("delete from %s where %s = ", "Laadklant", laadklant.getId())).uniqueResult();
+    public Laadklant createItem(Laadklant item) {
+        currentSession().save(item);
+        return item;
     }
 
+    /* //----------------// SECTIE: Read //----------------// */
+
+
+    /* //----------------// SECTIE: Update //----------------// */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Laadklant addLaadklant(Laadklant laadklant) {
-        currentSession().save(laadklant);
-        return laadklant;
+    public void updateItem(Laadklant item) {
+        currentSession().update(item);
     }
 
-    public Laadklant getLaadklantById(long id) {
-        return (Laadklant) currentSession().createQuery(String.format("from %s where %s = ", "Laadklant",id)).uniqueResult();
+    /* //----------------// SECTIE: Delete //----------------// */
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
+    public Laadklant deleteItem(Laadklant item){
+        return (Laadklant) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
     }
 }

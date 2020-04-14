@@ -1,11 +1,12 @@
 package be.fastned.application.dao.Interfaces;
 
+import be.fastned.application.domain.Contract;
 import be.fastned.application.domain.Personen.Laadklant;
 
 public interface LaadklantDao {
-    public Laadklant addLaadklant(Laadklant laadklant);
+    public Laadklant createItem(Laadklant item);
 
-    public Laadklant deleteLaadklant(Laadklant laadklant);
+    public Laadklant deleteItem(Laadklant item);
 
-    public Laadklant getLaadklantById (long id);
+    public void updateItem (Laadklant item);
 }

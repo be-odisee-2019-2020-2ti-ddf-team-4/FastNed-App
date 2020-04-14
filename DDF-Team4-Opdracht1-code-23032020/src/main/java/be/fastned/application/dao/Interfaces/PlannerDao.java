@@ -1,12 +1,12 @@
 package be.fastned.application.dao.Interfaces;
 
+import be.fastned.application.domain.Contract;
 import be.fastned.application.domain.Personen.Planner;
 
 public interface PlannerDao {
-    public Planner addPlanner(Planner afspraak);
+    public Planner createItem(Planner item);
 
-    public Planner deletePlanner(Planner afspraak);
+    public Planner deleteItem(Planner item);
 
-    public Planner getPlannerById (long id);
-
+    public void updateItem (Planner item);
 }

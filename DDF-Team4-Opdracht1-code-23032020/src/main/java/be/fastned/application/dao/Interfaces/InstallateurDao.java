@@ -1,22 +1,14 @@
 package be.fastned.application.dao.Interfaces;
 
+import be.fastned.application.domain.Contract;
 import be.fastned.application.domain.Personen.Installateur;
 
 import java.util.ArrayList;
 
 public interface InstallateurDao {
-    // Create
-    Installateur createInstallateur(Installateur installateur);
+    public Installateur createItem(Installateur item);
 
-    // Read
-    Installateur getInstallateurById (String id);
-    ArrayList<Installateur> getAllInstallateurs ();
-    String getLastItemId();
-    Boolean isTableEmpty ();
+    public Installateur deleteItem(Installateur item);
 
-    // Update
-    Installateur updateInstallateur (Installateur installateur);
-
-    // Delete
-    Installateur deleteInstallateur(Installateur installateur);
+    public void updateItem (Installateur item);
 }

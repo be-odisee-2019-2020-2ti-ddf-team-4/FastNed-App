@@ -2,59 +2,72 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Interfaces.InstallateurDao;
 import be.fastned.application.domain.Personen.Installateur;
-import be.fastned.application.service.AppRunner;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
+import static be.fastned.application.dao.InstallateurHibernateDao.BEAN_DAO_NAME;
 
-@Repository("installateurDao")
+@Repository(BEAN_DAO_NAME)
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
-@Component("installateurDao")
-public class InstallateurHibernateDao implements InstallateurDao {
 
-    private static final String TABLE = "Installateur";
-    protected SessionFactory sessionFactory;
+public class InstallateurHibernateDao extends BaseHibernateDao implements InstallateurDao {
 
-    protected Session currentSession(){
-        return ((SessionFactory) AppRunner.getAppContext().getBean("sessionFactory")).getCurrentSession();
+    /* //----------------// -#####----------------------------#####- //----------------// */
+    /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
+    /* //----------------// -#####----------------------------#####- //----------------// */
+
+    /* //----------------// -#####-------------------------#####- //----------------// */
+    /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
+    /* //----------------// -#####-------------------------#####- //----------------// */
+
+    /* //----------------// SECTIE: Constanten //----------------// */
+    public static final String BEAN_DAO_NAME = "installateurDao";
+    private static final String INSTALLATEUR_ENTITY_NAME = Installateur.ENTITY_NAME;
+
+    /* //----------------// -#####--------------------#####- //----------------// */
+    /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
+    /* //----------------// -#####--------------------#####- //----------------// */
+    InstallateurHibernateDao() {
+        configureAbstractOperations();
     }
 
-    // Create
+    /* //----------------// -#####----------------#####- //----------------// */
+    /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
+    /* //----------------// -#####----------------#####- //----------------// */
+
+    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
+    /* //----------------\\ <||> FUNCTIES Technisch <||> //----------------\\ */
+    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
+    private void configureAbstractOperations(){
+        ENTITY_NAME = INSTALLATEUR_ENTITY_NAME;
+    }
+
+    /* //----------------\\ <||> --------------- <||> //----------------\\ */
+    /* //----------------\\ <||> FUNCTIES Domein <||> //----------------\\ */
+    /* //----------------\\ <||> --------------- <||> //----------------\\ */
+
+    /* //----------------// SECTIE: Create //----------------// */
+    /**
+     * Voegt een instantie van deze klasse aan de DB toe als gepersisteerde entiteit.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Installateur createInstallateur(Installateur installateur) {
-        currentSession().save(installateur);
-        return installateur;
+    public Installateur createItem(Installateur item) {
+        currentSession().save(item);
+        return item;
     }
 
-    // Read
-    public Installateur getInstallateurById(String id) {
-        return (Installateur) currentSession().createQuery(String.format("from %s where id = \'%s\'", TABLE,id)).uniqueResult();
-    }
-    public ArrayList<Installateur> getAllInstallateurs() {
-        return (ArrayList<Installateur>) currentSession().createQuery(String.format("from %s", TABLE)).list();
-    }
+    /* //----------------// SECTIE: Read //----------------// */
 
-    public String getLastItemId() {
-        return (String) ((Installateur)currentSession().createQuery(String.format("SELECT TOP 1 * FROM %s ORDER BY INSTR_ID DESC ", TABLE)).uniqueResult()).getId();
-    }
-    public Boolean isTableEmpty() {
-        return ((Installateur)currentSession().createQuery(String.format("SELECT TOP 1 * FROM %s ORDER BY INSTR_ID DESC ", TABLE)).uniqueResult() == null);
-    }
 
-    // Update
+    /* //----------------// SECTIE: Update //----------------// */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Installateur updateInstallateur(Installateur installateur) {
-        currentSession().update(installateur);
-        return installateur;
+    public void updateItem(Installateur item) {
+        currentSession().update(item);
     }
 
-    // Delete
+    /* //----------------// SECTIE: Delete //----------------// */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Installateur deleteInstallateur(Installateur installateur){
-        return (Installateur) currentSession().createQuery(String.format("DELETE from %s where %s = ", TABLE, installateur.getId())).uniqueResult();
+    public Installateur deleteItem(Installateur item){
+        return (Installateur) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
     }
 }
