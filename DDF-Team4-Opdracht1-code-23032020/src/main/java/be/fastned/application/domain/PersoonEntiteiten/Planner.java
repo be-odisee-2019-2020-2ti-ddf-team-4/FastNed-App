@@ -1,18 +1,16 @@
-package be.fastned.application.domain.Personen;
+package be.fastned.application.domain.PersoonEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
-import be.fastned.application.dao.Interfaces.BaseDao;
-import be.fastned.application.domain.Laadpaal;
-import be.fastned.application.domain.Oplossing;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonExtension;
+import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.AndereEntiteiten.*;
+import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
 import be.fastned.application.domain.PersoonAbstracties.PersoonDefaultImpl;
-import be.fastned.application.domain.Probleem;
 import be.fastned.application.service.AppRunner;
-
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import static be.fastned.application.domain.Personen.Laadklant.ENTITY_NAME;
-import static be.fastned.application.domain.Personen.Laadklant.TABLE_NAME;
+import static be.fastned.application.domain.PersoonEntiteiten.Planner.ENTITY_NAME;
+import static be.fastned.application.domain.PersoonEntiteiten.Planner.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -22,7 +20,7 @@ import static be.fastned.application.domain.Personen.Laadklant.TABLE_NAME;
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
+public class Planner extends PersoonDefaultImpl {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -39,23 +37,21 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
-
 	private String id;
 
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 
-	/* //----------------// SECTIE: Problemen //----------------// */
+	/* //----------------// SECTIE: Afspraken //----------------// */
 	/**
-	 * (ACT-PROBLEMEN) Collectie van actieve & nieuwe instanties via deze klasse.
+	 * (ACT-AFSPRAKEN) Collectie van actieve & nieuwe instanties via deze klasse.
 	 */
-	public static ArrayList<Probleem> actieveProblemen = new ArrayList<Probleem>();
+	public static ArrayList<Afspraak> actieveAfspraken = new ArrayList<Afspraak>();
 	/**
-	 * (ARCH-PROBLEMEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 * (ARCH-AFSPRAKEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
 	 */
-	public static ArrayList<Probleem> gearchiveerdeProblemen = new ArrayList<Probleem>();
-
+	public static ArrayList<Afspraak> gearchiveerdeAfspraken = new ArrayList<Afspraak>();
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- &|& KLASSE VARIABELEN &|& -##########- //----------------// */
@@ -63,28 +59,25 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
-	public static final String ENTITY_NAME = "Laadklant";
-	public static final String TABLE_NAME = "tbl_laadklanten";
+	public static final String ENTITY_NAME = "Planner";
+	public static final String TABLE_NAME = "tbl_planners";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
-	public static final String ID_PREFIX = LAADKLANT_ID_PREFIX;
+	public static final String ID_PREFIX = PLANNER_ID_PREFIX;
 
 	// Constanten met kolom-namen
 	public static final String ID_COL_NAME = ID_PREFIX + "Id";
 
-	/* //----------------// SECTIE: Laadklanten //----------------// */
+	/* //----------------// SECTIE: Planners //----------------// */
 	/**
-	 * (ACT-LAADKLANTEN) Collectie van actieve & nieuwe instanties via deze klasse.
+	 * (ACT-PLANNERS) Collectie van actieve & nieuwe instanties via deze klasse.
 	 */
-	public static ArrayList<PersoonExtension> actieveLaadklanten = new ArrayList<PersoonExtension>();
+	public static ArrayList<PersoonDefault> actievePlanners = new ArrayList<PersoonDefault>();
 	/**
-	 * (ARCH-LAADKLANTEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 * (ARCH-PLANNERS) Collectie van verlopen & afgehandelde instanties via deze klasse.
 	 */
-	public static ArrayList<PersoonExtension> gearchiveerdeLaadklanten = new ArrayList<PersoonExtension>();
+	public static ArrayList<PersoonDefault> gearchiveerdePlanners = new ArrayList<PersoonDefault>();
 
-	/* //----------------// -#####--------------------#####- //----------------// */
-	/* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-	/* //----------------// -#####--------------------#####- //----------------// */
 	/* //----------------// -#########------------------------#########- //----------------// */
 	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
 	/* //----------------// -#########------------------------#########- //----------------// */
@@ -92,7 +85,7 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	/**
 	 * Default constructor voor deze klasse. (Wel configuratie)
 	 */
-	public Laadklant(){
+	public Planner(){
 		setupInitConfig();
 		id = extrapolateId();
 	}
@@ -100,7 +93,7 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	/**
 	 * Default constructor voor deze klasse. (Geen configuratie)
 	 */
-	public Laadklant(boolean noConfig){
+	public Planner(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
 		id = extrapolateId();
 	}
@@ -108,15 +101,16 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	/**
 	 * Basische constructor voor deze klasse. (enkel accountgegevens)
 	 */
-	public Laadklant(String emailadres, String gebruikersnaam, String wachtwoord){
+	public Planner(String emailadres, String gebruikersnaam, String wachtwoord){
 		super(emailadres, gebruikersnaam, wachtwoord);
 		setupInitConfig();
 		id = extrapolateId();
 	}
+
 	/**
 	 * Volledige constructor voor deze klasse. (accountgegevens + persoonsgegevens)
 	 */
-	public Laadklant(String emailadres, String gebruikersnaam, String wachtwoord, String naam, String voornaam, String geslacht, String gsm ){
+	public Planner(String emailadres, String gebruikersnaam, String wachtwoord, String naam, String voornaam, String geslacht, String gsm){
 		super(emailadres, gebruikersnaam, wachtwoord, naam, voornaam, geslacht, gsm);
 		setupInitConfig();
 		id = extrapolateId();
@@ -129,20 +123,88 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/**
+	 * Deze domein-functie retourneert alle locatietoestemmingen
+	 */
+	public ArrayList<Locatietoestemming> toonLocatieToestemmingen(){
+		ArrayList<Locatietoestemming> tussenStap = new ArrayList<Locatietoestemming>();
+		Locatietoestemming.actieveLocatietoestemmingen.forEach(item -> tussenStap.add((Locatietoestemming) item));
+		return tussenStap;
+	}
 
 	/**
-	 * Deze domein-functie maakt een probleem aan (als laadklant naar planner toe)
-	 * voegt dat probleem toe aan de lijst met actieve problemen via deze persoon.
-	 * (2 signaturen -> arg om een probleem te maken OF een al aangemaakt probleem)
+	 * Deze domein-functie maakt een afspraak aan (als planner) en
+	 * voegt die afspraak toe aan de lijst met actieve afspraken via deze persoon.
+	 * (5 signaturen -> arg om een afspraak te maken OF dat met laadpalen OF een al aangemaakte afspraak + 2x no contract)
 	 */
-	public Probleem maakProbleem(Laadpaal defecteLaadpaal, String probBeschrijving){
-		Probleem createdProbleem = new Probleem(defecteLaadpaal, probBeschrijving);
-		actieveProblemen.add(createdProbleem);
-		return createdProbleem;
+	public Afspraak maakAfspraak(Afspraak aangemaakteAfspraak){
+		actieveAfspraken.add(aangemaakteAfspraak);
+		return aangemaakteAfspraak;
 	}
-	public Probleem maakProbleem(Probleem probleem){
-		actieveProblemen.add(probleem);
-		return probleem;
+	public Afspraak maakAfspraak(Laadpaal laadpaal, Installateur installateur){
+		Afspraak afspraak = new Afspraak(laadpaal, installateur, null);
+		actieveAfspraken.add(afspraak);
+		return afspraak;
+	}
+
+	public Afspraak maakAfspraak(Laadpaal laadpaal, Installateur installateur, Contract contract){
+		Afspraak afspraak = new Afspraak(laadpaal, installateur, contract);
+		actieveAfspraken.add(afspraak);
+		return afspraak;
+	}
+
+	/**
+	 * (PROBLEMEN) Deze domein-functie retourneert alle Problemen, ingezonden door laadklanten of locatiehouders.
+	 */
+	public ArrayList<Probleem> toonProblemen(){
+		ArrayList<Probleem> tussenStap = new ArrayList<Probleem>();
+		Locatiehouder.getActieveProblemen().forEach(item -> tussenStap.add((Probleem) item));
+		Laadklant.getActieveProblemen().forEach(item -> tussenStap.add((Probleem) item));
+		return tussenStap;
+	}
+
+	/**
+	 * (INST PROBLEEM) Deze domein-functie retourneert het probleem binnen een installatie-afspraak.
+	 */
+	public Probleem toonInstallatieProbleem(Afspraak afspraak){
+		return afspraak.getInstallatie().getProbleem();
+	}
+
+	/**
+	 * (REP PROBLEEM) Deze domein-functie retourneert het probleem binnen een reparatie-afspraak.
+	 */
+	public Probleem toonReparatieProbleem(Afspraak afspraak){
+		return afspraak.getReparatie().getProbleem();
+	}
+
+	/**
+	 * (PROB STATUS) Deze domein-functie overschrijft de status van een probleem.
+	 */
+	public void evalueerProbleem(Probleem probleem, String status){
+		probleem.setStatus(status);
+	}
+
+	/**
+	 * (SLUIT PROB) Deze domein-functie overschrijft de status van een probleem met "Gesloten".
+	 */
+	public void sluitProbleem(Probleem probleem){
+		probleem.setStatus("Gesloten");
+	}
+
+	/**
+	 * (LOCAAN STATUS) Deze domein-functie overschrijft de status van een locatietoestemming.
+	 */
+	public void evalueerAanmelding(Locatietoestemming aanmelding, String status){
+		aanmelding.setStatus(status);
+	}
+
+	/**
+	 * (CONTRACT) Deze domein-functie maakt een contract binnen een afspraak via deze persoon.
+	 */
+	public Contract maakContract(LocalDateTime contractDatum, LocalDateTime installatieDatum, Afspraak parentAfspraak){
+		Contract aangemaaktContract = new Contract(contractDatum, installatieDatum);
+		parentAfspraak.setContract(aangemaaktContract);
+		return aangemaaktContract;
 	}
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
@@ -153,15 +215,15 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
 	 */
 	public void archiveer(){
-		gearchiveerdeLaadklanten.add(this);
-		actieveLaadklanten.remove(this);
+		gearchiveerdePlanners.add(this);
+		actievePlanners.remove(this);
 	}
 
 	/**
 	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
 	 */
 	private void setupInitConfig(){
-		actieveLaadklanten.add(this);
+		actievePlanners.add(this);
 		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
 	}
 
@@ -200,27 +262,15 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	/* //----------------\\ # Property Technische Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------ # //----------------\\ */
 
-	/* //----------------// PROPERTY: Actieve & Gearchiveerde LAADKLANTEN //----------------// */
+	/* //----------------// PROPERTY: Actieve & Gearchiveerde Planners //----------------// */
 	/**
-	 * (ACT-LAADKLANTEN) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. actieve installateurs.
+	 * (ACT-PLANNERS) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. actieve instanties.
 	 */
 	@Transient
-	public static ArrayList<PersoonExtension> getActieveInstanties() { return actieveLaadklanten; }
+	public static ArrayList<PersoonDefault> getActieveInstanties() { return actievePlanners; }
 	/**
-	 * (ARCH-LAADKLANTEN) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. gearchiveerde installateurs.
+	 * (ARCH-PLANNERS) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. gearchiveerde instanties.
 	 */
 	@Transient
-	public static ArrayList<PersoonExtension> getGearchiveerdeInstanties() { return gearchiveerdeLaadklanten; }
-
-	/* //----------------// PROPERTY: Actieve & Gearchiveerde aangemaakte PROBLEMEN //----------------// */
-	/**
-	 * (ACT-PROBLEMEN) Deze domein-attribuut-setter vertegenwoordigt de coll. v.d. actieve PROBLEMEN.
-	 */
-	@Transient
-	public static ArrayList<Probleem> getActieveProblemen() { return actieveProblemen; }
-	/**
-	 * (ARCH-PROBLEMEN) Deze domein-attribuut-setter vertegenwoordigt de coll. v.d. gearchiveerde PROBLEMEN.
-	 */
-	@Transient
-	public static ArrayList<Probleem> getGearchiveerdeProblemen() { return gearchiveerdeProblemen; }
+	public static ArrayList<PersoonDefault> getGearchiveerdeInstanties() { return gearchiveerdePlanners; }
 }

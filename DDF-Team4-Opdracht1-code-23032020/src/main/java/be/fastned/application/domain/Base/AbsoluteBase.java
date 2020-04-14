@@ -1,6 +1,6 @@
-package be.fastned.application.domain;
+package be.fastned.application.domain.Base;
 
-import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.dao.Base.BaseDao;
 import java.io.Serializable;
 
 public abstract class AbsoluteBase implements Serializable {

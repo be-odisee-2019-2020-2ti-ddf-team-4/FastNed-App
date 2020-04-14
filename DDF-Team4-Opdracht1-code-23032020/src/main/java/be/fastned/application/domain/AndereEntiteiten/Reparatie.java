@@ -1,14 +1,16 @@
-package be.fastned.application.domain;
+package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
-import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.Technisch.Bezoek;
 import be.fastned.application.domain.Technisch.DocumentatieRepository;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import static be.fastned.application.domain.Reparatie.ENTITY_NAME;
-import static be.fastned.application.domain.Reparatie.TABLE_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Reparatie.ENTITY_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Reparatie.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -18,7 +20,7 @@ import static be.fastned.application.domain.Reparatie.TABLE_NAME;
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Reparatie extends AbsoluteBase implements Bezoek{
+public class Reparatie extends AbsoluteBase implements Bezoek {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */

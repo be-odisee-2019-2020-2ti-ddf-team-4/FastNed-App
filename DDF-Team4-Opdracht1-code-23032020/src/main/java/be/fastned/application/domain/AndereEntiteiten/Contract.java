@@ -1,12 +1,14 @@
-package be.fastned.application.domain;
+package be.fastned.application.domain.AndereEntiteiten;
 
-import be.fastned.application.dao.AfspraakHibernateDao;
-import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.dao.ContractHibernateDao;
+import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.AbsoluteBase;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import static be.fastned.application.domain.Locatietoestemming.ENTITY_NAME;
-import static be.fastned.application.domain.Locatietoestemming.TABLE_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Contract.ENTITY_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Contract.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -16,7 +18,7 @@ import static be.fastned.application.domain.Locatietoestemming.TABLE_NAME;
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Locatietoestemming extends AbsoluteBase{
+public class Contract extends AbsoluteBase {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -34,15 +36,13 @@ public class Locatietoestemming extends AbsoluteBase{
 	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 
-	private String id = null;
-	private int aantalLaadpalen;
-	private String typeLaadpaal = null;
-	private String status = null;
+	private String id;
+	private LocalDateTime contractDatum = null;
+	private LocalDateTime uitvoeringsDatum = null;
 
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
-
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- &|& KLASSE VARIABELEN &|& -##########- //----------------// */
@@ -50,36 +50,34 @@ public class Locatietoestemming extends AbsoluteBase{
 
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
-	public static final String ENTITY_NAME = "Locatietoestemming";
-	public static final String TABLE_NAME = "tbl_Locatietoestemmingen";
+	public static final String ENTITY_NAME = "Contract";
+	public static final String TABLE_NAME = "tbl_Contracten";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
-	public static final String ID_PREFIX = LOCATIETOESTEMMING_ID_PREFIX;
+	public static final String ID_PREFIX = CONTRACT_ID_PREFIX;
 
 	// Constanten met kolom-namen
 	public static final String ID_COL_NAME = ID_PREFIX + "Id";
-	public static final String AANTALLAADPALEN_COL_NAME = "AantalLaadpalen";
-	public static final String TYPELAADPAAL_COL_NAME = "TypeLaadpaal";
-	public static final String STATUS_COL_NAME = "Status";
+	public static final String CONTRACTDATUM_COL_NAME = "ContractDatum";
+	public static final String UITVOERINGSDATUM_COL_NAME = "UitvoeringsDatum";
 
-	/* //----------------// SECTIE: Locatietoestemmingen //----------------// */
+	/* //----------------// SECTIE: Contracten //----------------// */
 	/**
-	 * (ACT-LOCATIETOESTEMMINGEN) Collectie van actieve & nieuwe instanties via deze klasse.
+	 * (ACT-CONTRACTEN) Collectie van actieve & nieuwe instanties via deze klasse.
 	 */
-	public static ArrayList<Locatietoestemming> actieveLocatietoestemmingen = new ArrayList<Locatietoestemming>();
+	public static ArrayList<Contract> actieveContracten = new ArrayList<Contract>();
 	/**
-	 * (ARCH-LOCATIETOESTEMMINGEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 * (ARCH-CONTRACTEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
 	 */
-	public static ArrayList<Locatietoestemming> gearchiveerdeLocatietoestemmingen = new ArrayList<Locatietoestemming>();
+	public static ArrayList<Contract> gearchiveerdeContracten = new ArrayList<Contract>();
 
 	/* //----------------// -#########------------------------#########- //----------------// */
 	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
 	/* //----------------// -#########------------------------#########- //----------------// */
-
 	/**
 	 * Default constructor voor deze klasse. (Wel configuratie)
 	 */
-	public Locatietoestemming(){
+	public Contract(){
 		setupInitConfig();
 		id = extrapolateId();
 	}
@@ -87,7 +85,7 @@ public class Locatietoestemming extends AbsoluteBase{
 	/**
 	 * Default constructor voor deze klasse. (Geen configuratie)
 	 */
-	public Locatietoestemming(boolean noConfig){
+	public Contract(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
 		id = extrapolateId();
 	}
@@ -95,12 +93,11 @@ public class Locatietoestemming extends AbsoluteBase{
 	/**
 	 * Volledige Constructor voor deze klasse.
 	 */
-	public Locatietoestemming(int aantalLaadpalen, String typeLaadpaal, String status){
+	public Contract(LocalDateTime contractDatum, LocalDateTime uitvoeringsDatum){
 		setupInitConfig();
 		id = extrapolateId();
-		this.aantalLaadpalen = aantalLaadpalen;
-		this.typeLaadpaal = typeLaadpaal;
-		this.status = status;
+		this.contractDatum = contractDatum;
+		this.uitvoeringsDatum = uitvoeringsDatum;
 	}
 
 	/* //----------------// -#########--------------------#########- //----------------// */
@@ -119,16 +116,16 @@ public class Locatietoestemming extends AbsoluteBase{
 	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
 	 */
 	public void archiveer(){
-		gearchiveerdeLocatietoestemmingen.add(this);
-		actieveLocatietoestemmingen.remove(this);
+		gearchiveerdeContracten.add(this);
+		actieveContracten.remove(this);
 	}
 
 	/**
 	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
 	 */
 	private void setupInitConfig(){
-		actieveLocatietoestemmingen.add(this);
-		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
+		actieveContracten.add(this);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(ContractHibernateDao.BEAN_DAO_NAME);
 	}
 
 	/**
@@ -162,43 +159,53 @@ public class Locatietoestemming extends AbsoluteBase{
 		this.id = value;
 	}
 
-	/* //----------------// PROPERTY: AantalLaadpalen //----------------// */
+	/* //----------------// PROPERTY: ContractDatum //----------------// */
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt het aantalLaadpalen-attribuut van deze instantie.
+	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
 	 */
-	@Column(name = AANTALLAADPALEN_COL_NAME)
-	public int getAantalLaadpalen(){ return this.aantalLaadpalen; }
-	/**
-	 * Deze domein-attribuut setter vertegenwoordigt het aantalLaadpalen-attribuut van deze instantie.
-	 */
-	@Transient
-	public void setAantalLaadpalen(int value){ this.aantalLaadpalen = value; }
-
-
-	/* //----------------// PROPERTY: TypeLaadpaal //----------------// */
-	/**
-	 * Deze domein-attribuut getter vertegenwoordigt het typeLaadpaal-attribuut van deze instantie.
-	 */
-	@Column(name = TYPELAADPAAL_COL_NAME)
-	public String getTypeLaadpaal(){
-		return this.typeLaadpaal;
+	@Column(name = CONTRACTDATUM_COL_NAME)
+	public LocalDateTime getContractDatum(){
+		return this.contractDatum;
 	}
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt het typeLaadpaal-attribuut van deze instantie.
+	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
 	 */
 	@Transient
-	public void setTypeLaadpaal(String value){ this.typeLaadpaal = value; }
+	public void setContractDatum(LocalDateTime value){
+		this.contractDatum = value;
+	}
 
 
-	/* //----------------// PROPERTY: Status //----------------// */
+	/* //----------------// PROPERTY: ContractDatum //----------------// */
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt het status-attribuut van deze instantie.
+	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
 	 */
-	@Column(name = STATUS_COL_NAME)
-	public String getStatus(){ return this.status; }
+	@Column(name = UITVOERINGSDATUM_COL_NAME)
+	public LocalDateTime getUitvoeringsDatum(){
+		return this.uitvoeringsDatum;
+	}
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt het status-attribuut van deze instantie.
+	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
 	 */
 	@Transient
-	public void setStatus(String value){ this.status = value; }
+	public void setUitvoeringsDatum(LocalDateTime value){
+		this.uitvoeringsDatum = value;
+	}
+
+
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Propertie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: Actieve & Gearchiveerde AFSPRAKEN (STATIC) //----------------// */
+	/**
+	 * (ACT-CONTRACTEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. actieve instanties.
+	 */
+	@Transient
+	public static ArrayList<Contract> getActieveInstanties() { return actieveContracten; }
+	/**
+	 * (ARCH-CONTRACTEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. gearchiveerde instanties.
+	 */
+	@Transient
+	public static ArrayList<Contract> getGearchiveerdeInstanties() { return gearchiveerdeContracten; }
 }

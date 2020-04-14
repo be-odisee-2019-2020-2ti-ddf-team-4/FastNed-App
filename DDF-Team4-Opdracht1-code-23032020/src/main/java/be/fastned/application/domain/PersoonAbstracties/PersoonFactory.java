@@ -1,9 +1,9 @@
 package be.fastned.application.domain.PersoonAbstracties;
 
-import be.fastned.application.domain.Personen.Installateur;
-import be.fastned.application.domain.Personen.Laadklant;
-import be.fastned.application.domain.Personen.Locatiehouder;
-import be.fastned.application.domain.Personen.Planner;
+import be.fastned.application.domain.PersoonEntiteiten.Installateur;
+import be.fastned.application.domain.PersoonEntiteiten.Laadklant;
+import be.fastned.application.domain.PersoonEntiteiten.Locatiehouder;
+import be.fastned.application.domain.PersoonEntiteiten.Planner;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonProfessional;
 import org.hibernate.cfg.NotYetImplementedException;

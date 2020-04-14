@@ -1,4 +1,4 @@
-package be.fastned.application.domain.Technisch;
+package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.domain.PersoonAbstracties.EnumPersoon;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;

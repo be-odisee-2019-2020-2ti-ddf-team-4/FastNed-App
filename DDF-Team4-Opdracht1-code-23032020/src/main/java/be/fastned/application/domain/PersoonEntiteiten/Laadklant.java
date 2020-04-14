@@ -1,20 +1,17 @@
-package be.fastned.application.domain.Personen;
+package be.fastned.application.domain.PersoonEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
-import be.fastned.application.dao.Interfaces.BaseDao;
-import be.fastned.application.domain.Laadpaal;
-import be.fastned.application.domain.Locatietoestemming;
-import be.fastned.application.domain.Oplossing;
+import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonExtension;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonProfessional;
-import be.fastned.application.domain.PersoonAbstracties.PersoonProfessionalImpl;
-import be.fastned.application.domain.Probleem;
+import be.fastned.application.domain.PersoonAbstracties.PersoonDefaultImpl;
+import be.fastned.application.domain.AndereEntiteiten.Probleem;
 import be.fastned.application.service.AppRunner;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import static be.fastned.application.domain.Personen.Locatiehouder.ENTITY_NAME;
-import static be.fastned.application.domain.Personen.Locatiehouder.TABLE_NAME;
+import static be.fastned.application.domain.PersoonEntiteiten.Laadklant.ENTITY_NAME;
+import static be.fastned.application.domain.PersoonEntiteiten.Laadklant.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -24,7 +21,7 @@ import static be.fastned.application.domain.Personen.Locatiehouder.TABLE_NAME;
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Locatiehouder extends PersoonProfessionalImpl {
+public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -42,7 +39,7 @@ public class Locatiehouder extends PersoonProfessionalImpl {
 	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 
-	private String id = null;
+	private String id;
 
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
@@ -58,15 +55,6 @@ public class Locatiehouder extends PersoonProfessionalImpl {
 	 */
 	public static ArrayList<Probleem> gearchiveerdeProblemen = new ArrayList<Probleem>();
 
-	/* //----------------// SECTIE: Locatietoestemmingen //----------------// */
-	/**
-	 * (ACT-LOCATIETOESTEMMINGEN) Collectie van actieve & nieuwe instanties via deze klasse.
-	 */
-	public static ArrayList<Locatietoestemming> actieveLocatietoestemmingen = new ArrayList<Locatietoestemming>();
-	/**
-	 * (ARCH-LOCATIETOESTEMMINGEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
-	 */
-	public static ArrayList<Locatietoestemming> gearchiveerdeLocatietoestemmingen = new ArrayList<Locatietoestemming>();
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- &|& KLASSE VARIABELEN &|& -##########- //----------------// */
@@ -74,25 +62,28 @@ public class Locatiehouder extends PersoonProfessionalImpl {
 
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
-	public static final String ENTITY_NAME = "Locatiehouder";
-	public static final String TABLE_NAME = "tbl_locatiehouders";
+	public static final String ENTITY_NAME = "Laadklant";
+	public static final String TABLE_NAME = "tbl_laadklanten";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
-	public static final String ID_PREFIX = LOCATIEHOUDER_ID_PREFIX;
+	public static final String ID_PREFIX = LAADKLANT_ID_PREFIX;
 
 	// Constanten met kolom-namen
 	public static final String ID_COL_NAME = ID_PREFIX + "Id";
 
-	/* //----------------// SECTIE: Locatiehouders //----------------// */
+	/* //----------------// SECTIE: Laadklanten //----------------// */
 	/**
-	 * (ACT-LOCATIEHOUDERS) Collectie van actieve & nieuwe instanties via deze klasse.
+	 * (ACT-LAADKLANTEN) Collectie van actieve & nieuwe instanties via deze klasse.
 	 */
-	public static ArrayList<PersoonProfessional> actieveLocatiehouders = new ArrayList<PersoonProfessional>();
+	public static ArrayList<PersoonExtension> actieveLaadklanten = new ArrayList<PersoonExtension>();
 	/**
-	 * (ARCH-LOCATIEHOUDERS) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 * (ARCH-LAADKLANTEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
 	 */
-	public static ArrayList<PersoonProfessional> gearchiveerdeLocatiehouders = new ArrayList<PersoonProfessional>();
+	public static ArrayList<PersoonExtension> gearchiveerdeLaadklanten = new ArrayList<PersoonExtension>();
 
+	/* //----------------// -#####--------------------#####- //----------------// */
+	/* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
+	/* //----------------// -#####--------------------#####- //----------------// */
 	/* //----------------// -#########------------------------#########- //----------------// */
 	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
 	/* //----------------// -#########------------------------#########- //----------------// */
@@ -100,7 +91,7 @@ public class Locatiehouder extends PersoonProfessionalImpl {
 	/**
 	 * Default constructor voor deze klasse. (Wel configuratie)
 	 */
-	public Locatiehouder(){
+	public Laadklant(){
 		setupInitConfig();
 		id = extrapolateId();
 	}
@@ -108,7 +99,7 @@ public class Locatiehouder extends PersoonProfessionalImpl {
 	/**
 	 * Default constructor voor deze klasse. (Geen configuratie)
 	 */
-	public Locatiehouder(boolean noConfig){
+	public Laadklant(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
 		id = extrapolateId();
 	}
@@ -116,7 +107,7 @@ public class Locatiehouder extends PersoonProfessionalImpl {
 	/**
 	 * Basische constructor voor deze klasse. (enkel accountgegevens)
 	 */
-	public Locatiehouder(String emailadres, String gebruikersnaam, String wachtwoord){
+	public Laadklant(String emailadres, String gebruikersnaam, String wachtwoord){
 		super(emailadres, gebruikersnaam, wachtwoord);
 		setupInitConfig();
 		id = extrapolateId();
@@ -124,8 +115,8 @@ public class Locatiehouder extends PersoonProfessionalImpl {
 	/**
 	 * Volledige constructor voor deze klasse. (accountgegevens + persoonsgegevens)
 	 */
-	public Locatiehouder(String emailadres,  String gebruikersnaam, String wachtwoord, String bedrijfsnaam, String adres, String btwNummer, String naam, String voornaam, String geslacht, String gsm){
-		super(emailadres, gebruikersnaam, wachtwoord, adres, bedrijfsnaam, btwNummer, naam, voornaam, geslacht, gsm);
+	public Laadklant(String emailadres, String gebruikersnaam, String wachtwoord, String naam, String voornaam, String geslacht, String gsm ){
+		super(emailadres, gebruikersnaam, wachtwoord, naam, voornaam, geslacht, gsm);
 		setupInitConfig();
 		id = extrapolateId();
 	}
@@ -137,23 +128,9 @@ public class Locatiehouder extends PersoonProfessionalImpl {
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/**
-	 * Deze domein-functie maakt een locatietoestemming aan (als l.houder naar planner toe)
-	 * en voegt die locatietoestemming toe aan de lijst met actieve locatietoestemmingen via deze persoon.
-	 * (2 signaturen -> arg om een locatietoestemming te maken OF een al aangemaakte locatietoestemming)
-	 */
-	public Locatietoestemming maakLocatietoestemming(int aantalLaadpalen, String typeLaadpaal){
-		Locatietoestemming aangemaakteLoctoest = new Locatietoestemming(aantalLaadpalen, typeLaadpaal, "Aangemaakt");
-		actieveLocatietoestemmingen.add(aangemaakteLoctoest);
-		return aangemaakteLoctoest;
-	}
-	public Locatietoestemming maakLocatietoestemming(Locatietoestemming aangemaakteLoctoest){
-		actieveLocatietoestemmingen.add(aangemaakteLoctoest);
-		return aangemaakteLoctoest;
-	}
 
 	/**
-	 * Deze domein-functie maakt een probleem aan (als locatiehouder naar planner toe)
+	 * Deze domein-functie maakt een probleem aan (als laadklant naar planner toe)
 	 * voegt dat probleem toe aan de lijst met actieve problemen via deze persoon.
 	 * (2 signaturen -> arg om een probleem te maken OF een al aangemaakt probleem)
 	 */
@@ -167,7 +144,6 @@ public class Locatiehouder extends PersoonProfessionalImpl {
 		return probleem;
 	}
 
-
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
 	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
@@ -176,15 +152,15 @@ public class Locatiehouder extends PersoonProfessionalImpl {
 	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
 	 */
 	public void archiveer(){
-		gearchiveerdeLocatiehouders.add(this);
-		actieveLocatiehouders.remove(this);
+		gearchiveerdeLaadklanten.add(this);
+		actieveLaadklanten.remove(this);
 	}
 
 	/**
 	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
 	 */
 	private void setupInitConfig(){
-		actieveLocatiehouders.add(this);
+		actieveLaadklanten.add(this);
 		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
 	}
 
@@ -219,39 +195,31 @@ public class Locatiehouder extends PersoonProfessionalImpl {
 		this.id = value;
 	}
 
-	/* //----------------// PROPERTY: Actieve & Gearchiveerde LOCATIEHOUDERS //----------------// */
-	/**
-	 * (ACT-LOCATIEHOUDERS) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. actieve installateurs.
-	 */
-	@Transient
-	public static ArrayList<PersoonProfessional> getActieveInstanties() { return actieveLocatiehouders; }
-	/**
-	 * (ARCH-LOCATIEHOUDERS) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. gearchiveerde installateurs.
-	 */
-	@Transient
-	public static ArrayList<PersoonProfessional> getGearchiveerdeInstanties() { return gearchiveerdeLocatiehouders; }
+	/* //----------------\\ # ------------------------------ # //----------------\\ */
+	/* //----------------\\ # Property Technische Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------ # //----------------\\ */
 
-	/* //----------------// PROPERTY: Actieve & Gearchiveerde PROBLEMEN //----------------// */
+	/* //----------------// PROPERTY: Actieve & Gearchiveerde LAADKLANTEN //----------------// */
 	/**
-	 * (ACT-PROBLEMEN) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. actieve installateurs.
+	 * (ACT-LAADKLANTEN) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. actieve installateurs.
+	 */
+	@Transient
+	public static ArrayList<PersoonExtension> getActieveInstanties() { return actieveLaadklanten; }
+	/**
+	 * (ARCH-LAADKLANTEN) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. gearchiveerde installateurs.
+	 */
+	@Transient
+	public static ArrayList<PersoonExtension> getGearchiveerdeInstanties() { return gearchiveerdeLaadklanten; }
+
+	/* //----------------// PROPERTY: Actieve & Gearchiveerde aangemaakte PROBLEMEN //----------------// */
+	/**
+	 * (ACT-PROBLEMEN) Deze domein-attribuut-setter vertegenwoordigt de coll. v.d. actieve PROBLEMEN.
 	 */
 	@Transient
 	public static ArrayList<Probleem> getActieveProblemen() { return actieveProblemen; }
 	/**
-	 * (ARCH-PROBLEMEN) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. gearchiveerde installateurs.
+	 * (ARCH-PROBLEMEN) Deze domein-attribuut-setter vertegenwoordigt de coll. v.d. gearchiveerde PROBLEMEN.
 	 */
 	@Transient
 	public static ArrayList<Probleem> getGearchiveerdeProblemen() { return gearchiveerdeProblemen; }
-
-	/* //----------------// PROPERTY: Actieve & Gearchiveerde LOCATIETOESTEMMINGEN //----------------// */
-	/**
-	 * (ACT-LOCATIETOESTEMMINGEN) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. actieve installateurs.
-	 */
-	@Transient
-	public static ArrayList<Locatietoestemming> getActieveLocatietoestemmingen() { return actieveLocatietoestemmingen; }
-	/**
-	 * (ARCH-LOCATIETOESTEMMINGEN) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. gearchiveerde installateurs.
-	 */
-	@Transient
-	public static ArrayList<Locatietoestemming> getGearchiveerdeLocatietoestemmingen() { return gearchiveerdeLocatietoestemmingen; }
 }

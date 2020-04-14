@@ -1,4 +1,4 @@
-package be.fastned.application.domain;
+package be.fastned.application.domain.Technisch;
 
 public enum EnumStatus {
     AANGEMAAKT("aangemaakt");

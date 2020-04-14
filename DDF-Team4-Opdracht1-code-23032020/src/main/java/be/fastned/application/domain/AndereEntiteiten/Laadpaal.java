@@ -1,13 +1,15 @@
-package be.fastned.application.domain;
-
+package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
-import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.PersoonEntiteiten.Locatiehouder;
+import be.fastned.application.domain.Technisch.DocumentatieRepository;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
-import static be.fastned.application.domain.Probleem.ENTITY_NAME;
-import static be.fastned.application.domain.Probleem.TABLE_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Laadpaal.ENTITY_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Laadpaal.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -17,7 +19,7 @@ import static be.fastned.application.domain.Probleem.TABLE_NAME;
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Probleem extends AbsoluteBase{
+public class Laadpaal extends AbsoluteBase {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -35,10 +37,12 @@ public class Probleem extends AbsoluteBase{
 	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 
-	private String id = null;
-	private String beschrijving = null;
-	private String status = null;
-	private Oplossing oplossing = null;
+	private String id;
+	private Locatiehouder locatiehouder;
+	private String installatieDoc;
+	private String reparatieDoc;
+	private String laadpaalType = null;
+	private String status;
 
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
@@ -51,27 +55,32 @@ public class Probleem extends AbsoluteBase{
 
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
-	public static final String ENTITY_NAME = "Probleem";
-	public static final String TABLE_NAME = "tbl_Probleem";
+	public static final String ENTITY_NAME = "Laadpaal";
+	public static final String TABLE_NAME = "tbl_Laadpalen";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
-	public static final String ID_PREFIX = PROBLEEM_ID_PREFIX;
+	public static final String ID_PREFIX = LAADPAAL_ID_PREFIX;
 
 	// Constanten met kolom-namen
 	public static final String ID_COL_NAME = ID_PREFIX + "Id";
-	public static final String BESCHRIJVING_COL_NAME = "Beschrijving";
+	public static final String LOCATIEHOUDER_COL_NAME = "Locatiehouder";
+	public static final String INSTALLATIEDOC_COL_NAME = "InstallatieDoc";
+	public static final String REPARATIEDOC_COL_NAME = "ReparatieDoc";
+	public static final String LAADPAALTYPE_COL_NAME = "LaadpaalType";
 	public static final String STATUS_COL_NAME = "Status";
-	public static final String OPLOSSING_COL_NAME = "Oplossing";
 
-	/* //----------------// SECTIE: Problemen //----------------// */
+	// Technische constanten
+	public static final DocumentatieRepository repo = DocumentatieRepository.getInstance();
+
+	/* //----------------// SECTIE: Laadpalen //----------------// */
 	/**
-	 * (ACT-PROBLEMEN) Collectie van actieve & nieuwe instanties via deze klasse.
+	 * (ACT-LAADPALEN) Collectie van actieve & nieuwe instanties via deze klasse.
 	 */
-	public static ArrayList<Probleem> actieveProblemen = new ArrayList<Probleem>();
+	public static ArrayList<Laadpaal> actieveLaadpalen = new ArrayList<Laadpaal>();
 	/**
-	 * (ARCH-PROBLEMEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 * (ARCH-LAADPALEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
 	 */
-	public static ArrayList<Probleem> gearchiveerdeProblemen = new ArrayList<Probleem>();
+	public static ArrayList<Laadpaal> gearchiveerdeLaadpalen = new ArrayList<Laadpaal>();
 
 	/* //----------------// -#########------------------------#########- //----------------// */
 	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
@@ -80,7 +89,7 @@ public class Probleem extends AbsoluteBase{
 	/**
 	 * Default constructor voor deze klasse. (Wel configuratie)
 	 */
-	public Probleem(){
+	public Laadpaal(){
 		setupInitConfig();
 		id = extrapolateId();
 	}
@@ -88,19 +97,22 @@ public class Probleem extends AbsoluteBase{
 	/**
 	 * Default constructor voor deze klasse. (Geen configuratie)
 	 */
-	public Probleem(boolean noConfig){
+	public Laadpaal(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
 		id = extrapolateId();
 	}
 
 	/**
-	 * Volledige constructor voor deze klasse.
+	 * Volledige Constructor voor deze klasse.
 	 */
-	public Probleem(Laadpaal laadpaal, String beschrijving){
+	public Laadpaal(Locatiehouder locatiehouder, String laadpaalType){
+		this.locatiehouder = locatiehouder;
+		this.laadpaalType = laadpaalType;
+		this.status = "aangemaakt";
+		this.installatieDoc = repo.laadpaalHashMapInst.get(laadpaalType);
+		this.reparatieDoc = repo.laadpaalHashMapRep.get(laadpaalType);
 		setupInitConfig();
 		id = extrapolateId();
-		this.beschrijving = beschrijving;
-		this.status = "aangemaakt";
 	}
 
 	/* //----------------// -#########--------------------#########- //----------------// */
@@ -119,15 +131,15 @@ public class Probleem extends AbsoluteBase{
 	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
 	 */
 	public void archiveer(){
-		gearchiveerdeProblemen.add(this);
-		actieveProblemen.remove(this);
+		gearchiveerdeLaadpalen.add(this);
+		actieveLaadpalen.remove(this);
 	}
 
 	/**
 	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
 	 */
 	private void setupInitConfig(){
-		actieveProblemen.add(this);
+		actieveLaadpalen.add(this);
 		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
 	}
 
@@ -162,64 +174,84 @@ public class Probleem extends AbsoluteBase{
 		this.id = value;
 	}
 
+	/* //----------------// PROPERTY: Locatiehouder //----------------// */
+	/**
+	 * Deze domein-attribuut getter vertegenwoordigt het locatiehouder-attribuut.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=LOCATIEHOUDER_COL_NAME, referencedColumnName = Laadpaal.ID_COL_NAME)
+	public Locatiehouder getLocatiehouder(){
+		return this.locatiehouder;
+	}
+	/**
+	 * Deze domein-attribuut setter vertegenwoordigt het locatiehouder-attribuut.
+	 */
+	@Transient
+	public void setLocatiehouder(Locatiehouder value){
+		this.locatiehouder = value;
+	}
+
+	/* //----------------// PROPERTY: Laadpaal-Type //----------------// */
+	/**
+	 * Deze domein-attribuut getter vertegenwoordigt het producttype-attribuut.
+	 */
+	@Column(name = LAADPAALTYPE_COL_NAME)
+	public String getLaadpaalType(){
+		return this.laadpaalType;
+	}
+	/**
+	 * Deze domein-attribuut getter vertegenwoordigt het producttype-attribuut.
+	 */
+	@Transient
+	public void setLaadpaalType(String value){
+		this.laadpaalType = value;
+	}
+
 	/* //----------------// PROPERTY: Status //----------------// */
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt het status-attribuut van deze instantie.
+	 * Deze domein-attribuut getter vertegenwoordigt het status-attribuut.
 	 */
 	@Column(name = STATUS_COL_NAME)
 	public String getStatus(){
 		return this.status;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt het status-attribuut van deze instantie.
+	 * Deze domein-attribuut getter vertegenwoordigt het status-attribuut.
 	 */
 	@Transient
 	public void setStatus(String value){
 		this.status = value;
 	}
 
-	/* //----------------// PROPERTY: Beschrijving //----------------// */
+	/* //----------------// PROPERTY: Installatie-Documentatie //----------------// */
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt het beschrijving-attribuut van deze instantie.
+	 * Deze domein-attribuut getter vertegenwoordigt het installatiedocumentatie-attribuut.
 	 */
-	@Column(name = BESCHRIJVING_COL_NAME)
-	public String getBeschrijving(){
-		return beschrijving;
+	@Column(name = INSTALLATIEDOC_COL_NAME)
+	public String getInstallatieDoc(){
+		return this.installatieDoc;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt het beschrijving-attribuut van deze instantie.
+	 * Deze domein-attribuut getter vertegenwoordigt het installatiedocumentatie-attribuut.
 	 */
 	@Transient
-	public void setBeschrijving(String value){ beschrijving = value; }
+	public void setInstallatieDoc(String value){
+		this.installatieDoc = value;
+	}
 
-	/* //----------------// PROPERTY: OPlossing //----------------// */
+	/* //----------------// PROPERTY: Reparatie-Documentatie //----------------// */
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt het beschrijving-attribuut van deze instantie.
+	 * Deze domein-attribuut getter vertegenwoordigt het reparatiedocumentatie-attribuut.
 	 */
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name=OPLOSSING_COL_NAME, referencedColumnName = Oplossing.ID_COL_NAME)
-	public Oplossing getOplossing(){
-		return oplossing;
+	@Column(name = REPARATIEDOC_COL_NAME)
+	public String getReparatieDoc(){
+		return this.reparatieDoc;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt het beschrijving-attribuut van deze instantie.
+	 * Deze domein-attribuut getter vertegenwoordigt het reparatiedocumentatie-attribuut.
 	 */
 	@Transient
-	public void setOplossing(Oplossing value){ oplossing = value; }
-
-	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Propertie Technisch Variabelen # //----------------\\ */
-	/* //----------------\\ # ---------------------------- # //----------------\\ */
-
-	/* //----------------// PROPERTY: Actieve & Gearchiveerde PROBLEMEN (STATIC) //----------------// */
-	/**
-	 * (ACT-PROBLEMEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. actieve instanties.
-	 */
-	@Transient
-	public static ArrayList<Probleem> getActieveInstanties() { return actieveProblemen; }
-	/**
-	 * (ARCH-PROBLEMEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. gearchiveerde instanties.
-	 */
-	@Transient
-	public static ArrayList<Probleem> getGearchiveerdeInstanties() { return gearchiveerdeProblemen; }
+	public void setReparatieDoc(String value){
+		this.reparatieDoc = value;
+	}
 }

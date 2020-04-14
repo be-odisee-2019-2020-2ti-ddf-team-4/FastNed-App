@@ -2,11 +2,9 @@ package be.fastned.application.domain.PersoonAbstracties;
 
 
 
-import be.fastned.application.dao.Interfaces.InstallateurDao;
-import be.fastned.application.domain.AbsoluteBase;
+import be.fastned.application.domain.Base.AbsoluteBase;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonExtension;
-import be.fastned.application.service.AppRunner;
 
 import javax.persistence.*;
 import java.util.ArrayList;

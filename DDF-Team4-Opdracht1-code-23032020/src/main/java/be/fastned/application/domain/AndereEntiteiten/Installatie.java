@@ -1,13 +1,16 @@
-package be.fastned.application.domain;
+package be.fastned.application.domain.AndereEntiteiten;
 
-import be.fastned.application.dao.AfspraakHibernateDao;
-import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.dao.InstallatieHibernateDao;
+import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.Technisch.Bezoek;
+import be.fastned.application.domain.Technisch.DocumentatieRepository;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import static be.fastned.application.domain.Laadsessie.ENTITY_NAME;
-import static be.fastned.application.domain.Laadsessie.TABLE_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Installatie.ENTITY_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Installatie.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -17,7 +20,7 @@ import static be.fastned.application.domain.Laadsessie.TABLE_NAME;
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Laadsessie extends AbsoluteBase{
+public class Installatie extends AbsoluteBase implements Bezoek {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -35,9 +38,8 @@ public class Laadsessie extends AbsoluteBase{
 	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	private String id;
-	private LocalDateTime startSessie;
-	private double startPercentage;
-	private Laadpaal laadpaal;
+	private LocalDateTime installatieCompleet;
+	private Probleem probleem;
 
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
@@ -50,29 +52,29 @@ public class Laadsessie extends AbsoluteBase{
 
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
-	public static final String ENTITY_NAME = "Laadsessie";
-	public static final String TABLE_NAME = "tbl_Laadsessies";
+	public static final String ENTITY_NAME = "Installatie";
+	public static final String TABLE_NAME = "tbl_Installaties";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
-	public static final String ID_PREFIX = LAADSESSIE_ID_PREFIX;
+	public static final String ID_PREFIX = INSTALLATIE_ID_PREFIX;
 
 	// Constanten met kolom-namen
 	public static final String ID_COL_NAME = ID_PREFIX + "Id";
-	public static final String LAADPAAL_COL_NAME = "Laadpaal_FK";
-	public static final String STARTPERCENTAGE_COL_NAME = "StartPercentage";
-	public static final String STARTSESSIE_COL_NAME = "StartSessie";
+	public static final String INSTALLATIECOMPLEET_COL_NAME = "InstallatieCompleet";
+	public static final String PROBLEEM_COL_NAME = "Probleem_FK";
 
-	private static final int LAADPERCENT_PER_MINUUT = 1;
+	// Technische constanten
+	public static final DocumentatieRepository repo = DocumentatieRepository.getInstance();
 
-	/* //----------------// SECTIE: Laadsessies //----------------// */
+	/* //----------------// SECTIE: Installaties //----------------// */
 	/**
-	 * (ACT-LAADSESSIES) Collectie van actieve & nieuwe instanties via deze klasse.
+	 * (ACT-INSTALLATIES) Collectie van actieve & nieuwe instanties via deze klasse.
 	 */
-	public static ArrayList<Laadsessie> actieveLaadsessies = new ArrayList<Laadsessie>();
+	public static ArrayList<Installatie> actieveInstallaties = new ArrayList<Installatie>();
 	/**
-	 * (ARCH-LAADSESSIES) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 * (ARCH-INSTALLATIES) Collectie van verlopen & afgehandelde instanties via deze klasse.
 	 */
-	public static ArrayList<Laadsessie> gearchiveerdeLaadsessies = new ArrayList<Laadsessie>();
+	public static ArrayList<Installatie> gearchiveerdeInstallaties = new ArrayList<Installatie>();
 
 	/* //----------------// -#########------------------------#########- //----------------// */
 	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
@@ -81,7 +83,7 @@ public class Laadsessie extends AbsoluteBase{
 	/**
 	 * Default constructor voor deze klasse. (Wel configuratie)
 	 */
-	public Laadsessie(){
+	public Installatie(){
 		setupInitConfig();
 		id = extrapolateId();
 	}
@@ -89,18 +91,15 @@ public class Laadsessie extends AbsoluteBase{
 	/**
 	 * Default constructor voor deze klasse. (Geen configuratie)
 	 */
-	public Laadsessie(boolean noConfig){
+	public Installatie(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
 		id = extrapolateId();
 	}
-
 	/**
 	 * Volledige Constructor voor deze klasse.
 	 */
-	public Laadsessie(LocalDateTime startSessie, double startPercentage, Laadpaal laadpaal){
-		this.startSessie = startSessie;
-		this.startPercentage = startPercentage;
-		this.laadpaal = laadpaal;
+	public Installatie(LocalDateTime installatieCompleet){
+		this.installatieCompleet = installatieCompleet;
 		setupInitConfig();
 		id = extrapolateId();
 	}
@@ -113,8 +112,11 @@ public class Laadsessie extends AbsoluteBase{
 	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
-	public double berekenLaadtijd(){
-		return ((100 - this.startPercentage)/this.LAADPERCENT_PER_MINUUT);
+	/**
+	 * Deze domein-functie haalt via de laadpaal installatie-documentatie op.
+	 */
+	public String toonInstallatieDoc(Laadpaal laadpaal){
+		return repo.laadpaalHashMapInst.get(laadpaal.getLaadpaalType());
 	}
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
@@ -125,16 +127,16 @@ public class Laadsessie extends AbsoluteBase{
 	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
 	 */
 	public void archiveer(){
-		gearchiveerdeLaadsessies.add(this);
-		actieveLaadsessies.remove(this);
+		gearchiveerdeInstallaties.add(this);
+		actieveInstallaties.remove(this);
 	}
 
 	/**
 	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
 	 */
 	private void setupInitConfig(){
-		actieveLaadsessies.add(this);
-		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
+		actieveInstallaties.add(this);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(InstallatieHibernateDao.BEAN_DAO_NAME);
 	}
 
 	/**
@@ -168,52 +170,54 @@ public class Laadsessie extends AbsoluteBase{
 		this.id = value;
 	}
 
-	/* //----------------// PROPERTY: Start-Sessie //----------------// */
+	/* //----------------// PROPERTY: Installatie Compleet //----------------// */
 	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het startsessie-attribuut van deze instantie.
+	 * Deze domein-attribuut-setter vertegenwoordigt het installatieCompleet-attribuut van deze instantie.
 	 */
-	@Column(name = STARTSESSIE_COL_NAME)
-	public LocalDateTime getStartSessie(){
-		return this.startSessie;
+	@Column(name = INSTALLATIECOMPLEET_COL_NAME)
+	public LocalDateTime getInstallatieCompleet(){
+		return this.installatieCompleet;
 	}
 	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het startsessie-attribuut van deze instantie.
-	 */
-	@Transient
-	public void setStartSessie(LocalDateTime value){
-		this.startSessie = value;
-	}
-
-	/* //----------------// PROPERTY: Start-Percentage //----------------// */
-	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het startpercentage-attribuut van deze instantie.
-	 */
-	@Column(name = STARTPERCENTAGE_COL_NAME)
-	public double getStartPercentage(){
-		return this.startPercentage;
-	}
-	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het startpercentage-attribuut van deze instantie.
+	 * Deze domein-attribuut-setter vertegenwoordigt het installatieCompleet-attribuut van deze instantie.
 	 */
 	@Transient
-	public void setStartPercentage(double value){
-		this.startPercentage = value;
+	public void setInstallatieCompleet(LocalDateTime value){
+		this.installatieCompleet = value;
 	}
 
-	/* //----------------// PROPERTY: Laadpaal //----------------// */
+
+	/* //----------------// PROPERTY: Probleem //----------------// */
 	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het laadpaal-attribuut van deze instantie.
+	 * Deze domein-attribuut-setter vertegenwoordigt het probleem-attribuut van deze instantie.
 	 */
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name=LAADPAAL_COL_NAME, referencedColumnName = Laadpaal.ID_COL_NAME)
-	public Laadpaal getLaadpaal(){
-		return this.laadpaal;
+	@JoinColumn(name=PROBLEEM_COL_NAME, referencedColumnName = Probleem.ID_COL_NAME)
+	public Probleem getProbleem(){
+		return this.probleem;
 	}
 	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het laadpaal-attribuut van deze instantie.
+	 * Deze domein-attribuut-setter vertegenwoordigt het probleem-attribuut van deze instantie.
 	 */
 	@Transient
-	public void setLaadpaal(Laadpaal value){
-		this.laadpaal = value;
+	public void setProbleem(Probleem value){
+		this.probleem = value;
 	}
+
+
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Propertie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: Actieve & Gearchiveerde INSTALLATIE (STATIC) //----------------// */
+	/**
+	 * (ACT-INSTALLATIES) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. actieve instanties.
+	 */
+	@Transient
+	public static ArrayList<Installatie> getActieveInstanties() { return actieveInstallaties; }
+	/**
+	 * (ARCH-INSTALLATIES) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. gearchiveerde instanties.
+	 */
+	@Transient
+	public static ArrayList<Installatie> getGearchiveerdeInstanties() { return gearchiveerdeInstallaties; }
 }

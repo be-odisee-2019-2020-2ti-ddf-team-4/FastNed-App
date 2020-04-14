@@ -1,14 +1,14 @@
-package be.fastned.application.domain;
+package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
-import be.fastned.application.dao.Interfaces.BaseDao;
-import be.fastned.application.dao.OplossingHibernateDao;
+import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.AbsoluteBase;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-import static be.fastned.application.domain.Oplossing.ENTITY_NAME;
-import static be.fastned.application.domain.Oplossing.TABLE_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Laadsessie.ENTITY_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Laadsessie.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -18,7 +18,7 @@ import static be.fastned.application.domain.Oplossing.TABLE_NAME;
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Oplossing extends AbsoluteBase{
+public class Laadsessie extends AbsoluteBase {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -35,9 +35,10 @@ public class Oplossing extends AbsoluteBase{
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
-
 	private String id;
-	private String oplossing;
+	private LocalDateTime startSessie;
+	private double startPercentage;
+	private Laadpaal laadpaal;
 
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
@@ -50,25 +51,29 @@ public class Oplossing extends AbsoluteBase{
 
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
-	public static final String ENTITY_NAME = "Oplossing";
-	public static final String TABLE_NAME = "tbl_Oplossingen";
+	public static final String ENTITY_NAME = "Laadsessie";
+	public static final String TABLE_NAME = "tbl_Laadsessies";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
-	public static final String ID_PREFIX = OPLOSSING_ID_PREFIX;
+	public static final String ID_PREFIX = LAADSESSIE_ID_PREFIX;
 
 	// Constanten met kolom-namen
 	public static final String ID_COL_NAME = ID_PREFIX + "Id";
-	public static final String OPLOSSING_COL_NAME = "Oplossing";
+	public static final String LAADPAAL_COL_NAME = "Laadpaal_FK";
+	public static final String STARTPERCENTAGE_COL_NAME = "StartPercentage";
+	public static final String STARTSESSIE_COL_NAME = "StartSessie";
 
-	/* //----------------// SECTIE: Afspraken //----------------// */
+	private static final int LAADPERCENT_PER_MINUUT = 1;
+
+	/* //----------------// SECTIE: Laadsessies //----------------// */
 	/**
-	 * (ACT-OPLOSSINGEN) Collectie van actieve & nieuwe instanties via deze klasse.
+	 * (ACT-LAADSESSIES) Collectie van actieve & nieuwe instanties via deze klasse.
 	 */
-	public static ArrayList<Oplossing> actieveOplossingen = new ArrayList<Oplossing>();
+	public static ArrayList<Laadsessie> actieveLaadsessies = new ArrayList<Laadsessie>();
 	/**
-	 * (ARCH-OPLOSSINGEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 * (ARCH-LAADSESSIES) Collectie van verlopen & afgehandelde instanties via deze klasse.
 	 */
-	public static ArrayList<Oplossing> gearchiveerdeOplossingen = new ArrayList<Oplossing>();
+	public static ArrayList<Laadsessie> gearchiveerdeLaadsessies = new ArrayList<Laadsessie>();
 
 	/* //----------------// -#########------------------------#########- //----------------// */
 	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
@@ -77,7 +82,7 @@ public class Oplossing extends AbsoluteBase{
 	/**
 	 * Default constructor voor deze klasse. (Wel configuratie)
 	 */
-	public Oplossing(){
+	public Laadsessie(){
 		setupInitConfig();
 		id = extrapolateId();
 	}
@@ -85,18 +90,20 @@ public class Oplossing extends AbsoluteBase{
 	/**
 	 * Default constructor voor deze klasse. (Geen configuratie)
 	 */
-	public Oplossing(boolean noConfig){
+	public Laadsessie(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
 		id = extrapolateId();
 	}
 
 	/**
-	 * Volledige constructor voor deze klasse.
+	 * Volledige Constructor voor deze klasse.
 	 */
-	public Oplossing(String oplossing){
-		//setupInitConfig();
-		//id = extrapolateId();
-		this.oplossing = oplossing;
+	public Laadsessie(LocalDateTime startSessie, double startPercentage, Laadpaal laadpaal){
+		this.startSessie = startSessie;
+		this.startPercentage = startPercentage;
+		this.laadpaal = laadpaal;
+		setupInitConfig();
+		id = extrapolateId();
 	}
 
 	/* //----------------// -#########--------------------#########- //----------------// */
@@ -107,6 +114,10 @@ public class Oplossing extends AbsoluteBase{
 	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
+	public double berekenLaadtijd(){
+		return ((100 - this.startPercentage)/this.LAADPERCENT_PER_MINUUT);
+	}
+
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
 	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
@@ -115,16 +126,16 @@ public class Oplossing extends AbsoluteBase{
 	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
 	 */
 	public void archiveer(){
-		gearchiveerdeOplossingen.add(this);
-		actieveOplossingen.remove(this);
+		gearchiveerdeLaadsessies.add(this);
+		actieveLaadsessies.remove(this);
 	}
 
 	/**
 	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
 	 */
 	private void setupInitConfig(){
-		actieveOplossingen.add(this);
-		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(OplossingHibernateDao.BEAN_DAO_NAME);
+		actieveLaadsessies.add(this);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
 	}
 
 	/**
@@ -134,60 +145,76 @@ public class Oplossing extends AbsoluteBase{
 		return baseExtrapolateId(ID_PREFIX, klasseDao);
 	}
 
-	/* //----------------// -#####------------------#####- //----------------// */
-	/* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-	/* //----------------// -#####------------------#####- //----------------// */
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+	/* //----------------// -#########- | PROPERTIES | -#########- //----------------// */
+	/* //----------------// -#########- |------------| -#########- //----------------// */
 
-	/* //----------------\\ <||> ----------------- <||> //----------------\\ */
-	/* //----------------\\ <||> DOMEIN Properties <||> //----------------\\ */
-	/* //----------------\\ <||> ----------------- <||> //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: ID //----------------// */
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt het id-attribuut van deze instantie.
+	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
 	 */
 	@Id @Column(name = ID_COL_NAME)
 	public String getId(){
 		return this.id;
 	}
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt het id-attribuut van deze instantie.
+	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
 	 */
 	@Transient
 	public void setId(String value){
 		this.id = value;
 	}
 
-	/* //----------------// PROPERTY: Oplossing //----------------// */
+	/* //----------------// PROPERTY: Start-Sessie //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt het oplossing-attribuut van deze instantie.
+	 * Deze domein-attribuut-getter vertegenwoordigt het startsessie-attribuut van deze instantie.
 	 */
-	@Column(name = OPLOSSING_ID_PREFIX)
-	public String getOplossing(){
-		return this.oplossing;
+	@Column(name = STARTSESSIE_COL_NAME)
+	public LocalDateTime getStartSessie(){
+		return this.startSessie;
 	}
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt het oplossing-attribuut van deze instantie.
+	 * Deze domein-attribuut-getter vertegenwoordigt het startsessie-attribuut van deze instantie.
 	 */
 	@Transient
-	public void setOplossing(String value){
-		this.oplossing = value;
+	public void setStartSessie(LocalDateTime value){
+		this.startSessie = value;
 	}
 
-
-	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Propertie Technisch Variabelen # //----------------\\ */
-	/* //----------------\\ # ---------------------------- # //----------------\\ */
-
-	/* //----------------// PROPERTY: Actieve & Gearchiveerde AFSPRAKEN (STATIC) //----------------// */
+	/* //----------------// PROPERTY: Start-Percentage //----------------// */
 	/**
-	 * (ACT-OPLOSSINGEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. actieve instanties.
+	 * Deze domein-attribuut-getter vertegenwoordigt het startpercentage-attribuut van deze instantie.
+	 */
+	@Column(name = STARTPERCENTAGE_COL_NAME)
+	public double getStartPercentage(){
+		return this.startPercentage;
+	}
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het startpercentage-attribuut van deze instantie.
 	 */
 	@Transient
-	public static ArrayList<Oplossing> getActieveInstanties() { return actieveOplossingen; }
+	public void setStartPercentage(double value){
+		this.startPercentage = value;
+	}
+
+	/* //----------------// PROPERTY: Laadpaal //----------------// */
 	/**
-	 * (ARCH-OPLOSSINGEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. gearchiveerde instanties.
+	 * Deze domein-attribuut-getter vertegenwoordigt het laadpaal-attribuut van deze instantie.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=LAADPAAL_COL_NAME, referencedColumnName = Laadpaal.ID_COL_NAME)
+	public Laadpaal getLaadpaal(){
+		return this.laadpaal;
+	}
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het laadpaal-attribuut van deze instantie.
 	 */
 	@Transient
-	public static ArrayList<Oplossing> getGearchiveerdeInstanties() { return gearchiveerdeOplossingen; }
+	public void setLaadpaal(Laadpaal value){
+		this.laadpaal = value;
+	}
 }

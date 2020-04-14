@@ -1,13 +1,14 @@
-package be.fastned.application.domain;
+package be.fastned.application.domain.AndereEntiteiten;
 
-import be.fastned.application.dao.ContractHibernateDao;
-import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.dao.OplossingHibernateDao;
+import be.fastned.application.domain.Base.AbsoluteBase;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import static be.fastned.application.domain.Contract.ENTITY_NAME;
-import static be.fastned.application.domain.Contract.TABLE_NAME;
+
+import static be.fastned.application.domain.AndereEntiteiten.Oplossing.ENTITY_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Oplossing.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -17,7 +18,7 @@ import static be.fastned.application.domain.Contract.TABLE_NAME;
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Contract extends AbsoluteBase{
+public class Oplossing extends AbsoluteBase {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -36,12 +37,12 @@ public class Contract extends AbsoluteBase{
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 
 	private String id;
-	private LocalDateTime contractDatum = null;
-	private LocalDateTime uitvoeringsDatum = null;
+	private String oplossing;
 
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- &|& KLASSE VARIABELEN &|& -##########- //----------------// */
@@ -49,34 +50,34 @@ public class Contract extends AbsoluteBase{
 
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
-	public static final String ENTITY_NAME = "Contract";
-	public static final String TABLE_NAME = "tbl_Contracten";
+	public static final String ENTITY_NAME = "Oplossing";
+	public static final String TABLE_NAME = "tbl_Oplossingen";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
-	public static final String ID_PREFIX = CONTRACT_ID_PREFIX;
+	public static final String ID_PREFIX = OPLOSSING_ID_PREFIX;
 
 	// Constanten met kolom-namen
 	public static final String ID_COL_NAME = ID_PREFIX + "Id";
-	public static final String CONTRACTDATUM_COL_NAME = "ContractDatum";
-	public static final String UITVOERINGSDATUM_COL_NAME = "UitvoeringsDatum";
+	public static final String OPLOSSING_COL_NAME = "Oplossing";
 
-	/* //----------------// SECTIE: Contracten //----------------// */
+	/* //----------------// SECTIE: Afspraken //----------------// */
 	/**
-	 * (ACT-CONTRACTEN) Collectie van actieve & nieuwe instanties via deze klasse.
+	 * (ACT-OPLOSSINGEN) Collectie van actieve & nieuwe instanties via deze klasse.
 	 */
-	public static ArrayList<Contract> actieveContracten = new ArrayList<Contract>();
+	public static ArrayList<Oplossing> actieveOplossingen = new ArrayList<Oplossing>();
 	/**
-	 * (ARCH-CONTRACTEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 * (ARCH-OPLOSSINGEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
 	 */
-	public static ArrayList<Contract> gearchiveerdeContracten = new ArrayList<Contract>();
+	public static ArrayList<Oplossing> gearchiveerdeOplossingen = new ArrayList<Oplossing>();
 
 	/* //----------------// -#########------------------------#########- //----------------// */
 	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
 	/* //----------------// -#########------------------------#########- //----------------// */
+
 	/**
 	 * Default constructor voor deze klasse. (Wel configuratie)
 	 */
-	public Contract(){
+	public Oplossing(){
 		setupInitConfig();
 		id = extrapolateId();
 	}
@@ -84,19 +85,18 @@ public class Contract extends AbsoluteBase{
 	/**
 	 * Default constructor voor deze klasse. (Geen configuratie)
 	 */
-	public Contract(boolean noConfig){
+	public Oplossing(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
 		id = extrapolateId();
 	}
 
 	/**
-	 * Volledige Constructor voor deze klasse.
+	 * Volledige constructor voor deze klasse.
 	 */
-	public Contract(LocalDateTime contractDatum, LocalDateTime uitvoeringsDatum){
-		setupInitConfig();
-		id = extrapolateId();
-		this.contractDatum = contractDatum;
-		this.uitvoeringsDatum = uitvoeringsDatum;
+	public Oplossing(String oplossing){
+		//setupInitConfig();
+		//id = extrapolateId();
+		this.oplossing = oplossing;
 	}
 
 	/* //----------------// -#########--------------------#########- //----------------// */
@@ -115,16 +115,16 @@ public class Contract extends AbsoluteBase{
 	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
 	 */
 	public void archiveer(){
-		gearchiveerdeContracten.add(this);
-		actieveContracten.remove(this);
+		gearchiveerdeOplossingen.add(this);
+		actieveOplossingen.remove(this);
 	}
 
 	/**
 	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
 	 */
 	private void setupInitConfig(){
-		actieveContracten.add(this);
-		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(ContractHibernateDao.BEAN_DAO_NAME);
+		actieveOplossingen.add(this);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(OplossingHibernateDao.BEAN_DAO_NAME);
 	}
 
 	/**
@@ -134,61 +134,44 @@ public class Contract extends AbsoluteBase{
 		return baseExtrapolateId(ID_PREFIX, klasseDao);
 	}
 
-	/* //----------------// -#########- |------------| -#########- //----------------// */
-	/* //----------------// -#########- | PROPERTIES | -#########- //----------------// */
-	/* //----------------// -#########- |------------| -#########- //----------------// */
+	/* //----------------// -#####------------------#####- //----------------// */
+	/* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
+	/* //----------------// -#####------------------#####- //----------------// */
 
-	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
-	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ <||> ----------------- <||> //----------------\\ */
+	/* //----------------\\ <||> DOMEIN Properties <||> //----------------\\ */
+	/* //----------------\\ <||> ----------------- <||> //----------------\\ */
 
 	/* //----------------// PROPERTY: ID //----------------// */
 	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
+	 * Deze domein-attribuut getter vertegenwoordigt het id-attribuut van deze instantie.
 	 */
 	@Id @Column(name = ID_COL_NAME)
 	public String getId(){
 		return this.id;
 	}
 	/**
-	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
+	 * Deze domein-attribuut setter vertegenwoordigt het id-attribuut van deze instantie.
 	 */
 	@Transient
 	public void setId(String value){
 		this.id = value;
 	}
 
-	/* //----------------// PROPERTY: ContractDatum //----------------// */
+	/* //----------------// PROPERTY: Oplossing //----------------// */
 	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
+	 * Deze domein-attribuut setter vertegenwoordigt het oplossing-attribuut van deze instantie.
 	 */
-	@Column(name = CONTRACTDATUM_COL_NAME)
-	public LocalDateTime getContractDatum(){
-		return this.contractDatum;
+	@Column(name = OPLOSSING_ID_PREFIX)
+	public String getOplossing(){
+		return this.oplossing;
 	}
 	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
+	 * Deze domein-attribuut setter vertegenwoordigt het oplossing-attribuut van deze instantie.
 	 */
 	@Transient
-	public void setContractDatum(LocalDateTime value){
-		this.contractDatum = value;
-	}
-
-
-	/* //----------------// PROPERTY: ContractDatum //----------------// */
-	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
-	 */
-	@Column(name = UITVOERINGSDATUM_COL_NAME)
-	public LocalDateTime getUitvoeringsDatum(){
-		return this.uitvoeringsDatum;
-	}
-	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
-	 */
-	@Transient
-	public void setUitvoeringsDatum(LocalDateTime value){
-		this.uitvoeringsDatum = value;
+	public void setOplossing(String value){
+		this.oplossing = value;
 	}
 
 
@@ -198,13 +181,13 @@ public class Contract extends AbsoluteBase{
 
 	/* //----------------// PROPERTY: Actieve & Gearchiveerde AFSPRAKEN (STATIC) //----------------// */
 	/**
-	 * (ACT-CONTRACTEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. actieve instanties.
+	 * (ACT-OPLOSSINGEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. actieve instanties.
 	 */
 	@Transient
-	public static ArrayList<Contract> getActieveInstanties() { return actieveContracten; }
+	public static ArrayList<Oplossing> getActieveInstanties() { return actieveOplossingen; }
 	/**
-	 * (ARCH-CONTRACTEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. gearchiveerde instanties.
+	 * (ARCH-OPLOSSINGEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. gearchiveerde instanties.
 	 */
 	@Transient
-	public static ArrayList<Contract> getGearchiveerdeInstanties() { return gearchiveerdeContracten; }
+	public static ArrayList<Oplossing> getGearchiveerdeInstanties() { return gearchiveerdeOplossingen; }
 }

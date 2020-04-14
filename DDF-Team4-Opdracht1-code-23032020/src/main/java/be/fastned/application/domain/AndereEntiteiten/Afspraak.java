@@ -1,13 +1,16 @@
-package be.fastned.application.domain;
+package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
-import be.fastned.application.dao.Interfaces.BaseDao;
-import be.fastned.application.domain.Personen.Installateur;
+import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.Technisch.Bezoek;
+import be.fastned.application.domain.Technisch.EnumStatus;
+import be.fastned.application.domain.PersoonEntiteiten.Installateur;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
-import static be.fastned.application.domain.Afspraak.ENTITY_NAME;
-import static be.fastned.application.domain.Afspraak.TABLE_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Afspraak.ENTITY_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.Afspraak.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -17,7 +20,7 @@ import static be.fastned.application.domain.Afspraak.TABLE_NAME;
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Afspraak extends AbsoluteBase{
+public class Afspraak extends AbsoluteBase {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */

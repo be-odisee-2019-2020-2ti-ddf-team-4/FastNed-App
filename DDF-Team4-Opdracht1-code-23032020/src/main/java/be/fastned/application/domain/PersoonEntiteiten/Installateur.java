@@ -1,18 +1,18 @@
-package be.fastned.application.domain.Personen;
+package be.fastned.application.domain.PersoonEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
-import be.fastned.application.dao.Interfaces.BaseDao;
-import be.fastned.application.domain.Afspraak;
-import be.fastned.application.domain.Laadpaal;
-import be.fastned.application.domain.Oplossing;
+import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.AndereEntiteiten.Afspraak;
+import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
+import be.fastned.application.domain.AndereEntiteiten.Oplossing;
 import be.fastned.application.domain.PersoonAbstracties.PersoonDefaultImpl;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonExtension;
-import be.fastned.application.domain.Probleem;
+import be.fastned.application.domain.AndereEntiteiten.Probleem;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
-import static be.fastned.application.domain.Personen.Installateur.ENTITY_NAME;
-import static be.fastned.application.domain.Personen.Installateur.TABLE_NAME;
+import static be.fastned.application.domain.PersoonEntiteiten.Installateur.ENTITY_NAME;
+import static be.fastned.application.domain.PersoonEntiteiten.Installateur.TABLE_NAME;
 
 /**
  * @author TiboVG
