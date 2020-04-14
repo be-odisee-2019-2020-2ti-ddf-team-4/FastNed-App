@@ -53,7 +53,7 @@ public class Installatie extends AbsoluteBase implements Bezoek {
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
 	public static final String ENTITY_NAME = "Installatie";
-	public static final String TABLE_NAME = "tbl_Installaties";
+	public static final String TABLE_NAME = "tbl_installaties";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
 	public static final String ID_PREFIX = INSTALLATIE_ID_PREFIX;
@@ -64,7 +64,8 @@ public class Installatie extends AbsoluteBase implements Bezoek {
 	public static final String PROBLEEM_COL_NAME = "Probleem_FK";
 
 	// Technische constanten
-	public static final DocumentatieDoc repo = DocumentatieDoc.getInstance();
+	public static DocumentatieDoc repo = new DocumentatieDoc();
+	private static ArrayList<DocumentatieDoc> installatieDocs = repo.getInstallatieDocumentaties();
 
 	/* //----------------// SECTIE: Installaties //----------------// */
 	/**
@@ -116,7 +117,7 @@ public class Installatie extends AbsoluteBase implements Bezoek {
 	 * Deze domein-functie haalt via de laadpaal installatie-documentatie op.
 	 */
 	public String toonInstallatieDoc(Laadpaal laadpaal){
-		return repo.laadpaalHashMapInst.get(laadpaal.getLaadpaalType());
+		return repo.findInstallatieDoc(laadpaal.getLaadpaalType()).getDocumentatie();
 	}
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */

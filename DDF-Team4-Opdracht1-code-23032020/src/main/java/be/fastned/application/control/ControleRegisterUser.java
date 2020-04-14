@@ -16,7 +16,6 @@ import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLE
  * @version 6.0
  */
 
-@Component(BEAN_CONTROLEREGISTERUSER)
 public class ControleRegisterUser extends ControleBaseImpl {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
@@ -27,7 +26,7 @@ public class ControleRegisterUser extends ControleBaseImpl {
     /* //----------------\\ # Instantie Technisch Variabelen # //----------------\\ */
     /* //----------------\\ # ------------------------------ # //----------------\\ */
     private SchermRegisterUser schermRegisterUser = null;
-    private Persoon actieveGebruiker = (Persoon)BEAN_ACTIEVE_GEBRUIKER;
+    private Persoon actieveGebruiker = null;
 
     /* //----------------\\ # ------------------------------ # //----------------\\ */
     /* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */

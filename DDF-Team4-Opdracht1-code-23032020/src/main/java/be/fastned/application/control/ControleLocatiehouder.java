@@ -19,7 +19,6 @@ import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLE
  * @version 6.0
  */
 
-@Component(BEAN_CONTROLELOCATIEHOUDER)
 public class ControleLocatiehouder extends ControleBaseImpl {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
@@ -30,7 +29,8 @@ public class ControleLocatiehouder extends ControleBaseImpl {
     /* //----------------\\ # Instantie Technisch Variabelen # //----------------\\ */
     /* //----------------\\ # ------------------------------ # //----------------\\ */
     private SchermLocatiehouder schermLocatiehouder = null;
-    private Locatiehouder actieveGebruiker = (Locatiehouder)BEAN_ACTIEVE_GEBRUIKER;
+    private Locatiehouder actieveGebruiker = null;
+    // TODO ActieveGebruiker
 
     /* //----------------\\ # ------------------------------ # //----------------\\ */
     /* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */

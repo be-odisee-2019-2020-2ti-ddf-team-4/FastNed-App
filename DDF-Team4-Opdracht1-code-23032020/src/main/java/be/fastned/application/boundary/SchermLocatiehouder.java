@@ -51,8 +51,8 @@ public class SchermLocatiehouder extends SchermBase {
      * Deze Domein-functie updated de actieve persoon met persoons-/gebruikersgegevens.
      * @return Het aangevulde persoon-object van de actieve gebruiker.
      */
-    public PersoonProfessional identificeer(PersoonProfessional gegevensOwner, String adres, String bedrijfsNaam, String btwNumer, String voornaam, String naam, String geslacht, String gsm){
-        return m_ParentControleInstance.identificeer(gegevensOwner, adres, bedrijfsNaam, btwNumer, voornaam, naam, geslacht, gsm);
+    public PersoonProfessional identificeer(String adres, String bedrijfsNaam, String btwNumer, String voornaam, String naam, String geslacht, String gsm){
+        return m_ParentControleInstance.identificeer(adres, bedrijfsNaam, btwNumer, voornaam, naam, geslacht, gsm);
     }
 
     /**

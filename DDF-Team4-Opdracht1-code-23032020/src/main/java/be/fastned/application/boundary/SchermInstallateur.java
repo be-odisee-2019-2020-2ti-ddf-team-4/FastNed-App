@@ -56,8 +56,8 @@ public class SchermInstallateur extends SchermBase {
      * Deze Domein-functie updated de actieve persoon met persoons-/gebruikersgegevens.
      * @return Het aangevulde persoon-object van de actieve gebruiker.
      */
-    public PersoonDefault identificeer(PersoonDefault gegevensOwner, String voornaam, String naam, String geslacht, String gsm){
-        return m_ParentControleInstance.identificeer(gegevensOwner, voornaam, naam, geslacht, gsm);
+    public PersoonDefault identificeer(String voornaam, String naam, String geslacht, String gsm){
+        return m_ParentControleInstance.identificeer(voornaam, naam, geslacht, gsm);
     }
 
     /**

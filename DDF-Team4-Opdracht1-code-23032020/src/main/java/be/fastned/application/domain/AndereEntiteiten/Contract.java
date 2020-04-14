@@ -16,7 +16,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Contract.TABLE_NAME
  */
 
 @Entity(name = ENTITY_NAME)
-@Table(name = TABLE_NAME)
+@Table(name = Oplossing.TABLE_NAME)
 
 public class Contract extends AbsoluteBase {
 
@@ -51,7 +51,7 @@ public class Contract extends AbsoluteBase {
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
 	public static final String ENTITY_NAME = "Contract";
-	public static final String TABLE_NAME = "tbl_Contracten";
+	public static final String TABLE_NAME = "tbl_contracten";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
 	public static final String ID_PREFIX = CONTRACT_ID_PREFIX;

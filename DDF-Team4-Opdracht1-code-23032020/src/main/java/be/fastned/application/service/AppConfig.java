@@ -87,11 +87,11 @@ public class AppConfig {
         return null;
     }
 
-    @Bean
+    /*@Bean
     Persoon actieveGebruiker(){
-        return new Planner("test@email.com", "testman", "XXX");
+        return ((Persoon)new Planner("test@email.com", "testman", "XXX"));
 //        return new Laadklant("test@email.com", "testman", "XXX");
 //        return new Installateur("test@email.com", "testman", "XXX");
 //        return new Locatiehouder("test@email.com", "testman", "XXX");
-    }
+    }*/
 }

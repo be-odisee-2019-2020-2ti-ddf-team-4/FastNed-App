@@ -18,7 +18,6 @@ import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLE
  * @version 6.0
  */
 
-@Component(BEAN_CONTROLEINSTALLATEUR)
 public class ControleInstallateur extends ControleBaseImpl {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
@@ -29,7 +28,7 @@ public class ControleInstallateur extends ControleBaseImpl {
     /* //----------------\\ # Instantie Technisch Variabelen # //----------------\\ */
     /* //----------------\\ # ------------------------------ # //----------------\\ */
     private SchermInstallateur schermInstallateur = null;
-    private Installateur actieveGebruiker = (Installateur)BEAN_ACTIEVE_GEBRUIKER;
+    private Installateur actieveGebruiker = null;
 
     /* //----------------\\ # ------------------------------ # //----------------\\ */
     /* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
@@ -53,7 +52,6 @@ public class ControleInstallateur extends ControleBaseImpl {
     /**
      * Default Constructor voor deze klasse.
      */
-    @Autowired
     public ControleInstallateur(){
         schermInstallateur = new SchermInstallateur(this);
     }

@@ -14,7 +14,6 @@ public class AppRunner {
 
     public static void main(String[] args) {
         s_ApplicationContext = initieerContext();
-        actieveGebruiker = (Persoon) getAppContext().getBean("actieveGebruiker");
         s_AppService = AppServiceImpl.getInstance();
         s_AppService.persisteerDemoAfspraak();
 

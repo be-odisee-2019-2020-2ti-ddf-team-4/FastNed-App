@@ -18,7 +18,6 @@ import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLE
  * @version 6.0
  */
 
-@Component(BEAN_CONTROLELAADKLANT)
 public class ControleLaadklant extends ControleBaseImpl {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
@@ -29,7 +28,7 @@ public class ControleLaadklant extends ControleBaseImpl {
     /* //----------------\\ # Instantie Technisch Variabelen # //----------------\\ */
     /* //----------------\\ # ------------------------------ # //----------------\\ */
     private SchermLaadklant schermLaadklant = null;
-    private Laadklant actieveGebruiker = (Laadklant)BEAN_ACTIEVE_GEBRUIKER;
+    private Laadklant actieveGebruiker = null;
 
     /* //----------------\\ # ------------------------------ # //----------------\\ */
     /* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */

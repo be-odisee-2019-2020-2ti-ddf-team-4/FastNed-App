@@ -52,7 +52,7 @@ public class Locatietoestemming extends AbsoluteBase {
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
 	public static final String ENTITY_NAME = "Locatietoestemming";
-	public static final String TABLE_NAME = "tbl_Locatietoestemmingen";
+	public static final String TABLE_NAME = "tbl_locatietoestemmingen";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
 	public static final String ID_PREFIX = LOCATIETOESTEMMING_ID_PREFIX;

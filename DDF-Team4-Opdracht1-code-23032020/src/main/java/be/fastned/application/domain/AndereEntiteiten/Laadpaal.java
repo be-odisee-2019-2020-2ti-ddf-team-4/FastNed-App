@@ -56,7 +56,7 @@ public class Laadpaal extends AbsoluteBase {
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
 	public static final String ENTITY_NAME = "Laadpaal";
-	public static final String TABLE_NAME = "tbl_Laadpalen";
+	public static final String TABLE_NAME = "tbl_laadpalen";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
 	public static final String ID_PREFIX = LAADPAAL_ID_PREFIX;
@@ -181,7 +181,7 @@ public class Laadpaal extends AbsoluteBase {
 	 * Deze domein-attribuut getter vertegenwoordigt het locatiehouder-attribuut.
 	 */
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name=LOCATIEHOUDER_COL_NAME, referencedColumnName = Laadpaal.ID_COL_NAME)
+	@JoinColumn(name=LOCATIEHOUDER_COL_NAME, referencedColumnName = Locatiehouder.ID_COL_NAME)
 	public Locatiehouder getLocatiehouder(){
 		return this.locatiehouder;
 	}

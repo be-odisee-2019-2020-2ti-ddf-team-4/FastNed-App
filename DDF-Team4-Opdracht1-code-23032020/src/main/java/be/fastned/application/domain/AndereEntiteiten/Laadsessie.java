@@ -52,7 +52,7 @@ public class Laadsessie extends AbsoluteBase {
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
 	public static final String ENTITY_NAME = "Laadsessie";
-	public static final String TABLE_NAME = "tbl_Laadsessies";
+	public static final String TABLE_NAME = "tbl_laadsessies";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
 	public static final String ID_PREFIX = LAADSESSIE_ID_PREFIX;

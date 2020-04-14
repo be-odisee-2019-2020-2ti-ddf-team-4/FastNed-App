@@ -6,7 +6,6 @@ import be.fastned.application.domain.Base.AbsoluteBase;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
-
 import static be.fastned.application.domain.AndereEntiteiten.Oplossing.ENTITY_NAME;
 import static be.fastned.application.domain.AndereEntiteiten.Oplossing.TABLE_NAME;
 
@@ -51,7 +50,7 @@ public class Oplossing extends AbsoluteBase {
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
 	public static final String ENTITY_NAME = "Oplossing";
-	public static final String TABLE_NAME = "tbl_Oplossingen";
+	public static final String TABLE_NAME = "tbl_oplossingen";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
 	public static final String ID_PREFIX = OPLOSSING_ID_PREFIX;
@@ -162,7 +161,7 @@ public class Oplossing extends AbsoluteBase {
 	/**
 	 * Deze domein-attribuut setter vertegenwoordigt het oplossing-attribuut van deze instantie.
 	 */
-	@Column(name = OPLOSSING_ID_PREFIX)
+	@Column(name = OPLOSSING_COL_NAME)
 	public String getOplossing(){
 		return this.oplossing;
 	}

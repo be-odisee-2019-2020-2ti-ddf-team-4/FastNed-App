@@ -1,6 +1,7 @@
 package be.fastned.application.service;
 
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
+import be.fastned.application.domain.PersoonEntiteiten.Planner;
 import be.fastned.application.service.Interfaces.AppService;
 import be.fastned.application.service.Interfaces.PersistenceService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class AppServiceImpl implements AppService {
     public Persoon m_HuidigePersoon;
     public Object m_GetoondObject;
+    //public static Persoon actieveGebruiker = new Planner("test@email.com", "testman", "XXX");
 
     private static AppServiceImpl s_UniqueInstance;
     private static AnnotationConfigApplicationContext s_ApplicationContext;

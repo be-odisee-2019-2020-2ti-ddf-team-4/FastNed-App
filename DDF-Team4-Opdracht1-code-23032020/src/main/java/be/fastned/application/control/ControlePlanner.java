@@ -18,7 +18,6 @@ import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLE
  * @version 6.0
  */
 
-@Component(BEAN_CONTROLEPLANNER)
 public class ControlePlanner extends ControleBaseImpl {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
@@ -29,7 +28,7 @@ public class ControlePlanner extends ControleBaseImpl {
     /* //----------------\\ # Instantie Technisch Variabelen # //----------------\\ */
     /* //----------------\\ # ------------------------------ # //----------------\\ */
     private SchermPlanner schermPlanner = null;
-    private Planner actieveGebruiker = (Planner)BEAN_ACTIEVE_GEBRUIKER;
+    private Planner actieveGebruiker = null;
 
     /* //----------------\\ # ------------------------------ # //----------------\\ */
     /* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */

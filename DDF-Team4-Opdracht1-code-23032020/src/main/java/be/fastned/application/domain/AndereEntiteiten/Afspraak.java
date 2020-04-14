@@ -57,7 +57,7 @@ public class Afspraak extends AbsoluteBase {
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
 	public static final String ENTITY_NAME = "Afspraak";
-	public static final String TABLE_NAME = "tbl_Afspraken";
+	public static final String TABLE_NAME = "tbl_afspraken";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
 	public static final String ID_PREFIX = AFSPRAAK_ID_PREFIX;
@@ -195,7 +195,7 @@ public class Afspraak extends AbsoluteBase {
 	 * Deze domein-attribuut-getter vertegenwoordigt het installateur-attribuut van deze instantie.
 	 */
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name=INSTALLATEUR_COL_NAME, referencedColumnName = ID_COL_NAME)
+	@JoinColumn(name=INSTALLATEUR_COL_NAME, referencedColumnName = Installateur.ID_COL_NAME)
 	public Installateur getInstallateur(){
 		return this.installateur;
 	}
@@ -212,7 +212,7 @@ public class Afspraak extends AbsoluteBase {
 	 * Deze domein-attribuut-getter vertegenwoordigt het contract-attribuut van deze instantie.
 	 */
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name=CONTRACT_COL_NAME, referencedColumnName = Oplossing.ID_COL_NAME)
+	@JoinColumn(name=CONTRACT_COL_NAME, referencedColumnName = Contract.ID_COL_NAME)
 	public Contract getContract(){
 		return this.contract;
 	}

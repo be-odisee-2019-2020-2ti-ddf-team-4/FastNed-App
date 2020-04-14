@@ -1,18 +1,13 @@
 package be.fastned.application.domain.Technisch;
 
-import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.dao.DocumentatieDocHibernateDao;
 import be.fastned.application.domain.Base.AbsoluteBase;
 import be.fastned.application.service.AppRunner;
-
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import static be.fastned.application.domain.AndereEntiteiten.Laadpaal.ENTITY_NAME;
-import static be.fastned.application.domain.AndereEntiteiten.Laadpaal.TABLE_NAME;
-import static be.fastned.application.domain.Base.AbsoluteBase.DOCUMENTATIEDOC_ID_PREFIX;
+import static be.fastned.application.domain.Technisch.DocumentatieDoc.ENTITY_NAME;
+import static be.fastned.application.domain.Technisch.DocumentatieDoc.TABLE_NAME;
 
 /**
  * @author TiboVG

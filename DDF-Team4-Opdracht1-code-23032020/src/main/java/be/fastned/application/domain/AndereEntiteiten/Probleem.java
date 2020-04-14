@@ -53,7 +53,7 @@ public class Probleem extends AbsoluteBase {
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
 	public static final String ENTITY_NAME = "Probleem";
-	public static final String TABLE_NAME = "tbl_Probleem";
+	public static final String TABLE_NAME = "tbl_probleem";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
 	public static final String ID_PREFIX = PROBLEEM_ID_PREFIX;

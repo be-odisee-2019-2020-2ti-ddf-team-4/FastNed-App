@@ -53,7 +53,7 @@ public class Reparatie extends AbsoluteBase implements Bezoek {
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
 	public static final String ENTITY_NAME = "Reparatie";
-	public static final String TABLE_NAME = "tbl_Reparaties";
+	public static final String TABLE_NAME = "tbl_reparaties";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
 	public static final String ID_PREFIX = REPARATIE_ID_PREFIX;
@@ -64,7 +64,8 @@ public class Reparatie extends AbsoluteBase implements Bezoek {
 	public static final String PROBLEEM_COL_NAME = "Probleem";
 
 	// Technische constanten
-	public static final DocumentatieDoc repo = DocumentatieDoc.getInstance();
+	public static DocumentatieDoc repo = new DocumentatieDoc();
+	private static ArrayList<DocumentatieDoc> reparatieDocs = repo.getReparatieDocumentaties();
 
 	/* //----------------// SECTIE: Reparaties //----------------// */
 	/**
@@ -112,12 +113,14 @@ public class Reparatie extends AbsoluteBase implements Bezoek {
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
+	// TODO laadpaal heeft geen prop!
+	// TODO DocumentatieDoc wordt als static gebruikt in instanties
 
 	/**
 	 * Deze domein-functie haalt via een laadpaal reparatie-documentatie op.
 	 */
 	public String toonReparatieDoc(Laadpaal laadpaal){
-		return repo.laadpaalHashMapInst.get(laadpaal.getLaadpaalType());
+		return repo.findReparatieDoc(laadpaal.getLaadpaalType()).getDocumentatie();
 	}
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
@@ -192,7 +195,7 @@ public class Reparatie extends AbsoluteBase implements Bezoek {
 	 * Deze domein-attribuut getter vertegenwoordigt het probleem-attribuut van deze instantie.
 	 */
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name=PROBLEEM_COL_NAME, referencedColumnName = ID_COL_NAME)
+	@JoinColumn(name=PROBLEEM_COL_NAME, referencedColumnName = Probleem.ID_COL_NAME)
 	public Probleem getProbleem(){
 		return this.probleem;
 	}
