@@ -1,114 +1,204 @@
 package be.fastned.application.domain;
 
-import be.fastned.application.domain.custom.ArrayListExtended;
-
+import be.fastned.application.dao.AfspraakHibernateDao;
+import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.domain.Technisch.DocumentatieRepository;
+import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import static be.fastned.application.domain.Reparatie.ENTITY_NAME;
+import static be.fastned.application.domain.Reparatie.TABLE_NAME;
 
 /**
  * @author TiboVG
- * @version 1.0
- * @created 15-Mar-2020 14:24:54
+ * @version 6.0
  */
-@Entity(name = "Reparatie")
-@Table(name = "Reparaties")
-public class Reparatie {
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Variabelen //----------------// */
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long m_Id;
-	@Column
-	private LocalDateTime m_ReparatieBeeïndigd;
-	@OneToOne(
-			mappedBy = "Reparaties",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
-			fetch = FetchType.LAZY
-	)
-	public Probleem m_Probleem;
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
+@Entity(name = ENTITY_NAME)
+@Table(name = TABLE_NAME)
 
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
-	/* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Variabelen //----------------// */
-	@Transient
-	public static DocumentatieRepository s_Repo = DocumentatieRepository.getInstance();
+public class Reparatie extends AbsoluteBase implements Bezoek{
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
-	@Transient
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/*
+		Verwijzing: Vragen omtrent actieve en gearchiveerde collecties -> (HELP02)
+		Verwijzing: Vragen omtrent Hoofdletter-genaamde variabelen -> (HELP03)
+	*/
+
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	private String id;
+	private LocalDateTime reparatieCompleet;
+	public Probleem probleem;
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
+
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& KLASSE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+
+	/* //----------------// SECTIE: Constanten //----------------// */
+	// Configureren @Table en @Entity
+	public static final String ENTITY_NAME = "Reparatie";
+	public static final String TABLE_NAME = "tbl_Reparaties";
+
+	// Lokale constante (id prefix) overkopieëren naar super-variabel
+	public static final String ID_PREFIX = REPARATIE_ID_PREFIX;
+
+	// Constanten met kolom-namen
+	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String REPARATIECOMPLEET_COL_NAME = "ReparatieCompleet";
+	public static final String PROBLEEM_COL_NAME = "Probleem";
+
+	// Technische constanten
+	public static final DocumentatieRepository repo = DocumentatieRepository.getInstance();
+
+	/* //----------------// SECTIE: Reparaties //----------------// */
 	/**
-	 * Collectie van actieve & nieuwe Reparaties. (data-bron voor schermen) */
-	public static ArrayListExtended<Reparatie, Reparatie> s_ActiveReparaties = new ArrayListExtended<Reparatie, Reparatie>();
-	@Transient
+	 * (ACT-REPARATIES) Collectie van actieve & nieuwe instanties via deze klasse.
+	 */
+	public static ArrayList<Reparatie> actieveReparaties = new ArrayList<Reparatie>();
 	/**
-	 * Collectie van verlopen & afgehandelde Reparaties. (repository voor rollback) */
-	public static ArrayList<Reparatie> s_ArchivedReparatieReparatie = new ArrayList<Reparatie>();
+	 * (ARCH-REPARATIES) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 */
+	public static ArrayList<Reparatie> gearchiveerdeReparaties = new ArrayList<Reparatie>();
 
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
-	/* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
+	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
+
 	/**
-	 * Default Constructor voor deze klasse. */
+	 * Default constructor voor deze klasse. (Wel configuratie)
+	 */
 	public Reparatie(){
-		s_ActiveReparaties.add(this);
-
-	}
-	/**
-	 * Volledige Constructor voor deze klasse. */
-	public Reparatie(LocalDateTime reparatieBeeïndigd){
-		m_ReparatieBeeïndigd = reparatieBeeïndigd;
-		s_ActiveReparaties.add(this);
+		setupInitConfig();
+		this.id = extrapolateId();
 	}
 
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Functies //----------------// */
 	/**
-	 * Deze domein-functie haalt via een laadpaal reparatie-documentatie op. */
+	 * Default constructor voor deze klasse. (Geen configuratie)
+	 */
+	public Reparatie(boolean noConfig){
+		if (!noConfig) { setupInitConfig(); }
+		this.id = extrapolateId();
+	}
+
+	/**
+	 * Volledige Constructor voor deze klasse.
+	 */
+	public Reparatie(LocalDateTime reparatieCompleet){
+		setupInitConfig();
+		id = extrapolateId();
+		this.reparatieCompleet = reparatieCompleet;
+	}
+
+	/* //----------------// -#########--------------------#########- //----------------// */
+	/* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+	/* //----------------// -#########--------------------#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/**
+	 * Deze domein-functie haalt via een laadpaal reparatie-documentatie op.
+	 */
 	public String toonReparatieDoc(Laadpaal laadpaal){
-		return s_Repo.laadpaalHashMapInst.get(laadpaal.getLaadpaalType());
+		return repo.laadpaalHashMapInst.get(laadpaal.getLaadpaalType());
 	}
 
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
 
-	/* //----------------// SECTIE: Technische-Functies //----------------// */
 	/**
-	 * Deze Domein-functie schrijft een deze instantie over van de Active-ArrayList naar de Archived-ArrayList.
-	 * Dit via klasse "ArrayListExtended" via naamgeving "s_ArchivedKlasseItemKlasse" of dit zonder "s_". */
+	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
+	 */
 	public void archiveer(){
-		this.s_ActiveReparaties.removeWrapped(Oplossing.class, Oplossing.class, true);
+		gearchiveerdeReparaties.add(this);
+		actieveReparaties.remove(this);
 	}
 
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-	/* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-	/* //----------------// PROPERTY: ReparatieBeeïndigd //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de ReparatieBeeïndigd. */
-	public void setReparatieBeeïndigd(LocalDateTime value){
-		this.m_ReparatieBeeïndigd = value;
+	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
+	 */
+	private void setupInitConfig(){
+		actieveReparaties.add(this);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
+	}
+
+	/**
+	 * Deze technische functie leidt het id af via het laatste record in de tabel.
+	 */
+	private String extrapolateId(){
+		return baseExtrapolateId(ID_PREFIX, klasseDao);
+	}
+
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+	/* //----------------// -#########- | PROPERTIES | -#########- //----------------// */
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: ID //----------------// */
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Id @Column(name = ID_COL_NAME)
+	public String getId(){
+		return this.id;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de ReparatieBeeïndigd. */
+	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setId(String value){
+		this.id = value;
+	}
+
+	/* //----------------// PROPERTY: ReparatieCompleet //----------------// */
+	/**
+	 * Deze domein-attribuut getter vertegenwoordigt het reparatiecompleet-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setReparatieBeeïndigd(LocalDateTime value){
+		this.reparatieCompleet = value;
+	}
+	/**
+	 * Deze domein-attribuut getter vertegenwoordigt het reparatiecompleet-attribuut van deze instantie.
+	 */
+	@Column(name = REPARATIECOMPLEET_COL_NAME)
 	public LocalDateTime getReparatieBeeïndigd(){
-		return this.m_ReparatieBeeïndigd;
+		return this.reparatieCompleet;
 	}
 
 	/* //----------------// PROPERTY: Probleem //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Probleem. */
-	public void setProbleem(Probleem value){
-		this.m_Probleem = value;
+	 * Deze domein-attribuut getter vertegenwoordigt het probleem-attribuut van deze instantie.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=PROBLEEM_COL_NAME, referencedColumnName = ID_COL_NAME)
+	public Probleem getProbleem(){
+		return this.probleem;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Probleem. */
-	public Probleem getProbleem(){
-		return this.m_Probleem;
+	 * Deze domein-attribuut getter vertegenwoordigt het probleem-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setProbleem(Probleem value){
+		this.probleem = value;
 	}
 }

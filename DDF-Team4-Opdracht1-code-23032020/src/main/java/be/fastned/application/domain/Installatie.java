@@ -1,115 +1,221 @@
 package be.fastned.application.domain;
 
-import be.fastned.application.domain.custom.ArrayListExtended;
-
+import be.fastned.application.dao.InstallatieHibernateDao;
+import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.domain.Technisch.DocumentatieRepository;
+import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import static be.fastned.application.domain.Installatie.ENTITY_NAME;
+import static be.fastned.application.domain.Installatie.TABLE_NAME;
 
 /**
  * @author TiboVG
- * @version 1.0
- * @created 15-Mar-2020 14:24:54
+ * @version 6.0
  */
-@Entity(name = "Installatie")
-@Table(name = "Installaties")
-public class Installatie {
 
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Variabelen //----------------// */
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long m_Id;
-	@Column
-	private LocalDateTime m_InstallatieBeëindigd;
-	@OneToOne(
-			mappedBy = "Installaties",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
-			fetch = FetchType.LAZY
-	)
-	private Probleem m_Probleem;
+@Entity(name = ENTITY_NAME)
+@Table(name = TABLE_NAME)
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
+public class Installatie extends AbsoluteBase implements Bezoek{
 
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
-	/* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Variabelen //----------------// */
-	@Transient
-	public static DocumentatieRepository s_Repo = DocumentatieRepository.getInstance();
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/*
+		Verwijzing: Vragen omtrent actieve en gearchiveerde collecties -> (HELP02)
+		Verwijzing: Vragen omtrent Hoofdletter-genaamde variabelen -> (HELP03)
+	*/
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
-	@Transient
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	private String id;
+	private LocalDateTime installatieCompleet;
+	private Probleem probleem;
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
+
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& KLASSE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+
+	/* //----------------// SECTIE: Constanten //----------------// */
+	// Configureren @Table en @Entity
+	public static final String ENTITY_NAME = "Installatie";
+	public static final String TABLE_NAME = "tbl_Installaties";
+
+	// Lokale constante (id prefix) overkopieëren naar super-variabel
+	public static final String ID_PREFIX = INSTALLATIE_ID_PREFIX;
+
+	// Constanten met kolom-namen
+	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String INSTALLATIECOMPLEET_COL_NAME = "InstallatieCompleet";
+	public static final String PROBLEEM_COL_NAME = "Probleem_FK";
+
+	// Technische constanten
+	public static final DocumentatieRepository repo = DocumentatieRepository.getInstance();
+
+	/* //----------------// SECTIE: Installaties //----------------// */
 	/**
-	 * Collectie van actieve & nieuwe Installaties. (data-bron voor schermen) */
-	public static ArrayListExtended<Installatie, Installatie> s_ActiveInstallaties = new ArrayListExtended<Installatie, Installatie>();
-	@Transient
-	/**
-	 * Collectie van verlopen & afgehandelde Installaties. (repository voor rollback) */
-	public static ArrayList<Installatie> s_ArchivedInstallatieInstallatie = new ArrayList<Installatie>();
-
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
-	/* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
-	/**
-	 * Default Constructor voor deze klasse. */
-	public Installatie(){
-		s_ActiveInstallaties.add(this);
-	}
-	/**
-	 * Volledige Constructor met parameters voor deze klasse. */
-	public Installatie(LocalDateTime installatieBeëindigd){
-		m_InstallatieBeëindigd = installatieBeëindigd;
-		s_ActiveInstallaties.add(this);
-	}
-
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Functies //----------------// */
-	/**
-	 * Deze domein-functie haalt via een laadpaal installatie-documentatie op. */
-	public String toonInstallatieDoc(Laadpaal laadpaal){
-		return s_Repo.laadpaalHashMapInst.get(laadpaal.getLaadpaalType());
-	}
-
-	/* //----------------// SECTIE: Technische-Functies //----------------// */
-	/**
-	 * Deze Domein-functie schrijft een deze instantie over van de Active-ArrayList naar de Archived-ArrayList.
-	 * Dit via klasse "ArrayListExtended" via naamgeving "s_ArchivedKlasseItemKlasse" of dit zonder "s_". */
-	public void archiveer(){
-		this.s_ActiveInstallaties.removeWrapped(Installatie.class, Installatie.class, true);
-	}
-
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-	/* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-
-	/* //----------------// PROPERTY: Installatie Beëindigd //----------------// */
-	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Installatie Beëindigd. */
-	public void setInstallatieBeëindigd(LocalDateTime value){
-		this.m_InstallatieBeëindigd = value;
-	}
-	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Installatie Beëindigd.
+	 * (ACT-INSTALLATIES) Collectie van actieve & nieuwe instanties via deze klasse.
 	 */
-	public LocalDateTime getInstallatieBeëindigd(){
-		return this.m_InstallatieBeëindigd;
+	public static ArrayList<Installatie> actieveInstallaties = new ArrayList<Installatie>();
+	/**
+	 * (ARCH-INSTALLATIES) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 */
+	public static ArrayList<Installatie> gearchiveerdeInstallaties = new ArrayList<Installatie>();
+
+	/* //----------------// -#########------------------------#########- //----------------// */
+	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
+
+	/**
+	 * Default constructor voor deze klasse. (Wel configuratie)
+	 */
+	public Installatie(){
+		setupInitConfig();
+		id = extrapolateId();
 	}
+
+	/**
+	 * Default constructor voor deze klasse. (Geen configuratie)
+	 */
+	public Installatie(boolean noConfig){
+		if (!noConfig) { setupInitConfig(); }
+		id = extrapolateId();
+	}
+	/**
+	 * Volledige Constructor voor deze klasse.
+	 */
+	public Installatie(LocalDateTime installatieCompleet){
+		this.installatieCompleet = installatieCompleet;
+		setupInitConfig();
+		id = extrapolateId();
+	}
+
+	/* //----------------// -#########--------------------#########- //----------------// */
+	/* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+	/* //----------------// -#########--------------------#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/**
+	 * Deze domein-functie haalt via de laadpaal installatie-documentatie op.
+	 */
+	public String toonInstallatieDoc(Laadpaal laadpaal){
+		return repo.laadpaalHashMapInst.get(laadpaal.getLaadpaalType());
+	}
+
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+
+	/**
+	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
+	 */
+	public void archiveer(){
+		gearchiveerdeInstallaties.add(this);
+		actieveInstallaties.remove(this);
+	}
+
+	/**
+	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
+	 */
+	private void setupInitConfig(){
+		actieveInstallaties.add(this);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(InstallatieHibernateDao.BEAN_DAO_NAME);
+	}
+
+	/**
+	 * Deze technische functie leidt het id af via het laatste record in de tabel.
+	 */
+	private String extrapolateId(){
+		return baseExtrapolateId(ID_PREFIX, klasseDao);
+	}
+
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+	/* //----------------// -#########- | PROPERTIES | -#########- //----------------// */
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: ID //----------------// */
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Id @Column(name = ID_COL_NAME)
+	public String getId(){
+		return this.id;
+	}
+	/**
+	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setId(String value){
+		this.id = value;
+	}
+
+	/* //----------------// PROPERTY: Installatie Compleet //----------------// */
+	/**
+	 * Deze domein-attribuut-setter vertegenwoordigt het installatieCompleet-attribuut van deze instantie.
+	 */
+	@Column(name = INSTALLATIECOMPLEET_COL_NAME)
+	public LocalDateTime getInstallatieCompleet(){
+		return this.installatieCompleet;
+	}
+	/**
+	 * Deze domein-attribuut-setter vertegenwoordigt het installatieCompleet-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setInstallatieCompleet(LocalDateTime value){
+		this.installatieCompleet = value;
+	}
+
 
 	/* //----------------// PROPERTY: Probleem //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Probleem. */
-	public void setProbleem(Probleem value){
-		this.m_Probleem = value;
+	 * Deze domein-attribuut-setter vertegenwoordigt het probleem-attribuut van deze instantie.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=PROBLEEM_COL_NAME, referencedColumnName = Probleem.ID_COL_NAME)
+	public Probleem getProbleem(){
+		return this.probleem;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Probleem. */
-	public Probleem getProbleem(){
-		return this.m_Probleem;
+	 * Deze domein-attribuut-setter vertegenwoordigt het probleem-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setProbleem(Probleem value){
+		this.probleem = value;
 	}
+
+
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Propertie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: Actieve & Gearchiveerde INSTALLATIE (STATIC) //----------------// */
+	/**
+	 * (ACT-INSTALLATIES) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. actieve instanties.
+	 */
+	@Transient
+	public static ArrayList<Installatie> getActieveInstanties() { return actieveInstallaties; }
+	/**
+	 * (ARCH-INSTALLATIES) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. gearchiveerde instanties.
+	 */
+	@Transient
+	public static ArrayList<Installatie> getGearchiveerdeInstanties() { return gearchiveerdeInstallaties; }
 }

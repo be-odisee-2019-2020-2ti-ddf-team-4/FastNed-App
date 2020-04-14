@@ -1,94 +1,134 @@
 package be.fastned.application.boundary;
 
+import be.fastned.application.boundary.Technisch.SchermBase;
 import be.fastned.application.domain.*;
 import be.fastned.application.control.ControleInstallateur;
-  
-import org.springframework.stereotype.Component;
+
+import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author TiboVG
- * @version 1.0
+ * @version 2.0
  * @created 15-Mar-2020 14:24:54
  */
-@Component("schermInstallateurInst")
-public class SchermInstallateur {
+public class SchermInstallateur extends SchermBase {
 
-    /* //----------------// -#####- |----------------------| -#####- //----------------// */
+    /* //----------------// -#####----------------------------#####- //----------------// */
     /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####- |----------------------| -#####- //----------------// */
+    /* //----------------// -#####----------------------------#####- //----------------// */
+
     /* //----------------// SECTIE: Domein-Variabelen //----------------// */
-    private Installateur m_Installateur = new Installateur();
-    private ControleInstallateur controle = new ControleInstallateur();
+    private ControleInstallateur m_ParentControleInstance = null;
 
     /* //----------------// SECTIE: Technische-Variabelen //----------------// */
-    /* //----------------// -#####- |-------------------| -#####- //----------------// */
+
+    /* //----------------// -#####-------------------------#####- //----------------// */
     /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####- |-------------------| -#####- //----------------// */
+    /* //----------------// -#####-------------------------#####- //----------------// */
+
     /* //----------------// SECTIE: Domein-Variabelen //----------------// */
 
     /* //----------------// SECTIE: Technische-Variabelen //----------------// */
 
-    /* //----------------// -#####- |--------------| -#####- //----------------// */
+    /* //----------------// -#####--------------------#####- //----------------// */
     /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-    /* //----------------// -#####- |--------------| -#####- //----------------// */
-    /**
-     * Default Constructor voor deze klasse. */
-    public SchermInstallateur(){
+    /* //----------------// -#####--------------------#####- //----------------// */
 
+    /**
+     * Default Constructor voor deze klasse.
+     */
+    @Autowired
+    public SchermInstallateur(ControleInstallateur parentControleInstallateur){
+        m_ParentControleInstance = parentControleInstallateur;
+        m_SchermViewer = m_ParentControleInstance.getActieveGebruiker();
 	}
 
-    /* //----------------// -#####- |----------| -#####- //----------------// */
+    /* //----------------// -#####----------------#####- //----------------// */
     /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-    /* //----------------// -#####- |----------| -#####- //----------------// */
+    /* //----------------// -#####----------------#####- //----------------// */
+
     /* //----------------// SECTIE: Domein-Functies //----------------// */
     /**
-     * Deze Domein-functie retourneert deze met-persoongegevens-aangevulde persoon. */
-    public Persoon identificeer(String voornaam, String naam, String geslacht, String emailAdres, String gsm){
-        return controle.identificeer(voornaam, naam, geslacht, emailAdres, gsm);
+     * Deze Domein-functie updated de actieve persoon met persoons-/gebruikersgegevens.
+     * @return Het aangevulde persoon-object van de actieve gebruiker.
+     */
+    public PersoonDefault identificeer(PersoonDefault gegevensOwner, String voornaam, String naam, String geslacht, String gsm){
+        return m_ParentControleInstance.identificeer(gegevensOwner, voornaam, naam, geslacht, gsm);
     }
 
     /**
-     * Deze Domein-functie retourneert de installatie documentatie via een laadpaal. */
-    public String toonInstallatieDoc(Laadpaal laadpaal){
-        return controle.toonInstallatieDoc(laadpaal);
+     * Deze Domein-functie zoekt installatiedocumentatie op basis van een laadpaal.
+     * @return De installatiedocumentatie uit de documentatierepository binnen een laadpaal.
+     */
+    public String zoekInstallatieDoc(Laadpaal laadpaal){
+        return m_ParentControleInstance.zoekInstallatieDoc(laadpaal);
     }
     /**
-     * Deze Domein-functie retourneert de reparatie documentatie via een laadpaal. */
-    public String toonReparatieDoc(Laadpaal laadpaal){
-        return controle.toonReparatieDoc(laadpaal);
-    }
-
-    /**
-     * Deze Domein-functie retourneert een aangemaakt probleem via een afspraak-installatie. */
-    public Probleem maakInstallatieProbleem(Afspraak afspraak, Laadpaal laadpaal, String beschrijving){
-        return controle.maakInstallatieProbleem(afspraak, laadpaal, beschrijving);
-    }
-    /**
-     * Deze Domein-functie retourneert een aangemaakt probleem via een afspraak-reparatie. */
-    public Probleem maakReparatieProbleem(Afspraak afspraak, Laadpaal laadpaal, String beschrijving){
-        return controle.maakReparatieProbleem(afspraak, laadpaal, beschrijving);
+     * Deze Domein-functie zoekt reparatiedocumentatie op basis van een laadpaal.
+     * @return De reparatiedocumentatie uit de documentatierepository binnen een laadpaal.
+     */
+    public String zoekReparatieDoc(Laadpaal laadpaal){
+        return m_ParentControleInstance.zoekReparatieDoc(laadpaal);
     }
 
     /**
-     * Deze Domein-functie retourneert een aangemaakt oplossing via een afspraak-installatie. */
-    public Oplossing maakInstallatieOplossing(Afspraak afspraak, String beschrijving){
-        return controle.maakInstallatieOplossing(afspraak, beschrijving);
+     * Deze Domein-functie maakt een probleem vanuit een installatie binnen een afspraak.
+     * @return Het aangemaakt probleem vanuit een installatie binnen een afspraak.
+     */
+    public Probleem maakInstallatieProbleem(Afspraak parentAfspraak, Laadpaal defecteLaadpaal, String probleemBeschrijving){
+        return m_ParentControleInstance.maakInstallatieProbleem(parentAfspraak, defecteLaadpaal, probleemBeschrijving);
     }
     /**
-     * Deze Domein-functie retourneert een aangemaakt oplossing via een afspraak-reparatie. */
-    public Oplossing maakReparatieOplossing(Afspraak afspraak, String beschrijving){
-        return controle.maakReparatieOplossing(afspraak, beschrijving);
+     * Deze Domein-functie maakt een probleem vanuit een reparatie binnen een afspraak.
+     * @return Het aangemaakt probleem vanuit een reparatie binnen een afspraak.
+     */
+    public Probleem maakReparatieProbleem(Afspraak parentAfspraak, Laadpaal defecteLaadpaal, String probleemBeschrijving){
+        return m_ParentControleInstance.maakReparatieProbleem(parentAfspraak, defecteLaadpaal, probleemBeschrijving);
     }
 
     /**
-     * Deze Domein-functie updated de status van een afspraak. */
-    public void updateAfspraakStatus(Afspraak afspraak, String status){
-        controle.updateAfspraakStatus(afspraak, status);
+     * Deze Domein-functie maakt een oplossing vanuit een installatie binnen een probleem in een afspraak.
+     * @return De aangemaakte oplossing vanuit een installatie binnen een probleem in een afspraak.
+     */
+    public Oplossing maakInstallatieOplossing(Afspraak parentAfspraak, String oplossingBeschrijving){
+        return m_ParentControleInstance.maakInstallatieOplossing(parentAfspraak, oplossingBeschrijving);
+    }
+    /**
+     * Deze Domein-functie maakt een oplossing vanuit een reparatie binnen een probleem in een afspraak.
+     * @return De aangemaakte oplossing vanuit een reparatie binnen een probleem in een afspraak.
+     */
+    public Oplossing maakReparatieOplossing(Afspraak parentAfspraak, String OplossingBeschrijving){
+        return m_ParentControleInstance.maakReparatieOplossing(parentAfspraak, OplossingBeschrijving);
+    }
+
+    /**
+     * Deze Domein-functie opdated een afspraak-status binnen een afspraak.
+     * @return De geüpdatete afspraak.
+     */
+    public Afspraak updateAfspraakStatus(Afspraak afspraak, String nieuweStatus){
+        return m_ParentControleInstance.updateAfspraakStatus(afspraak, nieuweStatus);
     }
 
     /* //----------------// SECTIE: Technische-Functies //----------------// */
 
-    /* //----------------// -#####- |------------| -#####- //----------------// */
+    /* //----------------// -#####------------------#####- //----------------// */
     /* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-    /* //----------------// -#####- |------------| -#####- //----------------// */
+    /* //----------------// -#####------------------#####- //----------------// */
+
+    /* //----------------// SECTIE: Domein-Properties //----------------// */
+    /**
+     * Deze domein-attribuut setter vertegenwoordigt de controle-instantie in deze boundary-instantie.
+     */
+    public void setControleInstance(ControleInstallateur value){
+        this.m_ParentControleInstance = value;
+    }
+    /**
+     * Deze domein-attribuut getter vertegenwoordigt de controle-instantie in deze boundary-instantie.
+     */
+    public ControleInstallateur getControleInstance(){
+        return this.m_ParentControleInstance;
+    }
+
+    /* //----------------// SECTIE: Technische-Properties //----------------// */
 }

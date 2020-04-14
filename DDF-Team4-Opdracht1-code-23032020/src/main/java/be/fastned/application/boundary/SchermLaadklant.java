@@ -1,85 +1,93 @@
 package be.fastned.application.boundary;
 
+import be.fastned.application.boundary.Technisch.SchermBase;
 import be.fastned.application.domain.*;
 import be.fastned.application.control.ControleLaadklant;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
 
 /**
  * @author TiboVG
- * @version 1.0
- * @created 15-Mar-2020 14:24:54
+ * @version 2.0
+ * @created 15-Mar-2020 14:24:55
  */
-@Component("schermLaadklantInst")
-public class SchermLaadklant {
-    /* //----------------// -#####- |----------------------| -#####- //----------------// */
+public class SchermLaadklant extends SchermBase {
+    /* //----------------// -#####----------------------------#####- //----------------// */
     /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####- |----------------------| -#####- //----------------// */
+    /* //----------------// -#####----------------------------#####- //----------------// */
+
     /* //----------------// SECTIE: Domein-Variabelen //----------------// */
-    /*@Autowired
-    private ControleRegisterUser controleRegisterUserInst;
-    private Laadklant m_Laadklant = (Laadklant) controleRegisterUserInst.getSignedIn("Laadklant");*/
-
-    @Autowired
-    private Persoon activeGebruikerInst;
-    private Laadklant m_Laadklant = (Laadklant) activeGebruikerInst;
-
-    @Autowired
-    private ControleLaadklant controleLaadklantInst;
-    //private ControleLaadklant controle = controleLaadklantInst;
+    private ControleLaadklant m_ParentControleInstance = null;
 
     /* //----------------// SECTIE: Technische-Variabelen //----------------// */
 
-    /* //----------------// -#####- |-------------------| -#####- //----------------// */
+    /* //----------------// -#####-------------------------#####- //----------------// */
     /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####- |-------------------| -#####- //----------------// */
+    /* //----------------// -#####-------------------------#####- //----------------// */
+
     /* //----------------// SECTIE: Domein-Variabelen //----------------// */
 
     /* //----------------// SECTIE: Technische-Variabelen //----------------// */
 
-    /* //----------------// -#####- |--------------| -#####- //----------------// */
+    /* //----------------// -#####--------------------#####- //----------------// */
     /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-    /* //----------------// -#####- |--------------| -#####- //----------------// */
+    /* //----------------// -#####--------------------#####- //----------------// */
+
     /**
-     * Default Constructor voor deze klasse. */
-    public SchermLaadklant(){
+     * Default Constructor voor deze klasse.
+     */
+    public SchermLaadklant(ControleLaadklant parentControleLaadklant){
+        m_ParentControleInstance = parentControleLaadklant;
+        m_SchermViewer = m_ParentControleInstance.getActieveGebruiker();
+    }
 
-	}
-
-    /* //----------------// -#####- |----------| -#####- //----------------// */
+    /* //----------------// -#####----------------#####- //----------------// */
     /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-    /* //----------------// -#####- |----------| -#####- //----------------// */
+    /* //----------------// -#####----------------#####- //----------------// */
+
     /* //----------------// SECTIE: Domein-Functies //----------------// */
     /**
-     * Deze Domein-functie retourneert deze met-persoongegevens-aangevulde persoon. */
-    public Persoon identificeer(String voornaam, String naam, String geslacht, String emailAdres, String gsm){
-        return controleLaadklantInst.identificeer(voornaam, naam, geslacht, emailAdres, gsm);
+     * Deze Domein-functie updated de actieve persoon met persoons-/gebruikersgegevens.
+     * @return Het aangevulde persoon-object van de actieve gebruiker.
+     */
+    public PersoonDefault identificeer(PersoonDefault gegevensOwner, String voornaam, String naam, String geslacht, String gsm){
+        return m_ParentControleInstance.identificeer(gegevensOwner, voornaam, naam, geslacht, gsm);
     }
 
     /**
-     * Deze Domein-functie retourneert een berekende (geschatte) laadtijd. */
+     * Deze Domein-functie berekent de verwachtte laadtijd op basis van een laadsessie.
+     * @return De berekende laadtijd als double (kommagetal).
+     */
     public double berekenLaadtijd(Laadsessie laadsessie){
-        return controleLaadklantInst.berekenLaadtijd(laadsessie);
+        return m_ParentControleInstance.berekenLaadtijd(laadsessie);
     }
 
     /**
-     * Deze Domein-functie retourneert een aangemaakt probleem via deze laadklant. */
-    public Probleem meldProbleem(Laadpaal laadpaal, String beschrijving){
-        return controleLaadklantInst.meldProbleem(laadpaal, beschrijving);
+     * Deze Domein-functie maakt een probleem via deze laadklant.
+     * @return Het aangemaakt probleem via deze laadklant.
+     */
+    public Probleem maakProbleem(Laadpaal laadpaal, String beschrijving){
+        return m_ParentControleInstance.maakProbleem(laadpaal, beschrijving);
     }
+
     /* //----------------// SECTIE: Technische-Functies //----------------// */
 
-    /* //----------------// -#####- |------------| -#####- //----------------// */
+    /* //----------------// -#####------------------#####- //----------------// */
     /* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-    /* //----------------// -#####- |------------| -#####- //----------------// */
+    /* //----------------// -#####------------------#####- //----------------// */
+
+    /* //----------------// SECTIE: Domein-Properties //----------------// */
     /**
-     * Deze domein-attribuut setter vertegenwoordigt de huidige Laadklant. */
-    public void setLaadklant(Laadklant value){
-        this.m_Laadklant = value;
+     * Deze domein-attribuut setter vertegenwoordigt de controle-instantie in deze boundary-instantie.
+     */
+    public void setControleInstance(ControleLaadklant value){
+        this.m_ParentControleInstance = value;
     }
     /**
-     * Deze domein-attribuut getter vertegenwoordigt de huidige Laadklant. */
-    public Laadklant getLaadklant(){
-        return (Laadklant) this.activeGebruikerInst;
+     * Deze domein-attribuut getter vertegenwoordigt de controle-instantie in deze boundary-instantie.
+     */
+    public ControleLaadklant getControleInstance(){
+        return this.m_ParentControleInstance;
     }
+
+    /* //----------------// SECTIE: Technische-Properties //----------------// */
 }

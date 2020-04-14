@@ -1,44 +1,72 @@
 package be.fastned.application.dao;
 
+import be.fastned.application.dao.Interfaces.AfspraakDao;
 import be.fastned.application.domain.Afspraak;
-import org.hibernate.SessionFactory;
-import org.hibernate.Session;										// HV 20150210
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import static be.fastned.application.dao.AfspraakHibernateDao.BEAN_DAO_NAME;
 
-@Repository("afspraakDao")
+@Repository(BEAN_DAO_NAME)
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
-public class AfspraakHibernateDao implements AfspraakDao {
-    private SessionFactory sessionFactory;
+public class AfspraakHibernateDao extends BaseHibernateDao implements AfspraakDao {
 
-    @Autowired
-    public void setSessionFactory (SessionFactory sessionFactory){
-        this.sessionFactory = sessionFactory;
+    /* //----------------// -#####----------------------------#####- //----------------// */
+    /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
+    /* //----------------// -#####----------------------------#####- //----------------// */
+
+    /* //----------------// -#####-------------------------#####- //----------------// */
+    /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
+    /* //----------------// -#####-------------------------#####- //----------------// */
+
+    /* //----------------// SECTIE: Constanten //----------------// */
+    public static final String BEAN_DAO_NAME = "afspraakDao";
+    private static final String AFSPRAAK_ENTITY_NAME = Afspraak.ENTITY_NAME;
+
+    /* //----------------// -#####--------------------#####- //----------------// */
+    /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
+    /* //----------------// -#####--------------------#####- //----------------// */
+    AfspraakHibernateDao() {
+        configureAbstractOperations();
     }
 
-    private Session currentSession(){
-        return sessionFactory.getCurrentSession();
+    /* //----------------// -#####----------------#####- //----------------// */
+    /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
+    /* //----------------// -#####----------------#####- //----------------// */
+
+    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
+    /* //----------------\\ <||> FUNCTIES Technisch <||> //----------------\\ */
+    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
+    private void configureAbstractOperations(){
+        ENTITY_NAME = AFSPRAAK_ENTITY_NAME;
     }
 
+    /* //----------------\\ <||> --------------- <||> //----------------\\ */
+    /* //----------------\\ <||> FUNCTIES Domein <||> //----------------\\ */
+    /* //----------------\\ <||> --------------- <||> //----------------\\ */
+
+    /* //----------------// SECTIE: Create //----------------// */
+    /**
+     * Voegt een instantie van deze klasse aan de DB toe als gepersisteerde entiteit.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Afspraak deleteAfspraak(Afspraak afspraak){
-        return (Afspraak) currentSession().createQuery(String.format("delete from %s where %s = ", "Afspraak", afspraak.getId())).uniqueResult();
+    public Afspraak addItem(Afspraak item) {
+        currentSession().save(item);
+        return item;
     }
 
+    /* //----------------// SECTIE: Read //----------------// */
+
+
+    /* //----------------// SECTIE: Update //----------------// */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Afspraak addAfspraak(Afspraak rekening) {
-        currentSession().save(rekening);
-        return rekening;
+    public void updateItem(Afspraak item) {
+        currentSession().update(item);
     }
 
+    /* //----------------// SECTIE: Delete //----------------// */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public void updateAfspraak(Afspraak rekening) {
-        currentSession().update(rekening);
-    }
-
-    public Afspraak getAfspraakById(long id) {
-        return (Afspraak) currentSession().createQuery(String.format("from Afspraak where id = ", "Afspraak",id)).uniqueResult();
+    public Afspraak deleteItem(Afspraak item){
+        return (Afspraak) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
     }
 }

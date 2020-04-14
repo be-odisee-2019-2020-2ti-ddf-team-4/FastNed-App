@@ -1,206 +1,307 @@
 package be.fastned.application.domain;
 
-import be.fastned.application.domain.custom.ArrayListExtended;
-
+import be.fastned.application.dao.AfspraakHibernateDao;
+import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.domain.Personen.Installateur;
+import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
-
-/**
- * @TODO Add dependency for .IsEmpty en .IsBlank use in Controle-class (org.apache.commons)
- */
+import static be.fastned.application.domain.Afspraak.ENTITY_NAME;
+import static be.fastned.application.domain.Afspraak.TABLE_NAME;
 
 /**
  * @author TiboVG
- * @version 1.0
- * @created 15-Mar-2020 14:24:54
+ * @version 6.0
  */
 
-@Entity(name = "Afspraak")
-@Table(name="afspraken")
-public class Afspraak {
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Properties //----------------// */
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long m_Id;
-	@OneToOne(
-			mappedBy = "afspraken",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
-			fetch = FetchType.LAZY
-	)
-	private Laadpaal m_Laadpaal = null;
-	@OneToOne(
-			mappedBy = "afspraken",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
-			fetch = FetchType.LAZY
-	)
-	private Installateur m_Installateur = null;
-	@OneToOne(
-			mappedBy = "afspraken",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
-			fetch = FetchType.LAZY
-	)
-	private Contract m_Contract = null;
-	@Column
-	private String  m_AfspraakStatus = "";
-	@OneToOne(
-			mappedBy = "afspraken",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
-			fetch = FetchType.LAZY
-	)
-	private Installatie m_Installatie = null;
-	@OneToOne(
-			mappedBy = "afspraken",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
-			fetch = FetchType.LAZY
-	)
-	private Reparatie m_Reparatie = null;
+@Entity(name = ENTITY_NAME)
+@Table(name = TABLE_NAME)
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
-	@Transient
-	public ArrayList<Laadpaal> Laadpalen = null;
+public class Afspraak extends AbsoluteBase{
 
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
-	/* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
-	/**
-	 * Collectie van actieve & nieuwe Afspraken. (data-bron voor schermen) */
-	public static ArrayListExtended<Afspraak, Afspraak> s_ActiveAfspraken = new ArrayListExtended<Afspraak, Afspraak>();
-	/**
-	 * Collectie van verlopen & afgehandelde Afspraken. (repository voor rollback) */
-	public static ArrayList<Afspraak> s_ArchivedAfspraakAfspraak = new ArrayList<Afspraak>();
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/*
+		Verwijzing: Vragen omtrent actieve en gearchiveerde collecties -> (HELP02)
+		Verwijzing: Vragen omtrent Hoofdletter-genaamde variabelen -> (HELP03)
+	*/
 
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
-	/* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
+	private String id = null;
+	private Laadpaal laadpaal = null;
+	private Installateur installateur = null;
+	private Contract contract = null;
+	private String  status = null;
+	private Bezoek bezoek = null;
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
+
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& KLASSE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+
+	/* //----------------// SECTIE: Constanten //----------------// */
+	// Configureren @Table en @Entity
+	public static final String ENTITY_NAME = "Afspraak";
+	public static final String TABLE_NAME = "tbl_Afspraken";
+
+	// Lokale constante (id prefix) overkopieëren naar super-variabel
+	public static final String ID_PREFIX = AFSPRAAK_ID_PREFIX;
+
+	// Constanten met kolom-namen
+	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String LAADPAAL_COL_NAME = "Laadpaal_FK";
+	public static final String INSTALLATEUR_COL_NAME = "Installateur_FK";
+	public static final String CONTRACT_COL_NAME = "Contract_FK";
+	public static final String STATUS_COL_NAME = "Status";
+	public static final String INSTALLATIE_COL_NAME = "Installatie_FK";
+	public static final String REPARATIE_COL_NAME = "Reparatie_FK";
+
+	/* //----------------// SECTIE: Afspraken //----------------// */
 	/**
-	 * Default Constructor voor deze klasse. */
+	 * (ACT-AFSPRAKEN) Collectie van actieve & nieuwe instanties via deze klasse.
+	 */
+	public static ArrayList<Afspraak> actieveAfspraken = new ArrayList<Afspraak>();
+	/**
+	 * (ARCH-AFSPRAKEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 */
+	public static ArrayList<Afspraak> gearchiveerdeAfspraken = new ArrayList<Afspraak>();
+
+	/* //----------------// -#########------------------------#########- //----------------// */
+	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
+
+	/**
+	 * Default constructor voor deze klasse. (Wel configuratie)
+	 */
 	public Afspraak(){
-		this.s_ActiveAfspraken.add(this);
-		//this.ActiveReparaties.add(Afspraak);
+		setupInitConfig();
+		id = extrapolateId();
 	}
+
 	/**
-	 * Volledige Constructor voor deze klasse. */
-	public Afspraak(ArrayList<Laadpaal> laadpalen, Installateur installateur, Contract contract){
-		Laadpalen = laadpalen;
-		m_Installateur = installateur;
-		m_Contract = contract;
-		m_AfspraakStatus = "Aangemaakt";
-		this.s_ActiveAfspraken.add(this);
+	 * Default constructor voor deze klasse. (Geen configuratie)
+	 */
+	public Afspraak(boolean noConfig){
+		if (!noConfig) { setupInitConfig(); }
+		id = extrapolateId();
 	}
+
 	/**
-	 * Secundaire Volledige Constructor voor deze klasse. */
+	 * Volledige constructor voor deze klasse.
+	 */
 	public Afspraak(Laadpaal laadpaal, Installateur installateur, Contract contract){
-		m_Laadpaal = laadpaal;
-		m_Installateur = installateur;
-		m_Contract = contract;
-		m_AfspraakStatus = "Aangemaakt";
-		this.s_ActiveAfspraken.add(this);
+		setupInitConfig();
+		id = extrapolateId();
+		this.laadpaal = laadpaal;
+		this.installateur = installateur;
+		this.contract = contract;
+		this.status = EnumStatus.AANGEMAAKT.getValue();
 	}
 
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Functies //----------------// */
-	/* //----------------// SECTIE: Technische-Functies //----------------// */
+	/* //----------------// -#########--------------------#########- //----------------// */
+	/* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+	/* //----------------// -#########--------------------#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+
 	/**
-	 * Deze Domein-functie schrijft een deze instantie over van de Active-ArrayList naar de Archived-ArrayList.
-	 * Dit via klasse "ArrayListExtended" via naamgeving "s_ArchivedKlasseItemKlasse" of dit zonder "s_". */
+	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
+	 */
 	public void archiveer(){
-		this.s_ActiveAfspraken.removeWrapped(Afspraak.class, Afspraak.class, true);
+		gearchiveerdeAfspraken.add(this);
+		actieveAfspraken.remove(this);
 	}
 
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-	/* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-	/* //----------------// PROPERTY: Id //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de afspraak-id. */
-	public void setId(long value){
-		this.m_Id = value;
+	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
+	 */
+	private void setupInitConfig(){
+		actieveAfspraken.add(this);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
+	}
+
+	/**
+	 * Deze technische functie leidt het id af via het laatste record in de tabel.
+	 */
+	private String extrapolateId(){
+		return baseExtrapolateId(ID_PREFIX, klasseDao);
+	}
+
+
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+	/* //----------------// -#########- | PROPERTIES | -#########- //----------------// */
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: ID //----------------// */
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Id @Column(name = ID_COL_NAME)
+	public String getId(){
+		return this.id;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de afspraak-id. */
-	public long getId(){
-		return this.m_Id;
+	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setId(String value){
+		this.id = value;
 	}
 
 	/* //----------------// PROPERTY: Laadpaal //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de afspraak-status. */
-	public void setLaadpaal(Laadpaal value){
-		this.m_Laadpaal = value;
+	 * Deze domein-attribuut-getter vertegenwoordigt het laadpaal-attribuut van deze instantie.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=LAADPAAL_COL_NAME, referencedColumnName = Laadpaal.ID_COL_NAME)
+	public Laadpaal getLaadpaal(){
+		return this.laadpaal;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de afspraak-status. */
-	public Laadpaal getLaadpaal(){
-		return this.m_Laadpaal;
+	 * Deze domein-attribuut-setter vertegenwoordigt het laadpaal-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setLaadpaal(Laadpaal value){
+		this.laadpaal = value;
 	}
 
 	/* //----------------// PROPERTY: Installateur //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de afspraak-status. */
-	public void setInstallateur(Installateur value){
-		this.m_Installateur = value;
+	 * Deze domein-attribuut-getter vertegenwoordigt het installateur-attribuut van deze instantie.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=INSTALLATEUR_COL_NAME, referencedColumnName = ID_COL_NAME)
+	public Installateur getInstallateur(){
+		return this.installateur;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de afspraak-status. */
-	public Installateur getInstallateur(){
-		return this.m_Installateur;
+	 * Deze domein-attribuut-setter vertegenwoordigt het installateur-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setInstallateur(Installateur value){
+		this.installateur = value;
 	}
 
 	/* //----------------// PROPERTY: Contract //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de afspraak-status. */
-	public void setContract(Contract value){
-		this.m_Contract = value;
+	 * Deze domein-attribuut-getter vertegenwoordigt het contract-attribuut van deze instantie.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=CONTRACT_COL_NAME, referencedColumnName = Oplossing.ID_COL_NAME)
+	public Contract getContract(){
+		return this.contract;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de afspraak-status. */
-	public Contract getContract(){
-		return this.m_Contract;
+	 * Deze domein-attribuut-setter vertegenwoordigt het contract-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setContract(Contract value){
+		this.contract = value;
 	}
 
-	/* //----------------// PROPERTY: Laadpaal-Status //----------------// */
+	/* //----------------// PROPERTY: Status //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de afspraak-status. */
-	public void setStatus(String value){
-		this.m_AfspraakStatus = value;
+	 * Deze domein-attribuut-getter vertegenwoordigt het status-attribuut van deze instantie.
+	 */
+	@Column(name = STATUS_COL_NAME)
+	public String getStatus(){
+		return this.status;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de afspraak-status. */
-	public String getStatus(){
-		return this.m_AfspraakStatus;
+	 * Deze domein-attribuut-getter vertegenwoordigt het status-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setStatus(String value){
+		this.status = value;
 	}
 
 	/* //----------------// PROPERTY: Installatie //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Installatie. */
-	public void setInstallatie(Installatie value){
-		this.m_Installatie = value;
+	 * Deze domein-attribuut-getter vertegenwoordigt het installatie-attribuut van deze instantie.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=INSTALLATIE_COL_NAME, referencedColumnName = Installatie.ID_COL_NAME)
+	public Installatie getInstallatie(){
+		return ((Installatie) this.getBezoek());
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Installatie. */
-	public Installatie getInstallatie(){
-		return this.m_Installatie;
+	 * Deze domein-attribuut-setter vertegenwoordigt het installatie-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setInstallatie(Installatie value){
+		this.setBezoek(value);
 	}
 
 	/* //----------------// PROPERTY: Reparatie //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Reparatie. */
-	public void setReparatie(Reparatie value){
-		this.m_Reparatie = value;
+	 * Deze domein-attribuut-getter vertegenwoordigt het reparatie-attribuut van deze instantie.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=REPARATIE_COL_NAME, referencedColumnName = Reparatie.ID_COL_NAME)
+	public Reparatie getReparatie(){
+		return ((Reparatie) this.getBezoek());
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Reparatie. */
-	public Reparatie getReparatie(){
-		return this.m_Reparatie;
+	 * Deze domein-attribuut-setter vertegenwoordigt het installatie-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setReparatie(Reparatie value){
+		this.setBezoek(value);
+	}
+
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Propertie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: Actieve & Gearchiveerde AFSPRAKEN (STATIC) //----------------// */
+	/**
+	 * (ACT-AFSPRAKEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. actieve instanties.
+	 */
+	@Transient
+	public static ArrayList<Afspraak> getActieveInstanties() { return actieveAfspraken; }
+	/**
+	 * (ARCH-AFSPRAKEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. gearchiveerde instanties.
+	 */
+	@Transient
+	public static ArrayList<Afspraak> getGearchiveerdeInstanties() { return gearchiveerdeAfspraken; }
+
+	/* //----------------// PROPERTY: Bezoek (PRIVATE) //----------------// */
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt de bezoek-member van deze instantie.
+	 * (Gateway voor Reparatie-/Installatie-prop die dezelfde bezoek-member refereren)
+	 */
+	@Transient
+	private Bezoek getBezoek(){
+		return this.bezoek;
+	}
+	/**
+	 * Deze domein-attribuut-setter vertegenwoordigt de bezoek-member van deze instantie.
+	 * (Gateway voor Reparatie-/Installatie-prop die dezelfde bezoek-member refereren)
+	 */
+	@Transient
+	private void setBezoek(Bezoek value){
+		this.bezoek = value;
 	}
 }

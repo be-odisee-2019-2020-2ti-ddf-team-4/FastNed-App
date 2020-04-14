@@ -1,0 +1,10 @@
+(HELP01)
+		Waar staan de andere domeinattributen?
+
+		Die staan in de superklassen PersoonDefaultImpl (gemeensch. attr.) en PersoonExtendedImpl (+ extra attr)
+		Beide implementaties hebben hun eigen interface, toch zijn ze verbonden via de ("super") "Persoon"-interface.
+
+		Note: Er zijn 2 implementaties (+interfaces) omdat een locatiehouder als extra bedrijfsnaam, btwnr en adres hebben.
+
+(HELP02)
+        Een "hf_..."-functie bevat de prefix "hf_" -> "Helper Functie" en bevat veelgebruikte code die ENKEL voor andere klasse-functies werkt.

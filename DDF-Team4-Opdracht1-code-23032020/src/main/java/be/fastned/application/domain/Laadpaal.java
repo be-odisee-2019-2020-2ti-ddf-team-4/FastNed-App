@@ -1,153 +1,256 @@
 package be.fastned.application.domain;
 
-import be.fastned.application.domain.custom.ArrayListExtended;
-
+import be.fastned.application.dao.AfspraakHibernateDao;
+import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.domain.Personen.Locatiehouder;
+import be.fastned.application.domain.Technisch.DocumentatieRepository;
+import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
+import static be.fastned.application.domain.Laadpaal.ENTITY_NAME;
+import static be.fastned.application.domain.Laadpaal.TABLE_NAME;
 
 /**
  * @author TiboVG
- * @version 1.0
- * @created 15-Mar-2020 14:24:53
+ * @version 6.0
  */
-@Entity(name = "Laadpaal")
-@Table(name = "Laadpalen")
-public class Laadpaal {
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Variabelen //----------------// */
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long m_Id;
-	@OneToOne(
-			mappedBy = "Laadpalen",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
-			fetch = FetchType.LAZY
-	)
-	private Locatiehouder m_LocatieEigenaar;
-	@Column
-	private String m_InstallatieDoc;
-	@Column
-	private String m_ReparatieDoc;
-	@Column
-	private String m_LaadpaalType = null;
-	@Column
-	private String m_Status;
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
+@Entity(name = ENTITY_NAME)
+@Table(name = TABLE_NAME)
 
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
-	/* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
+public class Laadpaal extends AbsoluteBase {
 
-	/* //----------------// SECTIE: Domein-Variabelen //----------------// */
-	@Transient
-	public static DocumentatieRepository repo = DocumentatieRepository.getInstance();
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/*
+		Verwijzing: Vragen omtrent actieve en gearchiveerde collecties -> (HELP02)
+		Verwijzing: Vragen omtrent Hoofdletter-genaamde variabelen -> (HELP03)
+	*/
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
-	@Transient
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
+	private String id;
+	private Locatiehouder locatiehouder;
+	private String installatieDoc;
+	private String reparatieDoc;
+	private String laadpaalType = null;
+	private String status;
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
+
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& KLASSE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+
+	/* //----------------// SECTIE: Constanten //----------------// */
+	// Configureren @Table en @Entity
+	public static final String ENTITY_NAME = "Laadpaal";
+	public static final String TABLE_NAME = "tbl_Laadpalen";
+
+	// Lokale constante (id prefix) overkopieëren naar super-variabel
+	public static final String ID_PREFIX = LAADPAAL_ID_PREFIX;
+
+	// Constanten met kolom-namen
+	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String LOCATIEHOUDER_COL_NAME = "Locatiehouder";
+	public static final String INSTALLATIEDOC_COL_NAME = "InstallatieDoc";
+	public static final String REPARATIEDOC_COL_NAME = "ReparatieDoc";
+	public static final String LAADPAALTYPE_COL_NAME = "LaadpaalType";
+	public static final String STATUS_COL_NAME = "Status";
+
+	// Technische constanten
+	public static final DocumentatieRepository repo = DocumentatieRepository.getInstance();
+
+	/* //----------------// SECTIE: Laadpalen //----------------// */
 	/**
-	 * Collectie van actieve & nieuwe Laadpalen. (data-bron voor schermen) */
-	public static ArrayListExtended<Laadpaal, Laadpaal> s_ActiveLaadpalen = new ArrayListExtended<Laadpaal, Laadpaal>();
-	@Transient
+	 * (ACT-LAADPALEN) Collectie van actieve & nieuwe instanties via deze klasse.
+	 */
+	public static ArrayList<Laadpaal> actieveLaadpalen = new ArrayList<Laadpaal>();
 	/**
-	 * Collectie van verlopen & afgehandelde Laadpalen. (repository voor rollback) */
-	public static ArrayList<Laadpaal> s_ArchivedLaadpaalLaadpaal = new ArrayList<Laadpaal>();
+	 * (ARCH-LAADPALEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 */
+	public static ArrayList<Laadpaal> gearchiveerdeLaadpalen = new ArrayList<Laadpaal>();
 
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
-	/* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
+	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
+
 	/**
-	 * Default Constructor voor deze klasse. */
+	 * Default constructor voor deze klasse. (Wel configuratie)
+	 */
 	public Laadpaal(){
-		s_ActiveLaadpalen.add(this);
+		setupInitConfig();
+		id = extrapolateId();
 	}
+
 	/**
-	 * Volledige Constructor voor deze klasse. */
+	 * Default constructor voor deze klasse. (Geen configuratie)
+	 */
+	public Laadpaal(boolean noConfig){
+		if (!noConfig) { setupInitConfig(); }
+		id = extrapolateId();
+	}
+
+	/**
+	 * Volledige Constructor voor deze klasse.
+	 */
 	public Laadpaal(Locatiehouder locatiehouder, String laadpaalType){
-		m_LocatieEigenaar = locatiehouder;
-		m_LaadpaalType = laadpaalType;
-		m_Status = "aangemaakt";
-		m_InstallatieDoc = repo.laadpaalHashMapInst.get(laadpaalType);
-		m_ReparatieDoc = repo.laadpaalHashMapRep.get(laadpaalType);
-		s_ActiveLaadpalen.add(this);
+		this.locatiehouder = locatiehouder;
+		this.laadpaalType = laadpaalType;
+		this.status = "aangemaakt";
+		this.installatieDoc = repo.laadpaalHashMapInst.get(laadpaalType);
+		this.reparatieDoc = repo.laadpaalHashMapRep.get(laadpaalType);
+		setupInitConfig();
+		id = extrapolateId();
 	}
 
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Functies //----------------// */
-	/* //----------------// SECTIE: Technische-Functies //----------------// */
+	/* //----------------// -#########--------------------#########- //----------------// */
+	/* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+	/* //----------------// -#########--------------------#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+
 	/**
-	 * Deze Domein-functie schrijft een deze instantie over van de Active-ArrayList naar de Archived-ArrayList.
-	 * Dit via klasse "ArrayListExtended" via naamgeving "s_ArchivedKlasseItemKlasse" of dit zonder "s_". */
+	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
+	 */
 	public void archiveer(){
-		this.s_ActiveLaadpalen.removeWrapped(Laadpaal.class, Laadpaal.class, true);
+		gearchiveerdeLaadpalen.add(this);
+		actieveLaadpalen.remove(this);
 	}
 
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-	/* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-	/* //----------------// PROPERTY: Locatie-Eigenaar //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Locatie-Eigenaar. */
-	public void setLocatieEigenaar(Locatiehouder value){
-		this.m_LocatieEigenaar = value;
+	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
+	 */
+	private void setupInitConfig(){
+		actieveLaadpalen.add(this);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
+	}
+
+	/**
+	 * Deze technische functie leidt het id af via het laatste record in de tabel.
+	 */
+	private String extrapolateId(){
+		return baseExtrapolateId(ID_PREFIX, klasseDao);
+	}
+
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+	/* //----------------// -#########- | PROPERTIES | -#########- //----------------// */
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: ID //----------------// */
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Id @Column(name = ID_COL_NAME)
+	public String getId(){
+		return this.id;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Locatie-Eigenaar. */
-	public Locatiehouder getLocatieEigenaar(){
-		return this.m_LocatieEigenaar;
+	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setId(String value){
+		this.id = value;
+	}
+
+	/* //----------------// PROPERTY: Locatiehouder //----------------// */
+	/**
+	 * Deze domein-attribuut getter vertegenwoordigt het locatiehouder-attribuut.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=LOCATIEHOUDER_COL_NAME, referencedColumnName = Laadpaal.ID_COL_NAME)
+	public Locatiehouder getLocatiehouder(){
+		return this.locatiehouder;
+	}
+	/**
+	 * Deze domein-attribuut setter vertegenwoordigt het locatiehouder-attribuut.
+	 */
+	@Transient
+	public void setLocatiehouder(Locatiehouder value){
+		this.locatiehouder = value;
 	}
 
 	/* //----------------// PROPERTY: Laadpaal-Type //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Laadpaal-Type. */
-	public void setLaadpaalType(String value){
-		this.m_LaadpaalType = value;
+	 * Deze domein-attribuut getter vertegenwoordigt het producttype-attribuut.
+	 */
+	@Column(name = LAADPAALTYPE_COL_NAME)
+	public String getLaadpaalType(){
+		return this.laadpaalType;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Laadpaal-Type. */
-	public String getLaadpaalType(){
-		return this.m_LaadpaalType;
+	 * Deze domein-attribuut getter vertegenwoordigt het producttype-attribuut.
+	 */
+	@Transient
+	public void setLaadpaalType(String value){
+		this.laadpaalType = value;
 	}
 
 	/* //----------------// PROPERTY: Status //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Status. */
-	public void setStatus(String value){
-		this.m_Status = value;
+	 * Deze domein-attribuut getter vertegenwoordigt het status-attribuut.
+	 */
+	@Column(name = STATUS_COL_NAME)
+	public String getStatus(){
+		return this.status;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Status */
-	public String getStatus(){
-		return this.m_Status;
+	 * Deze domein-attribuut getter vertegenwoordigt het status-attribuut.
+	 */
+	@Transient
+	public void setStatus(String value){
+		this.status = value;
 	}
 
 	/* //----------------// PROPERTY: Installatie-Documentatie //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Installatie-Documentatie. */
-	public void setInstallatieDoc(String value){
-		this.m_InstallatieDoc = value;
+	 * Deze domein-attribuut getter vertegenwoordigt het installatiedocumentatie-attribuut.
+	 */
+	@Column(name = INSTALLATIEDOC_COL_NAME)
+	public String getInstallatieDoc(){
+		return this.installatieDoc;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Installatie-Documentatie. */
-	public String getInstallatieDoc(){
-		return this.m_InstallatieDoc;
+	 * Deze domein-attribuut getter vertegenwoordigt het installatiedocumentatie-attribuut.
+	 */
+	@Transient
+	public void setInstallatieDoc(String value){
+		this.installatieDoc = value;
 	}
 
 	/* //----------------// PROPERTY: Reparatie-Documentatie //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Reparatie-Documentatie. */
-	public void setReparatieDoc(String value){
-		this.m_ReparatieDoc = value;
+	 * Deze domein-attribuut getter vertegenwoordigt het reparatiedocumentatie-attribuut.
+	 */
+	@Column(name = REPARATIEDOC_COL_NAME)
+	public String getReparatieDoc(){
+		return this.reparatieDoc;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Reparatie-Documentatie. */
-	public String getReparatieDoc(){
-		return this.m_ReparatieDoc;
+	 * Deze domein-attribuut getter vertegenwoordigt het reparatiedocumentatie-attribuut.
+	 */
+	@Transient
+	public void setReparatieDoc(String value){
+		this.reparatieDoc = value;
 	}
-
 }

@@ -1,98 +1,204 @@
 package be.fastned.application.domain;
 
-import be.fastned.application.domain.custom.ArrayListExtended;
-
+import be.fastned.application.dao.AfspraakHibernateDao;
+import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
+import static be.fastned.application.domain.Locatietoestemming.ENTITY_NAME;
+import static be.fastned.application.domain.Locatietoestemming.TABLE_NAME;
 
 /**
  * @author TiboVG
- * @version 1.0
- * @created 15-Mar-2020 14:24:54
+ * @version 6.0
  */
-@Entity(name = "Locatietoestemming")
-@Table(name = "Locatietoestemmingmen")
-public class Locatietoestemming {
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Variabelen //----------------// */
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long m_Id;
-	@Column
-	private int m_AantalLaadpalen;
-	@Column
-	private String m_TypeLaadpaal;
-	@Column
-	private String m_Status;
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
+@Entity(name = ENTITY_NAME)
+@Table(name = TABLE_NAME)
+
+public class Locatietoestemming extends AbsoluteBase{
+
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/*
+		Verwijzing: Vragen omtrent actieve en gearchiveerde collecties -> (HELP02)
+		Verwijzing: Vragen omtrent Hoofdletter-genaamde variabelen -> (HELP03)
+	*/
+
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
+	private String id = null;
+	private int aantalLaadpalen;
+	private String typeLaadpaal = null;
+	private String status = null;
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
 
 
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
-	/* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Variabelen //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& KLASSE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
-	@Transient
+	/* //----------------// SECTIE: Constanten //----------------// */
+	// Configureren @Table en @Entity
+	public static final String ENTITY_NAME = "Locatietoestemming";
+	public static final String TABLE_NAME = "tbl_Locatietoestemmingen";
+
+	// Lokale constante (id prefix) overkopieëren naar super-variabel
+	public static final String ID_PREFIX = LOCATIETOESTEMMING_ID_PREFIX;
+
+	// Constanten met kolom-namen
+	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String AANTALLAADPALEN_COL_NAME = "AantalLaadpalen";
+	public static final String TYPELAADPAAL_COL_NAME = "TypeLaadpaal";
+	public static final String STATUS_COL_NAME = "Status";
+
+	/* //----------------// SECTIE: Locatietoestemmingen //----------------// */
 	/**
-	 * Collectie van actieve & nieuwe Locatietoestemmingen. (data-bron voor schermen) */
-	public static ArrayListExtended<Locatietoestemming, Locatietoestemming> s_ActiveLocatietoestemmingen = new ArrayListExtended<Locatietoestemming, Locatietoestemming>();
-	@Transient
+	 * (ACT-LOCATIETOESTEMMINGEN) Collectie van actieve & nieuwe instanties via deze klasse.
+	 */
+	public static ArrayList<Locatietoestemming> actieveLocatietoestemmingen = new ArrayList<Locatietoestemming>();
 	/**
-	 * Collectie van verlopen & afgehandelde Locatietoestemming. (repository voor rollback) */
-	public static ArrayList<Locatietoestemming> s_ArchivedLocatietoestemmingLocatietoestemming = new ArrayList<Locatietoestemming>();
+	 * (ARCH-LOCATIETOESTEMMINGEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 */
+	public static ArrayList<Locatietoestemming> gearchiveerdeLocatietoestemmingen = new ArrayList<Locatietoestemming>();
 
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
-	/* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
+	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
+
 	/**
-	 * Default Constructor voor deze klasse. */
+	 * Default constructor voor deze klasse. (Wel configuratie)
+	 */
 	public Locatietoestemming(){
-		s_ActiveLocatietoestemmingen.add(this);
-
+		setupInitConfig();
+		id = extrapolateId();
 	}
+
 	/**
-	 * Volledige Constructor voor deze klasse. */
+	 * Default constructor voor deze klasse. (Geen configuratie)
+	 */
+	public Locatietoestemming(boolean noConfig){
+		if (!noConfig) { setupInitConfig(); }
+		id = extrapolateId();
+	}
+
+	/**
+	 * Volledige Constructor voor deze klasse.
+	 */
 	public Locatietoestemming(int aantalLaadpalen, String typeLaadpaal, String status){
-		m_AantalLaadpalen = aantalLaadpalen;
-		m_TypeLaadpaal = typeLaadpaal;
-		m_Status = status;
-		s_ActiveLocatietoestemmingen.add(this);
+		setupInitConfig();
+		id = extrapolateId();
+		this.aantalLaadpalen = aantalLaadpalen;
+		this.typeLaadpaal = typeLaadpaal;
+		this.status = status;
 	}
 
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Functies //----------------// */
-	/* //----------------// SECTIE: Technische-Functies //----------------// */
+	/* //----------------// -#########--------------------#########- //----------------// */
+	/* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+	/* //----------------// -#########--------------------#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+
 	/**
-	 * Deze Domein-functie schrijft een deze instantie over van de Active-ArrayList naar de Archived-ArrayList.
-	 * Dit via klasse "ArrayListExtended" via naamgeving "s_ArchivedKlasseItemKlasse" of dit zonder "s_". */
+	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
+	 */
 	public void archiveer(){
-		this.s_ActiveLocatietoestemmingen.removeWrapped(Locatietoestemming.class, Locatietoestemming.class, true);
+		gearchiveerdeLocatietoestemmingen.add(this);
+		actieveLocatietoestemmingen.remove(this);
 	}
 
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-	/* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-	/* //----------------// PROPERTY: AantalLaadpalen //----------------// */
-	public void setAantalLaadpalen(int value){ m_AantalLaadpalen = value; }
-	public int getAantalLaadpalen(){
-		return m_AantalLaadpalen;
+	/**
+	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
+	 */
+	private void setupInitConfig(){
+		actieveLocatietoestemmingen.add(this);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
 	}
+
+	/**
+	 * Deze technische functie leidt het id af via het laatste record in de tabel.
+	 */
+	private String extrapolateId(){
+		return baseExtrapolateId(ID_PREFIX, klasseDao);
+	}
+
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+	/* //----------------// -#########- | PROPERTIES | -#########- //----------------// */
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: ID //----------------// */
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Id @Column(name = ID_COL_NAME)
+	public String getId(){
+		return this.id;
+	}
+	/**
+	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setId(String value){
+		this.id = value;
+	}
+
+	/* //----------------// PROPERTY: AantalLaadpalen //----------------// */
+	/**
+	 * Deze domein-attribuut getter vertegenwoordigt het aantalLaadpalen-attribuut van deze instantie.
+	 */
+	@Column(name = AANTALLAADPALEN_COL_NAME)
+	public int getAantalLaadpalen(){ return this.aantalLaadpalen; }
+	/**
+	 * Deze domein-attribuut setter vertegenwoordigt het aantalLaadpalen-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setAantalLaadpalen(int value){ this.aantalLaadpalen = value; }
+
 
 	/* //----------------// PROPERTY: TypeLaadpaal //----------------// */
-	public void setTypeLaadpaal(String value){ m_TypeLaadpaal = value; }
+	/**
+	 * Deze domein-attribuut getter vertegenwoordigt het typeLaadpaal-attribuut van deze instantie.
+	 */
+	@Column(name = TYPELAADPAAL_COL_NAME)
 	public String getTypeLaadpaal(){
-		return m_TypeLaadpaal;
+		return this.typeLaadpaal;
 	}
+	/**
+	 * Deze domein-attribuut setter vertegenwoordigt het typeLaadpaal-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setTypeLaadpaal(String value){ this.typeLaadpaal = value; }
+
 
 	/* //----------------// PROPERTY: Status //----------------// */
-	public void setStatus(String value){ m_Status = value; }
-	public String getStatus(){
-		return m_Status;
-	}
+	/**
+	 * Deze domein-attribuut getter vertegenwoordigt het status-attribuut van deze instantie.
+	 */
+	@Column(name = STATUS_COL_NAME)
+	public String getStatus(){ return this.status; }
+	/**
+	 * Deze domein-attribuut setter vertegenwoordigt het status-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setStatus(String value){ this.status = value; }
 }

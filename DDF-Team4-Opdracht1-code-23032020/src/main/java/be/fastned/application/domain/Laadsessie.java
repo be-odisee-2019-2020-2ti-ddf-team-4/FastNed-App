@@ -1,128 +1,219 @@
 package be.fastned.application.domain;
 
-import be.fastned.application.domain.custom.ArrayListExtended;
-
+import be.fastned.application.dao.AfspraakHibernateDao;
+import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import static be.fastned.application.domain.Laadsessie.ENTITY_NAME;
+import static be.fastned.application.domain.Laadsessie.TABLE_NAME;
 
 /**
  * @author TiboVG
- * @version 1.0
- * @created 15-Mar-2020 14:24:53
+ * @version 6.0
  */
-@Entity(name = "Laadsessie")
-@Table(name = "Laadsessies")
-public class Laadsessie {
 
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Variabelen //----------------// */
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long m_Id;
-	@Column
-	private LocalDateTime m_StartSessie;
-	@Column
-	private double m_StartPercentage;
-	@OneToOne(
-			mappedBy = "Laadsessies",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
-			fetch = FetchType.LAZY
-	)
-	public Laadpaal m_Laadpaal;
+@Entity(name = ENTITY_NAME)
+@Table(name = TABLE_NAME)
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
+public class Laadsessie extends AbsoluteBase{
 
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
-	/* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/*
+		Verwijzing: Vragen omtrent actieve en gearchiveerde collecties -> (HELP02)
+		Verwijzing: Vragen omtrent Hoofdletter-genaamde variabelen -> (HELP03)
+	*/
 
-	/* //----------------// SECTIE: Domein-Variabelen //----------------// */
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########--------------------------------##########- //----------------// */
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
-	@Transient
-	private final double LAADPERCENT_PER_MINUUT = 1.5;
-	@Transient
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	private String id;
+	private LocalDateTime startSessie;
+	private double startPercentage;
+	private Laadpaal laadpaal;
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
+
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& KLASSE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+
+	/* //----------------// SECTIE: Constanten //----------------// */
+	// Configureren @Table en @Entity
+	public static final String ENTITY_NAME = "Laadsessie";
+	public static final String TABLE_NAME = "tbl_Laadsessies";
+
+	// Lokale constante (id prefix) overkopieëren naar super-variabel
+	public static final String ID_PREFIX = LAADSESSIE_ID_PREFIX;
+
+	// Constanten met kolom-namen
+	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String LAADPAAL_COL_NAME = "Laadpaal_FK";
+	public static final String STARTPERCENTAGE_COL_NAME = "StartPercentage";
+	public static final String STARTSESSIE_COL_NAME = "StartSessie";
+
+	private static final int LAADPERCENT_PER_MINUUT = 1;
+
+	/* //----------------// SECTIE: Laadsessies //----------------// */
 	/**
-	 * Collectie van actieve & nieuwe Laadsessies. (data-bron voor schermen) */
-	public static ArrayListExtended<Laadsessie, Laadsessie> s_ActiveLaadsessies = new ArrayListExtended<Laadsessie, Laadsessie>();
-	@Transient
+	 * (ACT-LAADSESSIES) Collectie van actieve & nieuwe instanties via deze klasse.
+	 */
+	public static ArrayList<Laadsessie> actieveLaadsessies = new ArrayList<Laadsessie>();
 	/**
-	 * Collectie van verlopen & afgehandelde Laadsessies. (repository voor rollback) */
-	public static ArrayList<Laadsessie> s_ArchivedLaadsessieLaadsessie = new ArrayList<Laadsessie>();
+	 * (ARCH-LAADSESSIES) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 */
+	public static ArrayList<Laadsessie> gearchiveerdeLaadsessies = new ArrayList<Laadsessie>();
 
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
-	/* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
+	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
+
 	/**
-	 * Default Constructor voor deze klasse. */
+	 * Default constructor voor deze klasse. (Wel configuratie)
+	 */
 	public Laadsessie(){
-		this.s_ActiveLaadsessies.add(this);
+		setupInitConfig();
+		id = extrapolateId();
 	}
+
 	/**
-	 * Volledige Constructor voor deze klasse. */
+	 * Default constructor voor deze klasse. (Geen configuratie)
+	 */
+	public Laadsessie(boolean noConfig){
+		if (!noConfig) { setupInitConfig(); }
+		id = extrapolateId();
+	}
+
+	/**
+	 * Volledige Constructor voor deze klasse.
+	 */
 	public Laadsessie(LocalDateTime startSessie, double startPercentage, Laadpaal laadpaal){
-		m_StartSessie = startSessie;
-		m_StartPercentage = startPercentage;
-		m_Laadpaal = laadpaal;
-		this.s_ActiveLaadsessies.add(this);
+		this.startSessie = startSessie;
+		this.startPercentage = startPercentage;
+		this.laadpaal = laadpaal;
+		setupInitConfig();
+		id = extrapolateId();
 	}
 
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Functies //----------------// */
+	/* //----------------// -#########--------------------#########- //----------------// */
+	/* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+	/* //----------------// -#########--------------------#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
 	public double berekenLaadtijd(){
-		return ((100 - m_StartPercentage)/this.LAADPERCENT_PER_MINUUT);
+		return ((100 - this.startPercentage)/this.LAADPERCENT_PER_MINUUT);
 	}
 
-	/* //----------------// SECTIE: Technische-Functies //----------------// */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+
 	/**
-	 * Deze Domein-functie schrijft een deze instantie over van de Active-ArrayList naar de Archived-ArrayList.
-	 * Dit via klasse "ArrayListExtended" via naamgeving "s_ArchivedKlasseItemKlasse" of dit zonder "s_". */
+	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
+	 */
 	public void archiveer(){
-		this.s_ActiveLaadsessies.removeWrapped(Laadsessie.class, Laadsessie.class, true);
+		gearchiveerdeLaadsessies.add(this);
+		actieveLaadsessies.remove(this);
 	}
 
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-	/* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-	/* //----------------// -#####- |------------| -#####- //----------------// */
+	/**
+	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
+	 */
+	private void setupInitConfig(){
+		actieveLaadsessies.add(this);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
+	}
+
+	/**
+	 * Deze technische functie leidt het id af via het laatste record in de tabel.
+	 */
+	private String extrapolateId(){
+		return baseExtrapolateId(ID_PREFIX, klasseDao);
+	}
+
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+	/* //----------------// -#########- | PROPERTIES | -#########- //----------------// */
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: ID //----------------// */
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Id @Column(name = ID_COL_NAME)
+	public String getId(){
+		return this.id;
+	}
+	/**
+	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setId(String value){
+		this.id = value;
+	}
+
 	/* //----------------// PROPERTY: Start-Sessie //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Start-Sessie. */
-	public void setStartSessie(LocalDateTime value){
-		this.m_StartSessie = value;
+	 * Deze domein-attribuut-getter vertegenwoordigt het startsessie-attribuut van deze instantie.
+	 */
+	@Column(name = STARTSESSIE_COL_NAME)
+	public LocalDateTime getStartSessie(){
+		return this.startSessie;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Start-Sessie. */
-	public LocalDateTime getStartSessie(){
-		return this.m_StartSessie;
+	 * Deze domein-attribuut-getter vertegenwoordigt het startsessie-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setStartSessie(LocalDateTime value){
+		this.startSessie = value;
 	}
 
 	/* //----------------// PROPERTY: Start-Percentage //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Start-Percentage. */
-	public void setStartPercentage(double value){
-		this.m_StartPercentage = value;
+	 * Deze domein-attribuut-getter vertegenwoordigt het startpercentage-attribuut van deze instantie.
+	 */
+	@Column(name = STARTPERCENTAGE_COL_NAME)
+	public double getStartPercentage(){
+		return this.startPercentage;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Start-Percentage. */
-	public double getStartPercentage(){
-		return this.m_StartPercentage;
+	 * Deze domein-attribuut-getter vertegenwoordigt het startpercentage-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setStartPercentage(double value){
+		this.startPercentage = value;
 	}
 
 	/* //----------------// PROPERTY: Laadpaal //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de Laadpaal. */
-	public void setLaadpaal(Laadpaal value){
-		this.m_Laadpaal = value;
+	 * Deze domein-attribuut-getter vertegenwoordigt het laadpaal-attribuut van deze instantie.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=LAADPAAL_COL_NAME, referencedColumnName = Laadpaal.ID_COL_NAME)
+	public Laadpaal getLaadpaal(){
+		return this.laadpaal;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de Laadpaal. */
-	public Laadpaal getLaadpaal(){
-		return this.m_Laadpaal;
+	 * Deze domein-attribuut-getter vertegenwoordigt het laadpaal-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setLaadpaal(Laadpaal value){
+		this.laadpaal = value;
 	}
 }

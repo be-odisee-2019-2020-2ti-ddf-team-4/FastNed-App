@@ -1,100 +1,210 @@
 package be.fastned.application.domain;
 
-import be.fastned.application.domain.custom.ArrayListExtended;
-
+import be.fastned.application.dao.ContractHibernateDao;
+import be.fastned.application.dao.Interfaces.BaseDao;
+import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import static be.fastned.application.domain.Contract.ENTITY_NAME;
+import static be.fastned.application.domain.Contract.TABLE_NAME;
 
 /**
  * @author TiboVG
- * @version 1.0
- * @created 15-Mar-2020 14:24:54
+ * @version 6.0
  */
-@Entity(name = "Contract")
-@Table(name="contracten")
-public class Contract {
 
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	/* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |----------------------| -#####- //----------------// */
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long m_Id;
-	@Column
-	private LocalDateTime m_ContractDatum = null;
-	@Column
-	private LocalDateTime m_InstallatieDatum = null;
+@Entity(name = ENTITY_NAME)
+@Table(name = TABLE_NAME)
 
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
-	/* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-	/* //----------------// -#####- |-------------------| -#####- //----------------// */
+public class Contract extends AbsoluteBase{
 
-	/* //----------------// SECTIE: Domein-Variabelen //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/*
+		Verwijzing: Vragen omtrent actieve en gearchiveerde collecties -> (HELP02)
+		Verwijzing: Vragen omtrent Hoofdletter-genaamde variabelen -> (HELP03)
+	*/
 
-	/* //----------------// SECTIE: Technische-Variabelen //----------------// */
-	@Transient
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########--------------------------------##########- //----------------// */
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
+	private String id;
+	private LocalDateTime contractDatum = null;
+	private LocalDateTime uitvoeringsDatum = null;
+
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+	/* //----------------// -##########- &|& KLASSE VARIABELEN &|& -##########- //----------------// */
+	/* //----------------// -##########-----------------------------##########- //----------------// */
+
+	/* //----------------// SECTIE: Constanten //----------------// */
+	// Configureren @Table en @Entity
+	public static final String ENTITY_NAME = "Contract";
+	public static final String TABLE_NAME = "tbl_Contracten";
+
+	// Lokale constante (id prefix) overkopieëren naar super-variabel
+	public static final String ID_PREFIX = CONTRACT_ID_PREFIX;
+
+	// Constanten met kolom-namen
+	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String CONTRACTDATUM_COL_NAME = "ContractDatum";
+	public static final String UITVOERINGSDATUM_COL_NAME = "UitvoeringsDatum";
+
+	/* //----------------// SECTIE: Contracten //----------------// */
 	/**
-	 * Collectie van actieve & nieuwe Contracten. (data-bron voor schermen) */
-	public static ArrayListExtended<Contract, Contract> s_ActiveContracten = new ArrayListExtended<Contract, Contract>();
-	@Transient
+	 * (ACT-CONTRACTEN) Collectie van actieve & nieuwe instanties via deze klasse.
+	 */
+	public static ArrayList<Contract> actieveContracten = new ArrayList<Contract>();
 	/**
-	 * Collectie van verlopen & afgehandelde Contracten. (repository voor rollback) */
-	public static ArrayList<Contract> s_ArchivedContractContract = new ArrayList<Contract>();
+	 * (ARCH-CONTRACTEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
+	 */
+	public static ArrayList<Contract> gearchiveerdeContracten = new ArrayList<Contract>();
 
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
-	/* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-	/* //----------------// -#####- |--------------| -#####- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
+	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+	/* //----------------// -#########------------------------#########- //----------------// */
 	/**
-	 * Default Constructor voor deze klasse. */
+	 * Default constructor voor deze klasse. (Wel configuratie)
+	 */
 	public Contract(){
-		this.s_ActiveContracten.add(this);
-	}
-	/**
-	 * Volledige Constructor voor deze klasse. */
-	public Contract(LocalDateTime contractDatum, LocalDateTime installatieDatum){
-		m_ContractDatum = contractDatum;
-		m_InstallatieDatum = installatieDatum;
-		this.s_ActiveContracten.add(this);
+		setupInitConfig();
+		id = extrapolateId();
 	}
 
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-	/* //----------------// -#####- |----------| -#####- //----------------// */
-	/* //----------------// SECTIE: Domein-Functies //----------------// */
-	/* //----------------// SECTIE: Technische-Functies //----------------// */
 	/**
-	 * Deze Domein-functie schrijft een deze instantie over van de Active-ArrayList naar de Archived-ArrayList.
-	 * Dit via klasse "ArrayListExtended" via naamgeving "s_ArchivedKlasseItemKlasse" of dit zonder "s_". */
+	 * Default constructor voor deze klasse. (Geen configuratie)
+	 */
+	public Contract(boolean noConfig){
+		if (!noConfig) { setupInitConfig(); }
+		id = extrapolateId();
+	}
+
+	/**
+	 * Volledige Constructor voor deze klasse.
+	 */
+	public Contract(LocalDateTime contractDatum, LocalDateTime uitvoeringsDatum){
+		setupInitConfig();
+		id = extrapolateId();
+		this.contractDatum = contractDatum;
+		this.uitvoeringsDatum = uitvoeringsDatum;
+	}
+
+	/* //----------------// -#########--------------------#########- //----------------// */
+	/* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+	/* //----------------// -#########--------------------#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+
+	/**
+	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
+	 */
 	public void archiveer(){
-		this.s_ActiveContracten.removeWrapped(Contract.class, Contract.class, true);
+		gearchiveerdeContracten.add(this);
+		actieveContracten.remove(this);
 	}
 
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-	/* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-	/* //----------------// -#####- |------------| -#####- //----------------// */
-
-	/* //----------------// PROPERTY: Contract-Datum //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de contract-datum. */
-	public void setContractDatum(LocalDateTime value){
-		this.m_ContractDatum = value;
+	 * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
+	 */
+	private void setupInitConfig(){
+		actieveContracten.add(this);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(ContractHibernateDao.BEAN_DAO_NAME);
+	}
+
+	/**
+	 * Deze technische functie leidt het id af via het laatste record in de tabel.
+	 */
+	private String extrapolateId(){
+		return baseExtrapolateId(ID_PREFIX, klasseDao);
+	}
+
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+	/* //----------------// -#########- | PROPERTIES | -#########- //----------------// */
+	/* //----------------// -#########- |------------| -#########- //----------------// */
+
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # ------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: ID //----------------// */
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Id @Column(name = ID_COL_NAME)
+	public String getId(){
+		return this.id;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de contract-datum. */
+	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setId(String value){
+		this.id = value;
+	}
+
+	/* //----------------// PROPERTY: ContractDatum //----------------// */
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
+	 */
+	@Column(name = CONTRACTDATUM_COL_NAME)
 	public LocalDateTime getContractDatum(){
-		return this.m_ContractDatum;
+		return this.contractDatum;
+	}
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setContractDatum(LocalDateTime value){
+		this.contractDatum = value;
 	}
 
-	/* //----------------// PROPERTY: Installatie-Datum //----------------// */
+
+	/* //----------------// PROPERTY: ContractDatum //----------------// */
 	/**
-	 * Deze domein-attribuut setter vertegenwoordigt de installatie-datum. */
-	public void setInstallatieDatum(LocalDateTime value){
-		this.m_InstallatieDatum = value;
+	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
+	 */
+	@Column(name = UITVOERINGSDATUM_COL_NAME)
+	public LocalDateTime getUitvoeringsDatum(){
+		return this.uitvoeringsDatum;
 	}
 	/**
-	 * Deze domein-attribuut getter vertegenwoordigt de installatie-datum. */
-	public LocalDateTime getInstallatieDatum(){
-		return this.m_InstallatieDatum;
+	 * Deze domein-attribuut-getter vertegenwoordigt het contractdatum-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setUitvoeringsDatum(LocalDateTime value){
+		this.uitvoeringsDatum = value;
 	}
+
+
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/* //----------------\\ # Propertie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # ---------------------------- # //----------------\\ */
+
+	/* //----------------// PROPERTY: Actieve & Gearchiveerde AFSPRAKEN (STATIC) //----------------// */
+	/**
+	 * (ACT-CONTRACTEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. actieve instanties.
+	 */
+	@Transient
+	public static ArrayList<Contract> getActieveInstanties() { return actieveContracten; }
+	/**
+	 * (ARCH-CONTRACTEN) Deze domein-attribuut-getter vertegenwoordigt de collectie v.d. gearchiveerde instanties.
+	 */
+	@Transient
+	public static ArrayList<Contract> getGearchiveerdeInstanties() { return gearchiveerdeContracten; }
 }

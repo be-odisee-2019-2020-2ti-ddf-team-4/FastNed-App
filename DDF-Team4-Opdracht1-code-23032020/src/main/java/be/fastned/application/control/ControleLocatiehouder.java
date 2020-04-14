@@ -1,88 +1,138 @@
 package be.fastned.application.control;
 
+import be.fastned.application.boundary.SchermLocatiehouder;
+import be.fastned.application.control.Technisch.ControleBaseExtended;
 import be.fastned.application.domain.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import be.fastned.application.domain.Personen.Locatiehouder;
+import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
+import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonProfessional;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author TiboVG
- * @version 1.0
- * @created 15-Mar-2020 14:24:52
+ * @version 2.0
+ * @created 15-Mar-2020 14:24:54
  */
-@Component("controleLocatiehouderInst")
-public class ControleLocatiehouder {
-    /* //----------------// -#####- |----------------------| -#####- //----------------// */
+//@Component("b_ControleLocatiehouderDef")
+public class ControleLocatiehouder extends ControleBaseExtended {
+    /* //----------------// -#####----------------------------#####- //----------------// */
     /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####- |----------------------| -#####- //----------------// */
-    /* //----------------// SECTIE: Domein-Variabelen //----------------// */
-    /*@Autowired
-    private ControleRegisterUser controleRegisterUserInst;
-    private Locatiehouder m_Locatiehouder = (Locatiehouder) controleRegisterUserInst.getSignedIn("Locatiehouder");*/
+    /* //----------------// -#####----------------------------#####- //----------------// */
 
-    @Autowired
-    private Persoon activeGebruikerInst;
-    private Locatiehouder m_Locatiehouder = (Locatiehouder) activeGebruikerInst;
+    /* //----------------// SECTIE: Domein-Variabelen //----------------// */
+    private SchermLocatiehouder m_SchermLocatiehouder = null;
 
     /* //----------------// SECTIE: Technische-Variabelen //----------------// */
 
-    /* //----------------// -#####- |-------------------| -#####- //----------------// */
+    /* //----------------// -#####-------------------------#####- //----------------// */
     /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####- |-------------------| -#####- //----------------// */
+    /* //----------------// -#####-------------------------#####- //----------------// */
+
     /* //----------------// SECTIE: Domein-Variabelen //----------------// */
 
     /* //----------------// SECTIE: Technische-Variabelen //----------------// */
 
-    /* //----------------// -#####- |--------------| -#####- //----------------// */
+    /* //----------------// -#####--------------------#####- //----------------// */
     /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-    /* //----------------// -#####- |--------------| -#####- //----------------// */
+    /* //----------------// -#####--------------------#####- //----------------// */
     /**
-     * Default Constructor voor deze klasse. */
-    public ControleLocatiehouder(){
-
+     * Default Constructor voor deze klasse.
+     */
+    public ControleLocatiehouder(Persoon b_ActieveGebruiker){
+        m_ActieveGebruiker = b_ActieveGebruiker;
+        m_SchermLocatiehouder = new SchermLocatiehouder(this);
     }
 
-    /* //----------------// -#####- |----------| -#####- //----------------// */
+    /* //----------------// -#####----------------#####- //----------------// */
     /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-    /* //----------------// -#####- |----------| -#####- //----------------// */
+    /* //----------------// -#####----------------#####- //----------------// */
+
     /* //----------------// SECTIE: Domein-Functies //----------------// */
     /**
-     * Deze Domein-functie retourneert deze met-persoongegevens-aangevulde persoon. */
-    public Persoon identificeer(String adres, String bedrijfsNaam, String BTWNummer, String voornaam, String naam, String geslacht, String emailAdres, String gsm){
-
+     * Deze Domein-functie updated de actieve persoon met persoons-/gebruikersgegevens na argumentencontroles na argumentcontroles.
+     * @return Het aangevulde persoon-object van de actieve gebruiker na argumentencontroles na argumentcontroles.
+     */
+    public PersoonProfessional identificeer(PersoonProfessional gegevensOwner, String adres, String bedrijfsNaam, String btwNummer, String voornaam, String naam, String geslacht, String gsm){
         try{
-            if(adres != "" && bedrijfsNaam != "" && BTWNummer != "" && voornaam != "" && naam != "" && geslacht != "" && emailAdres != "" && gsm != ""){
-                m_Locatiehouder.identificeer(voornaam, naam, geslacht, emailAdres, gsm);
-                m_Locatiehouder.setAdres(adres);
-                m_Locatiehouder.setBedrijfsnaam(BTWNummer);
-                m_Locatiehouder.setBTWNummer(adres);
-                return m_Locatiehouder;
+            // Setup technische helper-variabelen
+            StringBuilder samengesteldeError = new StringBuilder();
+            Map<Integer, String> indexToLabel = new HashMap<Integer, String>() {{
+                put(0, "gegevensOwner(parameter)");
+                put(1, "Adres");
+                put(2, "Bedrijfsnaam");
+                put(3, "BTW Nummer");
+                put(4, "Voornaam");
+                put(5, "Familienaam");
+                put(6, "Geslacht");
+                put(8, "Gsm Nummer");
+            }};
+
+            // Check persoon-argument.
+            if (gegevensOwner != null )
+                throw new Exception("Te updaten persoon is null.");
+            // Check verschillende gegevens via helper functie.
+            ArrayList<Integer> violationIndexes = tf_checkAgainstNullOrEmpty(new Object[]{adres, bedrijfsNaam, btwNummer, voornaam, naam, geslacht, gsm}, true);
+
+            // Afhandeling: er zijn geen problemen.
+            if (violationIndexes != null){
+                return gegevensOwner.identificeer(adres, bedrijfsNaam, btwNummer, voornaam, naam, geslacht, gsm);
             }
-            else
-                throw new Exception("Persoon is niet geïdentificeerd vanwege een lege of null-waarde in adres/bedrijfsnaam/BTWNummer/voornaam/familienaam/geslacht/emailadres/gsm");
+            // Afhandeling: er zijn problemen opgetreden.
+            else{
+                // Append elk label per probleem (int index) aan een string.
+                violationIndexes.forEach(violIndex -> samengesteldeError.append(String.format("[%s] ", indexToLabel.get(violIndex))));
+                // Throw uiteindelijke error.
+                throw new Exception(String.format("Persoon is niet geïdentificeerd vanwege een lege of null-waarde voor %s", samengesteldeError));
+            }
         }
         catch (Exception ex){
+            tf_ToonFoutmelding("methode identificeer in controleLocatiehouder", ex.getMessage(), true);
             return null;
         }
     }
 
     /**
-     * Deze Domein-functie retourneert een aangemaakte locatietoestemming via deze locatiehouder. */
-    public Locatietoestemming meldLocatieAan(int aantalLaadpalen, String typeLaadpaal){
-
+     * Deze Domein-functie maakt een locatietoestemming via deze locatiehouder na argumentcontroles.
+     * @return De aangemaakt locatietoestemming via deze locatiehouder na argumentcontroles.
+     */
+    public Locatietoestemming maakLocatieAan(Integer aantalLaadpalen, String typeLaadpaal){
         try{
-            if (aantalLaadpalen > 0 && typeLaadpaal != ""){
-                return m_Locatiehouder.meldLocatieAan(aantalLaadpalen, typeLaadpaal);
+            // Setup technische helper-variabelen
+            StringBuilder samengesteldeError = new StringBuilder();
+            Map<Integer, String> indexToLabel = new HashMap<Integer, String>() {{
+                put(0, "Aantal laadpalen");
+                put(1, "Type laadpaal");
+            }};
+
+            // Check parentAfspraak-/defecteLaadpaal-/probleemBeschrijving-argument via helper functie.
+            ArrayList<Integer> violationIndexes = tf_checkAgainstNullOrEmpty(new Object[]{aantalLaadpalen, typeLaadpaal}, false);
+
+            // Afhandeling: er zijn geen problemen.
+            if (violationIndexes != null){
+                return ((Locatiehouder)m_ActieveGebruiker).maakLocatietoestemming(aantalLaadpalen, typeLaadpaal);
             }
-            else
-                throw new Exception("Locatietoestemming is niet aangemaakt vanwege een lege of null-waarde voor aantalLaadpalen/typeLaadpaal");
+            // Afhandeling: er zijn problemen opgetreden.
+            else{
+                // Append elk label per probleem (int index) aan een string.
+                violationIndexes.forEach(violIndex -> samengesteldeError.append(String.format("[%s] ", indexToLabel.get(violIndex))));
+                // Throw uiteindelijke error.
+                throw new Exception(String.format("Locatietoestemming is niet aangemaakt vanwege een lege of null-waarde voor %s", samengesteldeError));
+            }
         }
         catch (Exception ex){
+            tf_ToonFoutmelding("methode maakLocatieAan in controleLocatiehouder", ex.getMessage(), true);
             return null;
         }
     }
 
     /**
-     * Deze Domein-functie retourneert een locatietoestemming zijn status via deze locatiehouder. */
+     * Deze Domein-functie toont het resultaat van een aanmelding na argumentcontroles.
+     * @return De statusproperty via van een locatietoestemming na argumentcontroles.
+     */
     public String toonAanmeldingResultaat(Locatietoestemming aanmelding){
 
         try{
@@ -93,24 +143,44 @@ public class ControleLocatiehouder {
                 throw new Exception("Aanmelding-Resultaat is niet opgevraagd vanwege een lege of null-waarde voor aanmelding.");
         }
         catch (Exception ex){
+            tf_ToonFoutmelding("methode toonAanmeldingResultaat in controleLocatiehouder", ex.getMessage(), true);
             return null;
         }
     }
 
     /**
-     * Deze Domein-functie retourneert een aangemaakt probleem via deze locatiehouder. */
-    public Probleem meldProbleem(Laadpaal laadpaal, String beschrijving){
+     * Deze Domein-functie maakt een probleem via deze Locatiehouder na argumentcontroles.
+     * @return Het aangemaakt probleem via deze Locatiehouder na argumentcontroles.
+     */
+    public Probleem maakProbleem(Laadpaal defecteLaadpaal, String probleemBeschrijving, Persoon probMelder){
 
         try{
-            if (laadpaal != null && beschrijving != ""){
-                Probleem probleem = new Probleem(laadpaal, beschrijving);
-                m_Locatiehouder.ActiveLocatietoestemmingen.add(probleem);
+            // Setup technische helper-variabelen
+            StringBuilder samengesteldeError = new StringBuilder();
+            Map<Integer, String> indexToLabel = new HashMap<Integer, String>() {{
+                put(0, "Laadpaal");
+                put(1, "Beschrijving van het probleem");
+            }};
+
+            // Check parentAfspraak-/defecteLaadpaal-/probleemBeschrijving-argument via helper functie.
+            ArrayList<Integer> violationIndexes = tf_checkAgainstNullOrEmpty(new Object[]{defecteLaadpaal, probleemBeschrijving}, false);
+
+            // Afhandeling: er zijn geen problemen.
+            if (violationIndexes != null){
+                Probleem probleem = new Probleem(defecteLaadpaal, probleemBeschrijving);
+                ((Locatiehouder)m_ActieveGebruiker).getActieveProblemen().add(probleem);
                 return probleem;
             }
-            else
-                throw new Exception("Probleem is niet aangemaakt vanwege een lege of null-waarde voor laadpaal/beschrijving");
+            // Afhandeling: er zijn problemen opgetreden.
+            else{
+                // Append elk label per probleem (int index) aan een string.
+                violationIndexes.forEach(violIndex -> samengesteldeError.append(String.format("[%s] ", indexToLabel.get(violIndex))));
+                // Throw uiteindelijke error.
+                throw new Exception(String.format("Probleem is niet aangemaakt vanwege een lege of null-waarde voor %s", samengesteldeError));
+            }
         }
         catch (Exception ex){
+            tf_ToonFoutmelding("methode maakProbleem in controleLocatiehouder", ex.getMessage(), true);
             return null;
         }
     }
@@ -120,4 +190,21 @@ public class ControleLocatiehouder {
     /* //----------------// -#####- |------------| -#####- //----------------// */
     /* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
     /* //----------------// -#####- |------------| -#####- //----------------// */
+
+    /* //----------------// SECTIE: Domein-Properties //----------------// */
+
+    /**
+     * Deze domein-attribuut setter vertegenwoordigt de scherm-instantie in deze controle-instantie.
+     */
+    public void setSchermLocatiehouder(SchermLocatiehouder value){
+        this.m_SchermLocatiehouder = value;
+    }
+    /**
+     * Deze domein-attribuut getter vertegenwoordigt de scherm-instantie in deze controle-instantie.
+     */
+    public SchermLocatiehouder getSchermLocatiehouder(){
+        return this.m_SchermLocatiehouder;
+    }
+
+    /* //----------------// SECTIE: Technische-Properties //----------------// */
 }
