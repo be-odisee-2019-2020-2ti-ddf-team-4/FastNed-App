@@ -1,14 +1,20 @@
 package be.fastned.application.service;
 
+import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
 import be.fastned.application.service.Interfaces.AppService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import javax.persistence.Column;
+import javax.persistence.Transient;
 
 public class AppRunner {
     private static AppService s_AppService = null;
     public static AnnotationConfigApplicationContext s_ApplicationContext = null;
+    private static Persoon actieveGebruiker;
 
     public static void main(String[] args) {
         s_ApplicationContext = initieerContext();
+        actieveGebruiker = (Persoon) getAppContext().getBean("actieveGebruiker");
         s_AppService = AppServiceImpl.getInstance();
         s_AppService.persisteerDemoAfspraak();
 
@@ -41,6 +47,19 @@ public class AppRunner {
 
         // Afsluiten van het systeem.
         closeApplication();
+    }
+
+    /**
+     * Deze domein-attribuut getter vertegenwoordigt het reparatiedocumentatie-attribuut.
+     */
+    public static Persoon getActieveGebruiker(){
+        return actieveGebruiker;
+    }
+    /**
+     * Deze domein-attribuut getter vertegenwoordigt het reparatiedocumentatie-attribuut.
+     */
+    public static void setActieveGebruiker(Persoon value){
+        actieveGebruiker = value;
     }
 
     public static AnnotationConfigApplicationContext getAppContext(){

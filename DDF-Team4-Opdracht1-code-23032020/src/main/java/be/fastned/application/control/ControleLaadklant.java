@@ -1,15 +1,17 @@
 package be.fastned.application.control;
 
 import be.fastned.application.boundary.SchermLaadklant;
-import be.fastned.application.control.Base.ControleBaseExtended;
-import be.fastned.application.domain.*;
-import be.fastned.application.domain.Personen.Laadklant;
+import be.fastned.application.control.Base.ControleBaseImpl;
+import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
+import be.fastned.application.domain.AndereEntiteiten.Laadsessie;
+import be.fastned.application.domain.AndereEntiteiten.Probleem;
+import be.fastned.application.domain.PersoonEntiteiten.Laadklant;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import static be.fastned.application.control.Base.ControleBaseExtended.BEAN_CONTROLELAADKLANT;
+import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLELAADKLANT;
 
 /**
  * @author TiboVG
@@ -17,7 +19,7 @@ import static be.fastned.application.control.Base.ControleBaseExtended.BEAN_CONT
  */
 
 @Component(BEAN_CONTROLELAADKLANT)
-public class ControleLaadklant extends ControleBaseExtended {
+public class ControleLaadklant extends ControleBaseImpl {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
     /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */

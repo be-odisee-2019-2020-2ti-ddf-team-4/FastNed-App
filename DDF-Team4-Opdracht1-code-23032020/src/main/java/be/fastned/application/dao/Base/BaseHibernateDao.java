@@ -1,7 +1,7 @@
 package be.fastned.application.dao.Base;
 
-import be.fastned.application.domain.AbsoluteBase;
-import be.fastned.application.domain.Oplossing;
+import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.AndereEntiteiten.Oplossing;
 import be.fastned.application.service.AppConfig;
 import be.fastned.application.service.AppRunner;
 import org.hibernate.Session;

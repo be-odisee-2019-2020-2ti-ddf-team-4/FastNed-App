@@ -1,6 +1,6 @@
 package be.fastned.application.dao.Interfaces;
 
-import be.fastned.application.domain.Installatie;
+import be.fastned.application.domain.AndereEntiteiten.Installatie;
 
 public interface InstallatieDao {
     Installatie createItem(Installatie item);

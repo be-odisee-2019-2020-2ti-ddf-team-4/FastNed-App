@@ -1,9 +1,6 @@
 package be.fastned.application.service.Interfaces;
 
-import be.fastned.application.domain.*;
-import be.fastned.application.domain.Personen.Installateur;
-
-import java.util.ArrayList;
+import be.fastned.application.domain.AndereEntiteiten.Oplossing;
 
 public interface PersistenceService {
     // Een afspraak managen

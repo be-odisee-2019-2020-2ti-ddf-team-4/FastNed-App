@@ -1,9 +1,12 @@
 package be.fastned.application.boundary;
 
 import be.fastned.application.boundary.Technisch.SchermBase;
-import be.fastned.application.domain.*;
 import be.fastned.application.control.ControleInstallateur;
 
+import be.fastned.application.domain.AndereEntiteiten.Afspraak;
+import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
+import be.fastned.application.domain.AndereEntiteiten.Oplossing;
+import be.fastned.application.domain.AndereEntiteiten.Probleem;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 

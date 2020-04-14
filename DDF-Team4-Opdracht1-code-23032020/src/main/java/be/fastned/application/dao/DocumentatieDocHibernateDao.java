@@ -1,12 +1,16 @@
 package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
-import be.fastned.application.dao.Interfaces.ReparatieDao;
-import be.fastned.application.domain.AndereEntiteiten.Reparatie;
+import be.fastned.application.dao.Interfaces.DocumentatieDocDao;
+import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.Technisch.DocumentatieDoc;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import static be.fastned.application.dao.ReparatieHibernateDao.BEAN_DAO_NAME;
+
+import java.util.ArrayList;
+
+import static be.fastned.application.dao.DocumentatieDocHibernateDao.BEAN_DAO_NAME;
 
 /**
  * @author TiboVG
@@ -16,7 +20,7 @@ import static be.fastned.application.dao.ReparatieHibernateDao.BEAN_DAO_NAME;
 @Repository(BEAN_DAO_NAME)
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
 
-public class ReparatieHibernateDao extends BaseHibernateDao implements ReparatieDao {
+public class DocumentatieDocHibernateDao extends BaseHibernateDao implements DocumentatieDocDao {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
     /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */
@@ -27,13 +31,14 @@ public class ReparatieHibernateDao extends BaseHibernateDao implements Reparatie
     /* //----------------// -#########-----------------------------#########- //----------------// */
 
     /* //----------------// SECTIE: Constanten //----------------// */
-    public static final String BEAN_DAO_NAME = "reparatieDao";
-    private static final String REPARATIE_ENTITY_NAME = Reparatie.ENTITY_NAME;
+    public static final String BEAN_DAO_NAME = "documentatieDocDao";
+    private static final String DOCUMENTATIEDOC_ENTITY_NAME = DocumentatieDoc.ENTITY_NAME;
 
     /* //----------------// -#########------------------------#########- //----------------// */
     /* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
     /* //----------------// -#########------------------------#########- //----------------// */
-    ReparatieHibernateDao() {
+
+    DocumentatieDocHibernateDao() {
         configureAbstractOperations();
     }
 
@@ -41,11 +46,31 @@ public class ReparatieHibernateDao extends BaseHibernateDao implements Reparatie
     /* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
     /* //----------------// -#########--------------------#########- //----------------// */
 
+    public ArrayList<DocumentatieDoc> getInstallatieDocumentaties(){
+        ArrayList<DocumentatieDoc> list = new ArrayList<DocumentatieDoc>();
+        for (AbsoluteBase item : getAllItems()) {
+            if (((DocumentatieDoc)item).getDocumentatieType()=="installatie"){
+                list.add((DocumentatieDoc)item);
+            }
+        }
+        return list;
+    }
+
+    public ArrayList<DocumentatieDoc> getReparatieDocumentaties(){
+        ArrayList<DocumentatieDoc> list = new ArrayList<DocumentatieDoc>();
+        for (AbsoluteBase item : getAllItems()) {
+            if (((DocumentatieDoc)item).getDocumentatieType()=="reparatie"){
+                list.add((DocumentatieDoc)item);
+            }
+        }
+        return list;
+    }
+
     /* //----------------\\ # ------------------ # //----------------\\ */
     /* //----------------\\ # Functies Technisch # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = REPARATIE_ENTITY_NAME;
+        ENTITY_NAME = DOCUMENTATIEDOC_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -57,7 +82,7 @@ public class ReparatieHibernateDao extends BaseHibernateDao implements Reparatie
      * Voegt een instantie van deze klasse aan de DB toe als gepersisteerde entiteit.
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Reparatie createItem(Reparatie item) {
+    public DocumentatieDoc createItem(DocumentatieDoc item) {
         currentSession().save(item);
         return item;
     }
@@ -70,7 +95,7 @@ public class ReparatieHibernateDao extends BaseHibernateDao implements Reparatie
      * Updated de gepersisteerde entiteit achter een instantie.
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public void updateItem(Reparatie item) {
+    public void updateItem(DocumentatieDoc item) {
         currentSession().update(item);
     }
 
@@ -79,7 +104,7 @@ public class ReparatieHibernateDao extends BaseHibernateDao implements Reparatie
      * Deleted de gepersisteerde entiteit achter een instantie.
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Reparatie deleteItem(Reparatie item){
-        return (Reparatie) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+    public DocumentatieDoc deleteItem(DocumentatieDoc item){
+        return (DocumentatieDoc) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
     }
 }

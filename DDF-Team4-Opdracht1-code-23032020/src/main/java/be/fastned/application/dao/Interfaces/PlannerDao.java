@@ -1,6 +1,6 @@
 package be.fastned.application.dao.Interfaces;
 
-import be.fastned.application.domain.Personen.Planner;
+import be.fastned.application.domain.PersoonEntiteiten.Planner;
 
 public interface PlannerDao {
     Planner createItem(Planner item);

@@ -1,6 +1,6 @@
 package be.fastned.application.dao.Base;
 
-import be.fastned.application.domain.AbsoluteBase;
+import be.fastned.application.domain.Base.AbsoluteBase;
 
 import java.util.ArrayList;
 

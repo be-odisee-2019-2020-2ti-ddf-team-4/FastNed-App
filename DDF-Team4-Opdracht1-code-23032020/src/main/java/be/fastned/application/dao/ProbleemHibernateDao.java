@@ -2,7 +2,7 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.ProbleemDao;
-import be.fastned.application.domain.Probleem;
+import be.fastned.application.domain.AndereEntiteiten.Probleem;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

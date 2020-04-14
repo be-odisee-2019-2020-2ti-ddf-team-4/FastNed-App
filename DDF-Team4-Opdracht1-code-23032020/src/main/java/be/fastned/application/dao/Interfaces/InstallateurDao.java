@@ -1,6 +1,6 @@
 package be.fastned.application.dao.Interfaces;
 
-import be.fastned.application.domain.Personen.Installateur;
+import be.fastned.application.domain.PersoonEntiteiten.Installateur;
 
 public interface InstallateurDao {
     Installateur createItem(Installateur item);

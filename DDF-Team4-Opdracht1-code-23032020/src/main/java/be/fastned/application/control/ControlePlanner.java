@@ -1,17 +1,17 @@
 package be.fastned.application.control;
 
 import be.fastned.application.boundary.SchermPlanner;
-import be.fastned.application.control.Base.ControleBaseExtended;
-import be.fastned.application.domain.*;
-import be.fastned.application.domain.Personen.Installateur;
-import be.fastned.application.domain.Personen.Planner;
+import be.fastned.application.control.Base.ControleBaseImpl;
+import be.fastned.application.domain.AndereEntiteiten.*;
+import be.fastned.application.domain.PersoonEntiteiten.Installateur;
+import be.fastned.application.domain.PersoonEntiteiten.Planner;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import static be.fastned.application.control.Base.ControleBaseExtended.BEAN_CONTROLEPLANNER;
+import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLEPLANNER;
 
 /**
  * @author TiboVG
@@ -19,7 +19,7 @@ import static be.fastned.application.control.Base.ControleBaseExtended.BEAN_CONT
  */
 
 @Component(BEAN_CONTROLEPLANNER)
-public class ControlePlanner extends ControleBaseExtended {
+public class ControlePlanner extends ControleBaseImpl {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
     /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */

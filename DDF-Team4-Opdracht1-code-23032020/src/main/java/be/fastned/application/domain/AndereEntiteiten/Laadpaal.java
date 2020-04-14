@@ -4,7 +4,7 @@ import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.domain.Base.AbsoluteBase;
 import be.fastned.application.domain.PersoonEntiteiten.Locatiehouder;
-import be.fastned.application.domain.Technisch.DocumentatieRepository;
+import be.fastned.application.domain.Technisch.DocumentatieDoc;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -70,7 +70,9 @@ public class Laadpaal extends AbsoluteBase {
 	public static final String STATUS_COL_NAME = "Status";
 
 	// Technische constanten
-	public static final DocumentatieRepository repo = DocumentatieRepository.getInstance();
+	public static DocumentatieDoc repo = new DocumentatieDoc();
+	private static ArrayList<DocumentatieDoc> reparatieDocs = repo.getReparatieDocumentaties();
+	private static ArrayList<DocumentatieDoc> installatieDocs = repo.getInstallatieDocumentaties();
 
 	/* //----------------// SECTIE: Laadpalen //----------------// */
 	/**
@@ -109,8 +111,8 @@ public class Laadpaal extends AbsoluteBase {
 		this.locatiehouder = locatiehouder;
 		this.laadpaalType = laadpaalType;
 		this.status = "aangemaakt";
-		this.installatieDoc = repo.laadpaalHashMapInst.get(laadpaalType);
-		this.reparatieDoc = repo.laadpaalHashMapRep.get(laadpaalType);
+		this.installatieDoc = repo.findInstallatieDoc(getLaadpaalType()).getDocumentatie();
+		this.reparatieDoc = repo.findReparatieDoc(getLaadpaalType()).getDocumentatie();
 		setupInitConfig();
 		id = extrapolateId();
 	}

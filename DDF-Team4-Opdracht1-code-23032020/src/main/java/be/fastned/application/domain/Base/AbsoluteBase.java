@@ -14,6 +14,7 @@ public abstract class AbsoluteBase implements Serializable {
     static protected final String OPLOSSING_ID_PREFIX = "OPLSNG_";
     static protected final String PROBLEEM_ID_PREFIX = "PBLM_";
     static protected final String REPARATIE_ID_PREFIX = "RPRTIE_";
+    static protected final String DOCUMENTATIEDOC_ID_PREFIX = "DCMNTTIEDC_";
 
     static protected final String PERSONEN_ID_PREFIX = "PRSN_";
     static protected final String INSTALLATEUR_ID_PREFIX = "INSTLR_";

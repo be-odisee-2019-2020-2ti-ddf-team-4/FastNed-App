@@ -1,6 +1,6 @@
 package be.fastned.application.dao.Interfaces;
 
-import be.fastned.application.domain.Reparatie;
+import be.fastned.application.domain.AndereEntiteiten.Reparatie;
 
 public interface ReparatieDao {
     Reparatie createItem(Reparatie item);

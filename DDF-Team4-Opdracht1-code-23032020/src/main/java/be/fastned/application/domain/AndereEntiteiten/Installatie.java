@@ -4,7 +4,7 @@ import be.fastned.application.dao.InstallatieHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.domain.Base.AbsoluteBase;
 import be.fastned.application.domain.Technisch.Bezoek;
-import be.fastned.application.domain.Technisch.DocumentatieRepository;
+import be.fastned.application.domain.Technisch.DocumentatieDoc;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -64,7 +64,7 @@ public class Installatie extends AbsoluteBase implements Bezoek {
 	public static final String PROBLEEM_COL_NAME = "Probleem_FK";
 
 	// Technische constanten
-	public static final DocumentatieRepository repo = DocumentatieRepository.getInstance();
+	public static final DocumentatieDoc repo = DocumentatieDoc.getInstance();
 
 	/* //----------------// SECTIE: Installaties //----------------// */
 	/**

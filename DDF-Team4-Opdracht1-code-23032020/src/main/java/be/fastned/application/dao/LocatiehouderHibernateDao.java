@@ -2,7 +2,7 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.LocatiehouderDao;
-import be.fastned.application.domain.Personen.Locatiehouder;
+import be.fastned.application.domain.PersoonEntiteiten.Locatiehouder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

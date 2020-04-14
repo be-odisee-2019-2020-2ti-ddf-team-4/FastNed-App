@@ -1,5 +1,7 @@
 package be.fastned.application.service;
 
+import be.fastned.application.domain.PersoonEntiteiten.Planner;
+import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
 import be.fastned.application.service.Interfaces.PersistenceService;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
@@ -83,5 +85,13 @@ public class AppConfig {
             System.out.println("Bean persistenceService is niet aangemaakt met exception: " + ex.getMessage());
         }
         return null;
+    }
+
+    @Bean
+    Persoon actieveGebruiker(){
+        return new Planner("test@email.com", "testman", "XXX");
+//        return new Laadklant("test@email.com", "testman", "XXX");
+//        return new Installateur("test@email.com", "testman", "XXX");
+//        return new Locatiehouder("test@email.com", "testman", "XXX");
     }
 }

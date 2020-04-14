@@ -1,14 +1,17 @@
 package be.fastned.application.control;
 
 import be.fastned.application.boundary.SchermInstallateur;
-import be.fastned.application.control.Base.ControleBaseExtended;
-import be.fastned.application.domain.*;
-import be.fastned.application.domain.Personen.Installateur;
+import be.fastned.application.control.Base.ControleBaseImpl;
+import be.fastned.application.domain.AndereEntiteiten.Afspraak;
+import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
+import be.fastned.application.domain.AndereEntiteiten.Oplossing;
+import be.fastned.application.domain.AndereEntiteiten.Probleem;
+import be.fastned.application.domain.PersoonEntiteiten.Installateur;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.*;
-import static be.fastned.application.control.Base.ControleBaseExtended.BEAN_CONTROLEINSTALLATEUR;
+import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLEINSTALLATEUR;
 
 /**
  * @author TiboVG
@@ -16,7 +19,7 @@ import static be.fastned.application.control.Base.ControleBaseExtended.BEAN_CONT
  */
 
 @Component(BEAN_CONTROLEINSTALLATEUR)
-public class ControleInstallateur extends ControleBaseExtended {
+public class ControleInstallateur extends ControleBaseImpl {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
     /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */

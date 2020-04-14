@@ -2,7 +2,7 @@ package be.fastned.application.boundary.Technisch;
 
 import be.fastned.application.domain.PersoonAbstracties.EnumPersoon;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
-import be.fastned.application.control.Technisch.ControleRegisterUser;
+import be.fastned.application.control.ControleRegisterUser;
 
 /**
  * @author TiboVG

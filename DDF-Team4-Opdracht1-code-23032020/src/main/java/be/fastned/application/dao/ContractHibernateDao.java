@@ -2,7 +2,7 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.ContractDao;
-import be.fastned.application.domain.Contract;
+import be.fastned.application.domain.AndereEntiteiten.Contract;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

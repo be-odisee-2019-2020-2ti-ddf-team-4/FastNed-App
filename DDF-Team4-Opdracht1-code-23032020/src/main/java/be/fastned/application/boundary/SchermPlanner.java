@@ -1,9 +1,9 @@
 package be.fastned.application.boundary;
 
 import be.fastned.application.boundary.Technisch.SchermBase;
-import be.fastned.application.domain.*;
 import be.fastned.application.control.ControlePlanner;
-import be.fastned.application.domain.Personen.Installateur;
+import be.fastned.application.domain.AndereEntiteiten.*;
+import be.fastned.application.domain.PersoonEntiteiten.Installateur;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
 
 import java.time.LocalDateTime;

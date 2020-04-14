@@ -1,15 +1,10 @@
 package be.fastned.application.service;
 
-import be.fastned.application.domain.AbsoluteBase;
-import be.fastned.application.domain.Oplossing;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
-import be.fastned.application.domain.Probleem;
 import be.fastned.application.service.Interfaces.AppService;
 import be.fastned.application.service.Interfaces.PersistenceService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 /**
  * @author TiboVG
