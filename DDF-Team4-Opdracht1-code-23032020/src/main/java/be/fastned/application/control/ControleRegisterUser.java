@@ -1,56 +1,71 @@
 package be.fastned.application.control;
 
 import be.fastned.application.boundary.Technisch.SchermRegisterUser;
-import be.fastned.application.control.Base.ControleBase;
+import be.fastned.application.control.Base.ControleBaseImpl;
 import be.fastned.application.domain.PersoonAbstracties.EnumPersoon;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
 import be.fastned.application.domain.PersoonAbstracties.PersoonFactory;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLEREGISTERUSER;
 
 /**
  * @author TiboVG
- * @version 2.0
- * @created 15-Mar-2020 14:24:54
+ * @version 6.0
  */
-@Component("b_ControleRegisterUserInst")
-public class ControleRegisterUser extends ControleBase {
 
-    /* //----------------// -#####----------------------------#####- //----------------// */
-    /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####----------------------------#####- //----------------// */
+@Component(BEAN_CONTROLEREGISTERUSER)
+public class ControleRegisterUser extends ControleBaseImpl {
 
-    /* //----------------// SECTIE: Domein-Variabelen //----------------// */
-    private SchermRegisterUser m_SchermLaadklant = null;
+    /* //----------------// -#########--------------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Technische-Variabelen //----------------// */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    /* //----------------\\ # Instantie Technisch Variabelen # //----------------\\ */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    private SchermRegisterUser schermRegisterUser = null;
+    private Persoon actieveGebruiker = (Persoon)BEAN_ACTIEVE_GEBRUIKER;
 
-    /* //----------------// -#####-------------------------#####- //----------------// */
-    /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####-------------------------#####- //----------------// */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    /* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
 
-    /* //----------------// SECTIE: Domein-Variabelen //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& KLASSE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Technische-Variabelen //----------------// */
+    /* //----------------\\ # --------------------------- # //----------------\\ */
+    /* //----------------\\ # Klasse Technisch Variabelen # //----------------\\ */
+    /* //----------------\\ # --------------------------- # //----------------\\ */
 
-    /* //----------------// -#####--------------------#####- //----------------// */
-    /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-    /* //----------------// -#####--------------------#####- //----------------// */
+    /* //----------------\\ # -------------------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein Variabelen # //----------------\\ */
+    /* //----------------\\ # -------------------------- # //----------------\\ */
+
+    /* //----------------// -#########------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+    /* //----------------// -#########------------------------#########- //----------------// */
     /**
      * Default Constructor voor deze klasse.
      */
     public ControleRegisterUser(){
-        m_SchermLaadklant = new SchermRegisterUser(this);
+        schermRegisterUser = new SchermRegisterUser(this);
     }
 
-    /* //----------------// -#####----------------#####- //----------------// */
-    /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-    /* //----------------// -#####----------------#####- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
+    /* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Domein-Functies //----------------// */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+
+    /* //----------------\\ # --------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein # //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
     /**
      * Deze Domein-functie retourneert een aangemaakte persoon.
      * @return De aangemaakte persoon.
@@ -133,26 +148,28 @@ public class ControleRegisterUser extends ControleBase {
         }
     }
 
-    /* //----------------// SECTIE: Technische-Functies //----------------// */
+    /* //----------------// -#########----------------------#########- //----------------// */
+    /* //----------------// -#########- &|& PROPERTIES &|& -#########- //----------------// */
+    /* //----------------// -#########----------------------#########- //----------------// */
 
-    /* //----------------// -#####- |------------| -#####- //----------------// */
-    /* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-    /* //----------------// -#####- |------------| -#####- //----------------// */
-
-    /* //----------------// SECTIE: Domein-Properties //----------------// */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
 
     /**
      * Deze domein-attribuut setter vertegenwoordigt de scherm-instantie in deze controle-instantie.
      */
     public void setSchermRegisterUser(SchermRegisterUser value){
-        this.m_SchermLaadklant = value;
+        this.schermRegisterUser = value;
     }
     /**
      * Deze domein-attribuut getter vertegenwoordigt de scherm-instantie in deze controle-instantie.
      */
     public SchermRegisterUser getSchermRegisterUser(){
-        return this.m_SchermLaadklant;
+        return this.schermRegisterUser;
     }
 
-    /* //----------------// SECTIE: Technische-Properties //----------------// */
+    /* //----------------\\ # --------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein # //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
 }
