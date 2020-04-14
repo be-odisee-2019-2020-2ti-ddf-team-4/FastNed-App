@@ -3,9 +3,9 @@ package be.fastned.application.dao.Interfaces;
 import be.fastned.application.domain.Contract;
 
 public interface ContractDao {
-    public Contract createItem(Contract item);
+    Contract createItem(Contract item);
 
-    public Contract deleteItem(Contract item);
+    Contract deleteItem(Contract item);
 
-    public void updateItem (Contract item);
+    void updateItem (Contract item);
 }

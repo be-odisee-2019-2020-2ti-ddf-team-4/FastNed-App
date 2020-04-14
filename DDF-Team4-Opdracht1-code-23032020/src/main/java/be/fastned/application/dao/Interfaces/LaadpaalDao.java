@@ -3,9 +3,9 @@ package be.fastned.application.dao.Interfaces;
 import be.fastned.application.domain.Laadpaal;
 
 public interface LaadpaalDao {
-    public Laadpaal addItem(Laadpaal item);
+    Laadpaal createItem(Laadpaal item);
 
-    public Laadpaal deleteItem(Laadpaal item);
+    Laadpaal deleteItem(Laadpaal item);
 
-    public void updateItem (Laadpaal item);
+    void updateItem (Laadpaal item);
 }

@@ -3,9 +3,9 @@ package be.fastned.application.dao.Interfaces;
 import be.fastned.application.domain.Probleem;
 
 public interface ProbleemDao {
-    public Probleem addItem(Probleem item);
+    Probleem createItem(Probleem item);
 
-    public Probleem deleteItem(Probleem item);
+    Probleem deleteItem(Probleem item);
 
-    public void updateItem (Probleem item);
+    void updateItem (Probleem item);
 }

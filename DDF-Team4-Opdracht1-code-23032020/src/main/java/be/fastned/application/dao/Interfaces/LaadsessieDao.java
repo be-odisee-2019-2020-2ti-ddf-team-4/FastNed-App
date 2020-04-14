@@ -3,9 +3,9 @@ package be.fastned.application.dao.Interfaces;
 import be.fastned.application.domain.Laadsessie;
 
 public interface LaadsessieDao {
-    public Laadsessie addItem(Laadsessie item);
+    Laadsessie createItem(Laadsessie item);
 
-    public Laadsessie deleteItem(Laadsessie item);
+    Laadsessie deleteItem(Laadsessie item);
 
-    public void updateItem (Laadsessie item);
+    void updateItem (Laadsessie item);
 }
