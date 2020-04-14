@@ -1,5 +1,6 @@
 package be.fastned.application.dao;
 
+import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.LaadklantDao;
 import be.fastned.application.domain.Personen.Laadklant;
 import org.springframework.stereotype.Repository;

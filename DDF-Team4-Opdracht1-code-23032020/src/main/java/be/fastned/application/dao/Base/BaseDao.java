@@ -1,4 +1,4 @@
-package be.fastned.application.dao.Interfaces;
+package be.fastned.application.dao.Base;
 
 import be.fastned.application.domain.AbsoluteBase;
 

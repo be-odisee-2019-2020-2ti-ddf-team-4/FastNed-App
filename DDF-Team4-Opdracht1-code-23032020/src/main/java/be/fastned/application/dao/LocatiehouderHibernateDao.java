@@ -1,5 +1,6 @@
 package be.fastned.application.dao;
 
+import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.LocatiehouderDao;
 import be.fastned.application.domain.Personen.Locatiehouder;
 import org.springframework.stereotype.Repository;

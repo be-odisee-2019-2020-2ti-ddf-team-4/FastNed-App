@@ -1,5 +1,6 @@
 package be.fastned.application.dao;
 
+import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.ReparatieDao;
 import be.fastned.application.domain.Reparatie;
 import org.springframework.stereotype.Repository;

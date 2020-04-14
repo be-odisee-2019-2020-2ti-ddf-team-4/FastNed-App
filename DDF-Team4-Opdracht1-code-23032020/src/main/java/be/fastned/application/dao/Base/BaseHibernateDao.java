@@ -1,6 +1,5 @@
-package be.fastned.application.dao;
+package be.fastned.application.dao.Base;
 
-import be.fastned.application.dao.Interfaces.BaseDao;
 import be.fastned.application.domain.AbsoluteBase;
 import be.fastned.application.domain.Oplossing;
 import be.fastned.application.service.AppConfig;
