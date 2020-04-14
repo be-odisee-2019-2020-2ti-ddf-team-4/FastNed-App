@@ -1,6 +1,7 @@
-package be.fastned.application.control.Technisch;
+package be.fastned.application.control;
 
 import be.fastned.application.boundary.Technisch.SchermRegisterUser;
+import be.fastned.application.control.Base.ControleBase;
 import be.fastned.application.domain.PersoonAbstracties.EnumPersoon;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
 import be.fastned.application.domain.PersoonAbstracties.PersoonFactory;

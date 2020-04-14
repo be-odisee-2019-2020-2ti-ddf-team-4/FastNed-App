@@ -1,4 +1,4 @@
-package be.fastned.application.control.Technisch;
+package be.fastned.application.control.Base;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.cfg.NotYetImplementedException;

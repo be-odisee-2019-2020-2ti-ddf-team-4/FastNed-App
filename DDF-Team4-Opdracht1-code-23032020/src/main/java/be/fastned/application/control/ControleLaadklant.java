@@ -1,62 +1,75 @@
 package be.fastned.application.control;
 
 import be.fastned.application.boundary.SchermLaadklant;
-import be.fastned.application.control.Technisch.ControleBaseExtended;
+import be.fastned.application.control.Base.ControleBaseExtended;
 import be.fastned.application.domain.*;
 import be.fastned.application.domain.Personen.Laadklant;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import static be.fastned.application.control.Base.ControleBaseExtended.BEAN_CONTROLELAADKLANT;
 
 /**
  * @author TiboVG
- * @version 2.0
- * @created 15-Mar-2020 14:24:54
+ * @version 6.0
  */
-//@Component("b_ControleLaadklantDef")
+
+@Component(BEAN_CONTROLELAADKLANT)
 public class ControleLaadklant extends ControleBaseExtended {
-    /* //----------------// -#####----------------------------#####- //----------------// */
-    /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####----------------------------#####- //----------------// */
 
-    /* //----------------// SECTIE: Domein-Variabelen //----------------// */
-    private SchermLaadklant m_SchermLaadklant = null;
+    /* //----------------// -#########--------------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Technische-Variabelen //----------------// */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    /* //----------------\\ # Instantie Technisch Variabelen # //----------------\\ */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    private SchermLaadklant schermLaadklant = null;
+    private Laadklant actieveGebruiker = (Laadklant)BEAN_ACTIEVE_GEBRUIKER;
 
-    /* //----------------// -#####-------------------------#####- //----------------// */
-    /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####-------------------------#####- //----------------// */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    /* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
 
-    /* //----------------// SECTIE: Domein-Variabelen //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& KLASSE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Technische-Variabelen //----------------// */
+    /* //----------------\\ # --------------------------- # //----------------\\ */
+    /* //----------------\\ # Klasse Technisch Variabelen # //----------------\\ */
+    /* //----------------\\ # --------------------------- # //----------------\\ */
 
-    /* //----------------// -#####--------------------#####- //----------------// */
-    /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-    /* //----------------// -#####--------------------#####- //----------------// */
+    /* //----------------\\ # -------------------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein Variabelen # //----------------\\ */
+    /* //----------------\\ # -------------------------- # //----------------\\ */
+
+    /* //----------------// -#########------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+    /* //----------------// -#########------------------------#########- //----------------// */
     /**
      * Default Constructor voor deze klasse.
      */
-    public ControleLaadklant(Persoon b_ActieveGebruiker){
-        m_ActieveGebruiker = b_ActieveGebruiker;
-        m_SchermLaadklant = new SchermLaadklant(this);
+    public ControleLaadklant(){
+        schermLaadklant = new SchermLaadklant(this);
     }
 
-    /* //----------------// -#####----------------#####- //----------------// */
-    /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-    /* //----------------// -#####----------------#####- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
+    /* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Domein-Functies //----------------// */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+
+    /* //----------------\\ # --------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein # //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
     /**
      * Deze Domein-functie updated de actieve persoon met persoons-/gebruikersgegevens na argumentencontroles na argumentcontroles.
-     * @return Het aangevulde persoon-object van de actieve gebruiker na argumentencontroles na argumentcontroles.
      */
-    public PersoonDefault identificeer(PersoonDefault gegevensOwner, String voornaam, String naam, String geslacht, String gsm){
+    public PersoonDefault identificeer(String voornaam, String naam, String geslacht, String gsm){
         try{
             // Setup technische helper-variabelen
             StringBuilder samengesteldeError = new StringBuilder();
@@ -68,15 +81,12 @@ public class ControleLaadklant extends ControleBaseExtended {
                 put(5, "Gsm Nummer");
             }};
 
-            // Check persoon-argument.
-            if (gegevensOwner != null )
-                throw new Exception("Te updaten persoon is null.");
             // Check verschillende gegevens via helper functie.
             ArrayList<Integer> violationIndexes = tf_checkAgainstNullOrEmpty(new Object[]{voornaam, naam, geslacht, gsm}, true);
 
             // Afhandeling: er zijn geen problemen.
             if (violationIndexes != null){
-                return gegevensOwner.identificeer(voornaam, naam, geslacht, gsm);
+                return actieveGebruiker.identificeer(voornaam, naam, geslacht, gsm);
             }
             // Afhandeling: er zijn problemen opgetreden.
             else{
@@ -94,7 +104,6 @@ public class ControleLaadklant extends ControleBaseExtended {
 
     /**
      * Deze Domein-functie berekent de verwachtte laadtijd op basis van een laadsessie na argumentcontroles.
-     * @return De berekende laadtijd als double (kommagetal) na argumentcontroles.
      */
     public Double berekenLaadtijd(Laadsessie laadsessie){
         try{
@@ -113,7 +122,6 @@ public class ControleLaadklant extends ControleBaseExtended {
 
     /**
      * Deze Domein-functie maakt een probleem via deze laadklant na argumentcontroles.
-     * @return Het aangemaakt probleem via deze laadklant na argumentcontroles.
      */
     public Probleem maakProbleem(Laadpaal defecteLaadpaal, String probleemBeschrijving){
         try{
@@ -145,26 +153,28 @@ public class ControleLaadklant extends ControleBaseExtended {
         }
     }
 
-    /* //----------------// SECTIE: Technische-Functies //----------------// */
+    /* //----------------// -#########----------------------#########- //----------------// */
+    /* //----------------// -#########- &|& PROPERTIES &|& -#########- //----------------// */
+    /* //----------------// -#########----------------------#########- //----------------// */
 
-    /* //----------------// -#####- |------------| -#####- //----------------// */
-    /* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-    /* //----------------// -#####- |------------| -#####- //----------------// */
-
-    /* //----------------// SECTIE: Domein-Properties //----------------// */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
 
     /**
      * Deze domein-attribuut setter vertegenwoordigt de scherm-instantie in deze controle-instantie.
      */
     public void setSchermLaadklant(SchermLaadklant value){
-        this.m_SchermLaadklant = value;
+        this.schermLaadklant = value;
     }
     /**
      * Deze domein-attribuut getter vertegenwoordigt de scherm-instantie in deze controle-instantie.
      */
     public SchermLaadklant getSchermLaadklant(){
-        return this.m_SchermLaadklant;
+        return this.schermLaadklant;
     }
 
-    /* //----------------// SECTIE: Technische-Properties //----------------// */
+    /* //----------------\\ # --------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein # //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
 }

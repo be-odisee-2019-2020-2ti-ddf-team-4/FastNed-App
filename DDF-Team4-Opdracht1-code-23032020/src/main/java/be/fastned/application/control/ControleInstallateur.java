@@ -1,83 +1,92 @@
 package be.fastned.application.control;
 
 import be.fastned.application.boundary.SchermInstallateur;
-import be.fastned.application.control.Technisch.ControleBaseExtended;
+import be.fastned.application.control.Base.ControleBaseExtended;
 import be.fastned.application.domain.*;
-
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
+import be.fastned.application.domain.Personen.Installateur;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.*;
+import static be.fastned.application.control.Base.ControleBaseExtended.BEAN_CONTROLEINSTALLATEUR;
 
 /**
  * @author TiboVG
- * @version 2.0
- * @created 15-Mar-2020 14:24:52
+ * @version 6.0
  */
-//@Component("b_ControleInstallateurDef")
+
+@Component(BEAN_CONTROLEINSTALLATEUR)
 public class ControleInstallateur extends ControleBaseExtended {
-    /* //----------------// -#####----------------------------#####- //----------------// */
-    /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####----------------------------#####- //----------------// */
 
-    /* //----------------// SECTIE: Domein-Variabelen //----------------// */
-    private SchermInstallateur m_SchermInstallateur = null;
+    /* //----------------// -#########--------------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Technische-Variabelen //----------------// */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    /* //----------------\\ # Instantie Technisch Variabelen # //----------------\\ */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    private SchermInstallateur schermInstallateur = null;
+    private Installateur actieveGebruiker = (Installateur)BEAN_ACTIEVE_GEBRUIKER;
 
-    /* //----------------// -#####-------------------------#####- //----------------// */
-    /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####-------------------------#####- //----------------// */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    /* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
 
-    /* //----------------// SECTIE: Domein-Variabelen //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& KLASSE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Technische-Variabelen //----------------// */
+    /* //----------------\\ # --------------------------- # //----------------\\ */
+    /* //----------------\\ # Klasse Technisch Variabelen # //----------------\\ */
+    /* //----------------\\ # --------------------------- # //----------------\\ */
 
-    /* //----------------// -#####--------------------#####- //----------------// */
-    /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-    /* //----------------// -#####--------------------#####- //----------------// */
+    /* //----------------\\ # -------------------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein Variabelen # //----------------\\ */
+    /* //----------------\\ # -------------------------- # //----------------\\ */
+
+    /* //----------------// -#########------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+    /* //----------------// -#########------------------------#########- //----------------// */
     /**
      * Default Constructor voor deze klasse.
      */
     @Autowired
-    public ControleInstallateur(Persoon b_ActieveGebruiker){
-        System.out.println("TEST");
-        m_ActieveGebruiker = b_ActieveGebruiker;
-        m_SchermInstallateur = new SchermInstallateur(this);
+    public ControleInstallateur(){
+        schermInstallateur = new SchermInstallateur(this);
     }
 
-    /* //----------------// -#####----------------#####- //----------------// */
-    /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-    /* //----------------// -#####----------------#####- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
+    /* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Domein-Functies //----------------// */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+
+    /* //----------------\\ # --------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein # //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
     /**
      * Deze Domein-functie updated de actieve persoon met persoons-/gebruikersgegevens na argumentencontroles.
      * @return Het aangevulde persoon-object van de actieve gebruiker na argumentencontroles.
      */
-    public PersoonDefault identificeer(PersoonDefault gegevensOwner, String voornaam, String naam, String geslacht, String gsm){
+    public PersoonDefault identificeer(String voornaam, String naam, String geslacht, String gsm){
         try{
             // Setup technische helper-variabelen
             StringBuilder samengesteldeError = new StringBuilder();
             Map<Integer, String> indexToLabel = new HashMap<Integer, String>() {{
-                put(0, "gegevensOwner(parameter)");
-                put(1, "Voornaam");
-                put(2, "Familienaam");
-                put(3, "Geslacht");
-                put(5, "Gsm Nummer");
+                put(0, "Voornaam");
+                put(1, "Familienaam");
+                put(2, "Geslacht");
+                put(3, "Gsm Nummer");
             }};
 
-            // Check persoon-argument.
-            if (gegevensOwner != null )
-                throw new Exception("Te updaten persoon is null.");
             // Check verschillende gegevens via helper functie.
             ArrayList<Integer> violationIndexes = tf_checkAgainstNullOrEmpty(new Object[]{voornaam, naam, geslacht, gsm}, true);
 
             // Afhandeling: er zijn geen problemen.
             if (violationIndexes != null){
-                return gegevensOwner.identificeer(voornaam, naam, geslacht, gsm);
+                return actieveGebruiker.identificeer(voornaam, naam, geslacht, gsm);
             }
             // Afhandeling: er zijn problemen opgetreden.
             else{
@@ -95,7 +104,6 @@ public class ControleInstallateur extends ControleBaseExtended {
 
     /**
      * Deze Domein-functie zoekt installatiedocumentatie op basis van een laadpaal na argumentcontroles.
-     * @return De installatiedocumentatie uit de documentatierepository binnen een laadpaal na argumentcontroles.
      */
     public String zoekInstallatieDoc(Laadpaal laadpaal){
         try{
@@ -113,7 +121,6 @@ public class ControleInstallateur extends ControleBaseExtended {
     }
     /**
      * Deze Domein-functie zoekt reparatiedocumentatie op basis van een laadpaal na argumentcontroles.
-     * @return De reparatiedocumentatie uit de documentatierepository binnen een laadpaal na argumentcontroles.
      */
     public String zoekReparatieDoc(Laadpaal laadpaal){
         // Check laadpaal-argument.
@@ -132,7 +139,6 @@ public class ControleInstallateur extends ControleBaseExtended {
 
     /**
      * Deze Domein-functie maakt een probleem vanuit een installatie binnen een afspraak na argumentcontroles.
-     * @return Het aangemaakt probleem vanuit een installatie binnen een afspraak na argumentcontroles.
      */
     public Probleem maakInstallatieProbleem(Afspraak parentAfspraak, Laadpaal defecteLaadpaal, String probleemBeschrijving){
         try{
@@ -167,7 +173,6 @@ public class ControleInstallateur extends ControleBaseExtended {
     }
     /**
      * Deze Domein-functie maakt een probleem vanuit een reparatie binnen een afspraak na argumentcontroles.
-     * @return Het aangemaakt probleem vanuit een reparatie binnen een afspraak na argumentcontroles.
      */
     public Probleem maakReparatieProbleem(Afspraak parentAfspraak, Laadpaal defecteLaadpaal, String probleemBeschrijving){
         try{
@@ -203,7 +208,6 @@ public class ControleInstallateur extends ControleBaseExtended {
 
     /**
      * Deze Domein-functie maakt een oplossing vanuit een installatie binnen een probleem in een afspraak na argumentcontroles.
-     * @return De aangemaakte oplossing vanuit een installatie binnen een probleem in een afspraak na argumentcontroles.
      */
     public Oplossing maakInstallatieOplossing(Afspraak parentAfspraak, String oplossingBeschrijving){
 
@@ -239,7 +243,6 @@ public class ControleInstallateur extends ControleBaseExtended {
     }
     /**
      * Deze Domein-functie maakt een oplossing vanuit een reparatie binnen een probleem in een afspraak na argumentcontroles.
-     * @return De aangemaakte oplossing vanuit een reparatie binnen een probleem in een afspraak na argumentcontroles.
      */
     public Oplossing maakReparatieOplossing(Afspraak parentAfspraak, String oplossingBeschrijving){
         try{
@@ -275,7 +278,6 @@ public class ControleInstallateur extends ControleBaseExtended {
 
     /**
      * Deze Domein-functie updated een afspraak-status binnen een afspraak.
-     * @return De geüpdatete afspraak.
      */
     public Afspraak updateAfspraakStatus(Afspraak afspraak, String nieuweStatus){
         try{
@@ -308,26 +310,28 @@ public class ControleInstallateur extends ControleBaseExtended {
         }
     }
 
-    /* //----------------// SECTIE: Technische-Functies //----------------// */
+    /* //----------------// -#########----------------------#########- //----------------// */
+    /* //----------------// -#########- &|& PROPERTIES &|& -#########- //----------------// */
+    /* //----------------// -#########----------------------#########- //----------------// */
 
-    /* //----------------// -#####- |------------| -#####- //----------------// */
-    /* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-    /* //----------------// -#####- |------------| -#####- //----------------// */
-
-    /* //----------------// SECTIE: Domein-Properties //----------------// */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
 
     /**
      * Deze domein-attribuut setter vertegenwoordigt de scherm-instantie in deze controle-instantie.
      */
     public void setSchermInstallateur(SchermInstallateur value){
-        this.m_SchermInstallateur = value;
+        this.schermInstallateur = value;
     }
     /**
      * Deze domein-attribuut getter vertegenwoordigt de scherm-instantie in deze controle-instantie.
      */
     public SchermInstallateur getSchermInstallateur(){
-        return this.m_SchermInstallateur;
+        return this.schermInstallateur;
     }
 
-    /* //----------------// SECTIE: Technische-Properties //----------------// */
+    /* //----------------\\ # --------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein # //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
 }

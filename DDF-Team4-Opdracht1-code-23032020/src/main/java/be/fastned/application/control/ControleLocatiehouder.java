@@ -1,85 +1,95 @@
 package be.fastned.application.control;
 
 import be.fastned.application.boundary.SchermLocatiehouder;
-import be.fastned.application.control.Technisch.ControleBaseExtended;
+import be.fastned.application.control.Base.ControleBaseExtended;
 import be.fastned.application.domain.*;
 import be.fastned.application.domain.Personen.Locatiehouder;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonProfessional;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import static be.fastned.application.control.Base.ControleBaseExtended.BEAN_CONTROLELOCATIEHOUDER;
 
 /**
  * @author TiboVG
- * @version 2.0
- * @created 15-Mar-2020 14:24:54
+ * @version 6.0
  */
-//@Component("b_ControleLocatiehouderDef")
+
+@Component(BEAN_CONTROLELOCATIEHOUDER)
 public class ControleLocatiehouder extends ControleBaseExtended {
-    /* //----------------// -#####----------------------------#####- //----------------// */
-    /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####----------------------------#####- //----------------// */
 
-    /* //----------------// SECTIE: Domein-Variabelen //----------------// */
-    private SchermLocatiehouder m_SchermLocatiehouder = null;
+    /* //----------------// -#########--------------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Technische-Variabelen //----------------// */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    /* //----------------\\ # Instantie Technisch Variabelen # //----------------\\ */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    private SchermLocatiehouder schermLocatiehouder = null;
+    private Locatiehouder actieveGebruiker = (Locatiehouder)BEAN_ACTIEVE_GEBRUIKER;
 
-    /* //----------------// -#####-------------------------#####- //----------------// */
-    /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####-------------------------#####- //----------------// */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
+    /* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
+    /* //----------------\\ # ------------------------------ # //----------------\\ */
 
-    /* //----------------// SECTIE: Domein-Variabelen //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& KLASSE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Technische-Variabelen //----------------// */
+    /* //----------------\\ # --------------------------- # //----------------\\ */
+    /* //----------------\\ # Klasse Technisch Variabelen # //----------------\\ */
+    /* //----------------\\ # --------------------------- # //----------------\\ */
 
-    /* //----------------// -#####--------------------#####- //----------------// */
-    /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-    /* //----------------// -#####--------------------#####- //----------------// */
+    /* //----------------\\ # -------------------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein Variabelen # //----------------\\ */
+    /* //----------------\\ # -------------------------- # //----------------\\ */
+
+    /* //----------------// -#########------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+    /* //----------------// -#########------------------------#########- //----------------// */
     /**
      * Default Constructor voor deze klasse.
      */
-    public ControleLocatiehouder(Persoon b_ActieveGebruiker){
-        m_ActieveGebruiker = b_ActieveGebruiker;
-        m_SchermLocatiehouder = new SchermLocatiehouder(this);
+    public ControleLocatiehouder(){
+        schermLocatiehouder = new SchermLocatiehouder(this);
     }
 
-    /* //----------------// -#####----------------#####- //----------------// */
-    /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-    /* //----------------// -#####----------------#####- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
+    /* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
 
-    /* //----------------// SECTIE: Domein-Functies //----------------// */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+
+    /* //----------------\\ # --------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein # //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
     /**
      * Deze Domein-functie updated de actieve persoon met persoons-/gebruikersgegevens na argumentencontroles na argumentcontroles.
-     * @return Het aangevulde persoon-object van de actieve gebruiker na argumentencontroles na argumentcontroles.
      */
-    public PersoonProfessional identificeer(PersoonProfessional gegevensOwner, String adres, String bedrijfsNaam, String btwNummer, String voornaam, String naam, String geslacht, String gsm){
+    public PersoonProfessional identificeer(String adres, String bedrijfsNaam, String btwNummer, String voornaam, String naam, String geslacht, String gsm){
         try{
             // Setup technische helper-variabelen
             StringBuilder samengesteldeError = new StringBuilder();
             Map<Integer, String> indexToLabel = new HashMap<Integer, String>() {{
-                put(0, "gegevensOwner(parameter)");
-                put(1, "Adres");
-                put(2, "Bedrijfsnaam");
-                put(3, "BTW Nummer");
-                put(4, "Voornaam");
-                put(5, "Familienaam");
-                put(6, "Geslacht");
-                put(8, "Gsm Nummer");
+                put(0, "Adres");
+                put(1, "Bedrijfsnaam");
+                put(2, "BTW Nummer");
+                put(3, "Voornaam");
+                put(4, "Familienaam");
+                put(5, "Geslacht");
+                put(6, "Gsm Nummer");
             }};
 
-            // Check persoon-argument.
-            if (gegevensOwner != null )
-                throw new Exception("Te updaten persoon is null.");
             // Check verschillende gegevens via helper functie.
             ArrayList<Integer> violationIndexes = tf_checkAgainstNullOrEmpty(new Object[]{adres, bedrijfsNaam, btwNummer, voornaam, naam, geslacht, gsm}, true);
 
             // Afhandeling: er zijn geen problemen.
             if (violationIndexes != null){
-                return gegevensOwner.identificeer(adres, bedrijfsNaam, btwNummer, voornaam, naam, geslacht, gsm);
+                return actieveGebruiker.identificeer(adres, bedrijfsNaam, btwNummer, voornaam, naam, geslacht, gsm);
             }
             // Afhandeling: er zijn problemen opgetreden.
             else{
@@ -97,7 +107,6 @@ public class ControleLocatiehouder extends ControleBaseExtended {
 
     /**
      * Deze Domein-functie maakt een locatietoestemming via deze locatiehouder na argumentcontroles.
-     * @return De aangemaakt locatietoestemming via deze locatiehouder na argumentcontroles.
      */
     public Locatietoestemming maakLocatieAan(Integer aantalLaadpalen, String typeLaadpaal){
         try{
@@ -131,7 +140,6 @@ public class ControleLocatiehouder extends ControleBaseExtended {
 
     /**
      * Deze Domein-functie toont het resultaat van een aanmelding na argumentcontroles.
-     * @return De statusproperty via van een locatietoestemming na argumentcontroles.
      */
     public String toonAanmeldingResultaat(Locatietoestemming aanmelding){
 
@@ -150,7 +158,6 @@ public class ControleLocatiehouder extends ControleBaseExtended {
 
     /**
      * Deze Domein-functie maakt een probleem via deze Locatiehouder na argumentcontroles.
-     * @return Het aangemaakt probleem via deze Locatiehouder na argumentcontroles.
      */
     public Probleem maakProbleem(Laadpaal defecteLaadpaal, String probleemBeschrijving, Persoon probMelder){
 
@@ -185,26 +192,28 @@ public class ControleLocatiehouder extends ControleBaseExtended {
         }
     }
 
-    /* //----------------// SECTIE: Technische-Functies //----------------// */
+    /* //----------------// -#########----------------------#########- //----------------// */
+    /* //----------------// -#########- &|& PROPERTIES &|& -#########- //----------------// */
+    /* //----------------// -#########----------------------#########- //----------------// */
 
-    /* //----------------// -#####- |------------| -#####- //----------------// */
-    /* //----------------// -#####- | PROPERTIES | -#####- //----------------// */
-    /* //----------------// -#####- |------------| -#####- //----------------// */
-
-    /* //----------------// SECTIE: Domein-Properties //----------------// */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
 
     /**
      * Deze domein-attribuut setter vertegenwoordigt de scherm-instantie in deze controle-instantie.
      */
     public void setSchermLocatiehouder(SchermLocatiehouder value){
-        this.m_SchermLocatiehouder = value;
+        this.schermLocatiehouder = value;
     }
     /**
      * Deze domein-attribuut getter vertegenwoordigt de scherm-instantie in deze controle-instantie.
      */
     public SchermLocatiehouder getSchermLocatiehouder(){
-        return this.m_SchermLocatiehouder;
+        return this.schermLocatiehouder;
     }
 
-    /* //----------------// SECTIE: Technische-Properties //----------------// */
+    /* //----------------\\ # --------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein # //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
 }
