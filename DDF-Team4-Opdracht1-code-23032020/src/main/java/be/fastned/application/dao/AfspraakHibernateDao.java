@@ -9,48 +9,50 @@ import static be.fastned.application.dao.AfspraakHibernateDao.BEAN_DAO_NAME;
 
 @Repository(BEAN_DAO_NAME)
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
+
 public class AfspraakHibernateDao extends BaseHibernateDao implements AfspraakDao {
 
-    /* //----------------// -#####----------------------------#####- //----------------// */
-    /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####----------------------------#####- //----------------// */
+    /* //----------------// -#########--------------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------------------#########- //----------------// */
 
-    /* //----------------// -#####-------------------------#####- //----------------// */
-    /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####-------------------------#####- //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& KLASSE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
 
     /* //----------------// SECTIE: Constanten //----------------// */
     public static final String BEAN_DAO_NAME = "afspraakDao";
     private static final String AFSPRAAK_ENTITY_NAME = Afspraak.ENTITY_NAME;
 
-    /* //----------------// -#####--------------------#####- //----------------// */
-    /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-    /* //----------------// -#####--------------------#####- //----------------// */
+    /* //----------------// -#########------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+    /* //----------------// -#########------------------------#########- //----------------// */
+
     AfspraakHibernateDao() {
         configureAbstractOperations();
     }
 
-    /* //----------------// -#####----------------#####- //----------------// */
-    /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-    /* //----------------// -#####----------------#####- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
+    /* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
 
-    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
-    /* //----------------\\ <||> FUNCTIES Technisch <||> //----------------\\ */
-    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
         ENTITY_NAME = AFSPRAAK_ENTITY_NAME;
     }
 
-    /* //----------------\\ <||> --------------- <||> //----------------\\ */
-    /* //----------------\\ <||> FUNCTIES Domein <||> //----------------\\ */
-    /* //----------------\\ <||> --------------- <||> //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein # //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
 
     /* //----------------// SECTIE: Create //----------------// */
     /**
      * Voegt een instantie van deze klasse aan de DB toe als gepersisteerde entiteit.
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Afspraak addItem(Afspraak item) {
+    public Afspraak createItem(Afspraak item) {
         currentSession().save(item);
         return item;
     }
@@ -59,12 +61,18 @@ public class AfspraakHibernateDao extends BaseHibernateDao implements AfspraakDa
 
 
     /* //----------------// SECTIE: Update //----------------// */
+    /**
+     * Updated de gepersisteerde entiteit achter een instantie.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public void updateItem(Afspraak item) {
         currentSession().update(item);
     }
 
     /* //----------------// SECTIE: Delete //----------------// */
+    /**
+     * Deleted de gepersisteerde entiteit achter een instantie.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Afspraak deleteItem(Afspraak item){
         return (Afspraak) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();

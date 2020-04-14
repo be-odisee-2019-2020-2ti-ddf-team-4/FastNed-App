@@ -7,12 +7,11 @@ import be.fastned.application.service.AppConfig;
 import be.fastned.application.service.AppRunner;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import java.util.ArrayList;
 
 public abstract class BaseHibernateDao implements BaseDao {
+
     protected static String ENTITY_NAME;
-    protected SessionFactory sessionFactory;
 
     protected Session currentSession(){
         return ((SessionFactory) AppRunner.getAppContext().getBean(AppConfig.BEAN_SESSIONFACTORY)).getCurrentSession();

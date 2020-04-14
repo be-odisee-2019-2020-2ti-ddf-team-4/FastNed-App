@@ -9,48 +9,49 @@ import static be.fastned.application.dao.ProbleemHibernateDao.BEAN_DAO_NAME;
 
 @Repository(BEAN_DAO_NAME)
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
+
 public class ProbleemHibernateDao extends BaseHibernateDao implements ProbleemDao {
 
-    /* //----------------// -#####----------------------------#####- //----------------// */
-    /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####----------------------------#####- //----------------// */
+    /* //----------------// -#########--------------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------------------#########- //----------------// */
 
-    /* //----------------// -#####-------------------------#####- //----------------// */
-    /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####-------------------------#####- //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& KLASSE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
 
     /* //----------------// SECTIE: Constanten //----------------// */
     public static final String BEAN_DAO_NAME = "probleemDao";
     private static final String PROBLEEM_ENTITY_NAME = Probleem.ENTITY_NAME;
 
-    /* //----------------// -#####--------------------#####- //----------------// */
-    /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-    /* //----------------// -#####--------------------#####- //----------------// */
+    /* //----------------// -#########------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+    /* //----------------// -#########------------------------#########- //----------------// */
     ProbleemHibernateDao() {
         configureAbstractOperations();
     }
 
-    /* //----------------// -#####----------------#####- //----------------// */
-    /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-    /* //----------------// -#####----------------#####- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
+    /* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
 
-    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
-    /* //----------------\\ <||> FUNCTIES Technisch <||> //----------------\\ */
-    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
         ENTITY_NAME = PROBLEEM_ENTITY_NAME;
     }
 
-    /* //----------------\\ <||> --------------- <||> //----------------\\ */
-    /* //----------------\\ <||> FUNCTIES Domein <||> //----------------\\ */
-    /* //----------------\\ <||> --------------- <||> //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein # //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
 
     /* //----------------// SECTIE: Create //----------------// */
     /**
      * Voegt een instantie van deze klasse aan de DB toe als gepersisteerde entiteit.
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Probleem addItem(Probleem item) {
+    public Probleem createItem(Probleem item) {
         currentSession().save(item);
         return item;
     }
@@ -59,12 +60,18 @@ public class ProbleemHibernateDao extends BaseHibernateDao implements ProbleemDa
 
 
     /* //----------------// SECTIE: Update //----------------// */
+    /**
+     * Updated de gepersisteerde entiteit achter een instantie.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public void updateItem(Probleem item) {
         currentSession().update(item);
     }
 
     /* //----------------// SECTIE: Delete //----------------// */
+    /**
+     * Deleted de gepersisteerde entiteit achter een instantie.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Probleem deleteItem(Probleem item){
         return (Probleem) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();

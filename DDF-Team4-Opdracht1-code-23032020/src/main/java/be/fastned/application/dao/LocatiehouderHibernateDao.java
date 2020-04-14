@@ -5,45 +5,47 @@ import be.fastned.application.domain.Personen.Locatiehouder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import static be.fastned.application.dao.LaadklantHibernateDao.BEAN_DAO_NAME;
+import static be.fastned.application.dao.LocatiehouderHibernateDao.BEAN_DAO_NAME;
 
 @Repository(BEAN_DAO_NAME)
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
+
 public class LocatiehouderHibernateDao extends BaseHibernateDao implements LocatiehouderDao {
 
-    /* //----------------// -#####----------------------------#####- //----------------// */
-    /* //----------------// -#####- | INSTANTIE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####----------------------------#####- //----------------// */
+    /* //----------------// -#########--------------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------------------#########- //----------------// */
 
-    /* //----------------// -#####-------------------------#####- //----------------// */
-    /* //----------------// -#####- | KLASSE VARIABELEN | -#####- //----------------// */
-    /* //----------------// -#####-------------------------#####- //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& KLASSE VARIABELEN &|& -#########- //----------------// */
+    /* //----------------// -#########-----------------------------#########- //----------------// */
 
     /* //----------------// SECTIE: Constanten //----------------// */
     public static final String BEAN_DAO_NAME = "locatiehouderDao";
     private static final String LOCATIEHOUDER_ENTITY_NAME = Locatiehouder.ENTITY_NAME;
 
-    /* //----------------// -#####--------------------#####- //----------------// */
-    /* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-    /* //----------------// -#####--------------------#####- //----------------// */
+    /* //----------------// -#########------------------------#########- //----------------// */
+    /* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
+    /* //----------------// -#########------------------------#########- //----------------// */
+
     LocatiehouderHibernateDao() {
         configureAbstractOperations();
     }
 
-    /* //----------------// -#####----------------#####- //----------------// */
-    /* //----------------// -#####- | FUNCTIES | -#####- //----------------// */
-    /* //----------------// -#####----------------#####- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
+    /* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
+    /* //----------------// -#########--------------------#########- //----------------// */
 
-    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
-    /* //----------------\\ <||> FUNCTIES Technisch <||> //----------------\\ */
-    /* //----------------\\ <||> ------------------ <||> //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
+    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
         ENTITY_NAME = LOCATIEHOUDER_ENTITY_NAME;
     }
 
-    /* //----------------\\ <||> --------------- <||> //----------------\\ */
-    /* //----------------\\ <||> FUNCTIES Domein <||> //----------------\\ */
-    /* //----------------\\ <||> --------------- <||> //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
+    /* //----------------\\ # Functies Domein # //----------------\\ */
+    /* //----------------\\ # --------------- # //----------------\\ */
 
     /* //----------------// SECTIE: Create //----------------// */
     /**
@@ -59,12 +61,18 @@ public class LocatiehouderHibernateDao extends BaseHibernateDao implements Locat
 
 
     /* //----------------// SECTIE: Update //----------------// */
+    /**
+     * Updated de gepersisteerde entiteit achter een instantie.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public void updateItem(Locatiehouder item) {
         currentSession().update(item);
     }
 
     /* //----------------// SECTIE: Delete //----------------// */
+    /**
+     * Deleted de gepersisteerde entiteit achter een instantie.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Locatiehouder deleteItem(Locatiehouder item){
         return (Locatiehouder) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
