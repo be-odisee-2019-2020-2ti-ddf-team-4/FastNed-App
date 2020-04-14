@@ -62,7 +62,7 @@ public class Laadpaal extends AbsoluteBase {
 	public static final String ID_PREFIX = LAADPAAL_ID_PREFIX;
 
 	// Constanten met kolom-namen
-	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String ID_COL_NAME = ID_PREFIX + "ID";
 	public static final String LOCATIEHOUDER_COL_NAME = "Locatiehouder";
 	public static final String INSTALLATIEDOC_COL_NAME = "InstallatieDoc";
 	public static final String REPARATIEDOC_COL_NAME = "ReparatieDoc";

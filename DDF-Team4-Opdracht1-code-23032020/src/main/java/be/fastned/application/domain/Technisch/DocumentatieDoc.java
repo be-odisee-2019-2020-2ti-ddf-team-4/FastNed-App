@@ -58,7 +58,7 @@ public class DocumentatieDoc extends AbsoluteBase {
     public static final String ID_PREFIX = DOCUMENTATIEDOC_ID_PREFIX;
 
     // Constanten met kolom-namen
-    public static final String ID_COL_NAME = ID_PREFIX + "Id";
+    public static final String ID_COL_NAME = ID_PREFIX + "ID";
     public static final String LAADPAALTYPE_COL_NAME = "LaadpaalType";
     public static final String DOCUMENTATIETYPE_COL_NAME = "DocumentatieType";
     public static final String DOCUMENTATIE_COL_NAME = "Documentatie";

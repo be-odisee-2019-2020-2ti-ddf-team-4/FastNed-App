@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 14 apr 2020 om 16:57
+-- Gegenereerd op: 14 apr 2020 om 21:01
 -- Serverversie: 10.4.11-MariaDB
 -- PHP-versie: 7.4.3
 
@@ -57,6 +57,19 @@ CREATE TABLE `tbl_contracten` (
   `CNTRCT_ID` char(11) NOT NULL,
   `ContractDatum` datetime NOT NULL,
   `UitvoeringsDatum` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `tbl_documentatiedoc`
+--
+
+CREATE TABLE `tbl_documentatiedoc` (
+  `DCMNTTIEDC_ID` char(11) NOT NULL,
+  `LaadpaalType` char(20) NOT NULL,
+  `DocumentatieType` char(20) NOT NULL,
+  `Documentatie` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -222,6 +235,13 @@ ALTER TABLE `tbl_afspraken`
 --
 ALTER TABLE `tbl_contracten`
   ADD PRIMARY KEY (`CNTRCT_ID`);
+
+--
+-- Indexen voor tabel `tbl_documentatiedoc`
+--
+ALTER TABLE `tbl_documentatiedoc`
+  ADD PRIMARY KEY (`DCMNTTIEDC_ID`),
+  ADD KEY `DCMNTTIEDC_ID` (`DCMNTTIEDC_ID`);
 
 --
 -- Indexen voor tabel `tbl_installateurs`

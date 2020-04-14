@@ -63,7 +63,7 @@ public class Afspraak extends AbsoluteBase {
 	public static final String ID_PREFIX = AFSPRAAK_ID_PREFIX;
 
 	// Constanten met kolom-namen
-	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String ID_COL_NAME = ID_PREFIX + "ID";
 	public static final String LAADPAAL_COL_NAME = "Laadpaal_FK";
 	public static final String INSTALLATEUR_COL_NAME = "Installateur_FK";
 	public static final String CONTRACT_COL_NAME = "Contract_FK";

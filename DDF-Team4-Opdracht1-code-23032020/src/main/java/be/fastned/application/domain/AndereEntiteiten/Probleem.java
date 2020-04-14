@@ -59,7 +59,7 @@ public class Probleem extends AbsoluteBase {
 	public static final String ID_PREFIX = PROBLEEM_ID_PREFIX;
 
 	// Constanten met kolom-namen
-	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String ID_COL_NAME = ID_PREFIX + "ID";
 	public static final String BESCHRIJVING_COL_NAME = "Beschrijving";
 	public static final String STATUS_COL_NAME = "Status";
 	public static final String OPLOSSING_COL_NAME = "Oplossing";

@@ -58,7 +58,7 @@ public class Laadsessie extends AbsoluteBase {
 	public static final String ID_PREFIX = LAADSESSIE_ID_PREFIX;
 
 	// Constanten met kolom-namen
-	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String ID_COL_NAME = ID_PREFIX + "ID";
 	public static final String LAADPAAL_COL_NAME = "Laadpaal_FK";
 	public static final String STARTPERCENTAGE_COL_NAME = "StartPercentage";
 	public static final String STARTSESSIE_COL_NAME = "StartSessie";

@@ -58,7 +58,7 @@ public class Locatietoestemming extends AbsoluteBase {
 	public static final String ID_PREFIX = LOCATIETOESTEMMING_ID_PREFIX;
 
 	// Constanten met kolom-namen
-	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String ID_COL_NAME = ID_PREFIX + "ID";
 	public static final String AANTALLAADPALEN_COL_NAME = "AantalLaadpalen";
 	public static final String TYPELAADPAAL_COL_NAME = "TypeLaadpaal";
 	public static final String STATUS_COL_NAME = "Status";

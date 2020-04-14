@@ -56,7 +56,7 @@ public class Oplossing extends AbsoluteBase {
 	public static final String ID_PREFIX = OPLOSSING_ID_PREFIX;
 
 	// Constanten met kolom-namen
-	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String ID_COL_NAME = ID_PREFIX + "ID";
 	public static final String OPLOSSING_COL_NAME = "Oplossing";
 
 	/* //----------------// SECTIE: Afspraken //----------------// */
