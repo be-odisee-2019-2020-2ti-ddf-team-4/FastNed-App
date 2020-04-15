@@ -1,17 +1,12 @@
 package be.fastned.application.domain.PersoonAbstracties;
 
-import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.dao.PersoonHibernateDao;
-import be.fastned.application.domain.AndereEntiteiten.Afspraak;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonExtension;
 import be.fastned.application.service.AppRunner;
-
 import javax.persistence.*;
 import java.util.ArrayList;
-
 import static be.fastned.application.domain.PersoonAbstracties.PersoonImpl.ENTITY_NAME;
 import static be.fastned.application.domain.PersoonAbstracties.PersoonImpl.TABLE_NAME;
 
@@ -21,7 +16,8 @@ import static be.fastned.application.domain.PersoonAbstracties.PersoonImpl.TABLE
  */
 
 @Entity(name = ENTITY_NAME)
-@Table(name = TABLE_NAME)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Table(name = TABLE_NAME)
 
 public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
     /* //----------------// -##########-----------------------------##########- //----------------// */

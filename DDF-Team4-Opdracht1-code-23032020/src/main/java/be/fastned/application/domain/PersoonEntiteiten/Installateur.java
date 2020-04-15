@@ -8,6 +8,7 @@ import be.fastned.application.domain.AndereEntiteiten.Oplossing;
 import be.fastned.application.domain.PersoonAbstracties.PersoonDefaultImpl;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonExtension;
 import be.fastned.application.domain.AndereEntiteiten.Probleem;
+import be.fastned.application.domain.PersoonAbstracties.PersoonImpl;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class Installateur extends PersoonDefaultImpl implements PersoonExtension
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 
 	private String id = null;
+	private PersoonImpl persoon;
 
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
@@ -81,6 +83,7 @@ public class Installateur extends PersoonDefaultImpl implements PersoonExtension
 
 	// Constanten met kolom-namen
 	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	public static final String PERSOON_COL_NAME = "Persoon_FK";
 
 	/* //----------------// SECTIE: Installateurs //----------------// */
 	/**
@@ -118,6 +121,7 @@ public class Installateur extends PersoonDefaultImpl implements PersoonExtension
 	public Installateur(String emailadres, String gebruikersnaam, String wachtwoord ){
 		super(emailadres, gebruikersnaam, wachtwoord);
 		setupInitConfig();
+		this.persoon = (PersoonImpl)this;
 		id = extrapolateId();
 	}
 	/**
@@ -230,6 +234,23 @@ public class Installateur extends PersoonDefaultImpl implements PersoonExtension
 	@Transient
 	public void setId(String value){
 		this.id = value;
+	}
+
+	/* //----------------// PROPERTY: Persoon-FK //----------------// */
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=PERSOON_COL_NAME, referencedColumnName = PersoonImpl.ID_COL_NAME)
+	public PersoonImpl getPersoon(){
+		return this.persoon;
+	}
+	/**
+	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setPersoon(PersoonImpl value){
+		this.persoon = value;
 	}
 
 	/* //----------------\\ # ------------------------------ # //----------------\\ */

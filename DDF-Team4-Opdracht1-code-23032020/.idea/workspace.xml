@@ -3,105 +3,32 @@
   <component name="ChangeListManager">
     <list default="true" id="2981aba2-5f55-4825-aea6-e0d621e64443" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Afspraak.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Afspraak.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Contract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Contract.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Installatie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Installatie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Laadpaal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Laadpaal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Laadsessie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Laadsessie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Locatietoestemming.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Locatietoestemming.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Oplossing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Oplossing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Probleem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Probleem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Reparatie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/AndereEntiteiten/Reparatie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/Technisch/DocumentatieDoc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/Technisch/DocumentatieDoc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/FastNedApplication.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/boundary/SchermInstallateur.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/boundary/SchermInstallateur.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/boundary/SchermLaadklant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/boundary/SchermLaadklant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/boundary/SchermLocatiehouder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/boundary/SchermLocatiehouder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/boundary/SchermPlanner.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/boundary/SchermPlanner.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/boundary/Technisch/SchermRegisterUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/boundary/Technisch/SchermRegisterUser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleInstallateur.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLaadklant$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLaadklant$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLaadklant$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLaadklant$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLaadklant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLaadklant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLocatiehouder$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLocatiehouder$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLocatiehouder$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLocatiehouder$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLocatiehouder$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLocatiehouder$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLocatiehouder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControleLocatiehouder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/control/ControlePlanner.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/Technisch/ControleBase.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/Technisch/ControleBaseExtended.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/Technisch/ControleRegisterUser$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/Technisch/ControleRegisterUser$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/control/Technisch/ControleRegisterUser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/AfspraakHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/AfspraakHibernateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/BaseHibernateDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/ContractHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/ContractHibernateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/InstallateurHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/InstallateurHibernateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/InstallatieHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/InstallatieHibernateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/AfspraakDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/AfspraakDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/BaseDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/ContractDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/ContractDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/InstallateurDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/InstallateurDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/InstallatieDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/InstallatieDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/LaadklantDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/LaadklantDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/LaadpaalDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/LaadpaalDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/LaadsessieDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/LaadsessieDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/LocatiehouderDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/LocatiehouderDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/OplossingDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/OplossingDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/PlannerDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/PlannerDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/ProbleemDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/ProbleemDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/ReparatieDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Interfaces/ReparatieDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/LaadklantHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/LaadklantHibernateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/LaadpaalHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/LaadpaalHibernateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/LaadsessieHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/LaadsessieHibernateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/LocatiehouderHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/LocatiehouderHibernateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/OplossingHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/OplossingHibernateDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/PersoonAbstracties/PersoonImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/PersoonAbstracties/PersoonImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/PersoonEntiteiten/Installateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/fastned/application/domain/PersoonEntiteiten/Installateur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Base/BaseDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Base/BaseDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Base/BaseHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/Base/BaseHibernateDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/DocumentatieDocHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/DocumentatieDocHibernateDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/PlannerHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/PlannerHibernateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/ProbleemHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/ProbleemHibernateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/ReparatieHibernateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/dao/ReparatieHibernateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AbsoluteBase.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Afspraak.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Bezoek.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Contract.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/EnumStatus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Installatie.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Laadpaal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Laadsessie.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Locatietoestemming.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Oplossing.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Personen/Installateur.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Personen/Laadklant.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Personen/Locatiehouder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Personen/Planner.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonAbstracties/PersoonFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonAbstracties/PersoonFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Afspraak.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Afspraak.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Contract.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Contract.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Installatie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Installatie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Laadpaal.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Laadpaal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Laadsessie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Laadsessie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Locatietoestemming.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Locatietoestemming.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Oplossing.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Oplossing.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Probleem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Probleem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Reparatie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/AndereEntiteiten/Reparatie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Base/AbsoluteBase.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonAbstracties/PersoonImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonAbstracties/PersoonImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Probleem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Reparatie.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Technisch/DocumentatieRepository$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Technisch/DocumentatieRepository$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Technisch/DocumentatieRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Technisch/Register.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/mvc/Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/mvc/MVCRunner.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/mvc/ModelOplossing.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/mvc/ViewOplossing.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonEntiteiten/Installateur.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonEntiteiten/Installateur.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonEntiteiten/Laadklant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonEntiteiten/Laadklant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonEntiteiten/Locatiehouder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonEntiteiten/Locatiehouder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonEntiteiten/Planner.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/PersoonEntiteiten/Planner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Technisch/DocumentatieDoc.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/domain/Technisch/DocumentatieDoc.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/service/AppConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/service/AppConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/service/AppRunner.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/service/AppRunner.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/service/AppServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/service/AppServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/service/Interfaces/PersistenceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/service/Interfaces/PersistenceService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/be/fastned/application/service/PersistenceServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/fastned/application/service/PersistenceServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dbfastned.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../dbfastned.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +197,9 @@
       <workItem from="1586607603212" duration="13402000" />
       <workItem from="1586676544487" duration="6282000" />
       <workItem from="1586833510868" duration="47413000" />
-      <workItem from="1586888194023" duration="2699000" />
+      <workItem from="1586888194023" duration="2796000" />
+      <workItem from="1586915047001" duration="9000000" />
+      <workItem from="1586926342994" duration="801000" />
     </task>
     <task id="LOCAL-00001" summary="Aanvulling van code bij persoon-interfaces en -klassen in de dao-component">
       <created>1586877670054</created>
@@ -342,7 +271,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586890544903</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Persoon-klasse verder geconfigureert">
+      <created>1586923103088</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1586923103088</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -358,7 +294,8 @@
     <MESSAGE value="Structureren met sorteren naar klassen in nieuwe packages" />
     <MESSAGE value="DocumentatieRepo compleet gefixt naar DocumentatieDoc" />
     <MESSAGE value="No more errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="No more errors" />
+    <MESSAGE value="Persoon-klasse verder geconfigureert" />
+    <option name="LAST_COMMIT_MESSAGE" value="Persoon-klasse verder geconfigureert" />
   </component>
   <component name="WindowStateProjectService">
     <state x="616" y="215" key="#Assign_Data_Sources" timestamp="1586498172762">
@@ -366,10 +303,11 @@
     </state>
     <state x="616" y="215" key="#Assign_Data_Sources/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1584859452627" />
     <state x="616" y="215" key="#Assign_Data_Sources/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586498172762" />
-    <state x="616" y="215" key="#Notifications" timestamp="1584775572204">
+    <state x="616" y="215" key="#Notifications" timestamp="1586916379782">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="616" y="215" key="#Notifications/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1584775572204" />
+    <state x="616" y="215" key="#Notifications/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586916379782" />
     <state x="616" y="215" key="#Project_Structure" timestamp="1584891078049">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
@@ -404,50 +342,50 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="754" y="303" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1585422832807" />
-    <state x="435" y="151" key="CommitChangelistDialog2" timestamp="1586890537978">
+    <state x="435" y="151" key="CommitChangelistDialog2" timestamp="1586923095378">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="435" y="151" key="CommitChangelistDialog2/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586890537978" />
-    <state width="2005" height="326" key="GridCell.Tab.0.bottom" timestamp="1586890387577">
+    <state x="435" y="151" key="CommitChangelistDialog2/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586923095378" />
+    <state width="2005" height="326" key="GridCell.Tab.0.bottom" timestamp="1586927148581">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2003" height="448" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1585674498369" />
-    <state width="2005" height="326" key="GridCell.Tab.0.bottom/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586890387577" />
-    <state width="2005" height="326" key="GridCell.Tab.0.center" timestamp="1586890387575">
+    <state width="2005" height="326" key="GridCell.Tab.0.bottom/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586927148581" />
+    <state width="2005" height="326" key="GridCell.Tab.0.center" timestamp="1586927148580">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2003" height="448" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1585674498368" />
-    <state width="2005" height="326" key="GridCell.Tab.0.center/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586890387575" />
-    <state width="2005" height="326" key="GridCell.Tab.0.left" timestamp="1586890387575">
+    <state width="2005" height="326" key="GridCell.Tab.0.center/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586927148580" />
+    <state width="2005" height="326" key="GridCell.Tab.0.left" timestamp="1586927148580">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2003" height="448" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1585674498368" />
-    <state width="2005" height="326" key="GridCell.Tab.0.left/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586890387575" />
-    <state width="2005" height="326" key="GridCell.Tab.0.right" timestamp="1586890387576">
+    <state width="2005" height="326" key="GridCell.Tab.0.left/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586927148580" />
+    <state width="2005" height="326" key="GridCell.Tab.0.right" timestamp="1586927148580">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2003" height="448" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1585674498369" />
-    <state width="2005" height="326" key="GridCell.Tab.0.right/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586890387576" />
-    <state width="2005" height="326" key="GridCell.Tab.1.bottom" timestamp="1586890387067">
+    <state width="2005" height="326" key="GridCell.Tab.0.right/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586927148580" />
+    <state width="2005" height="326" key="GridCell.Tab.1.bottom" timestamp="1586927148581">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2005" height="376" key="GridCell.Tab.1.bottom/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1585581800717" />
-    <state width="2005" height="326" key="GridCell.Tab.1.bottom/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586890387067" />
-    <state width="2005" height="326" key="GridCell.Tab.1.center" timestamp="1586890387066">
+    <state width="2005" height="326" key="GridCell.Tab.1.bottom/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586927148581" />
+    <state width="2005" height="326" key="GridCell.Tab.1.center" timestamp="1586927148581">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2005" height="376" key="GridCell.Tab.1.center/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1585581800716" />
-    <state width="2005" height="326" key="GridCell.Tab.1.center/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586890387066" />
-    <state width="2005" height="326" key="GridCell.Tab.1.left" timestamp="1586890387065">
+    <state width="2005" height="326" key="GridCell.Tab.1.center/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586927148581" />
+    <state width="2005" height="326" key="GridCell.Tab.1.left" timestamp="1586927148581">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2005" height="376" key="GridCell.Tab.1.left/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1585581800716" />
-    <state width="2005" height="326" key="GridCell.Tab.1.left/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586890387065" />
-    <state width="2005" height="326" key="GridCell.Tab.1.right" timestamp="1586890387067">
+    <state width="2005" height="326" key="GridCell.Tab.1.left/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586927148581" />
+    <state width="2005" height="326" key="GridCell.Tab.1.right" timestamp="1586927148581">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2005" height="376" key="GridCell.Tab.1.right/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1585581800717" />
-    <state width="2005" height="326" key="GridCell.Tab.1.right/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586890387067" />
+    <state width="2005" height="326" key="GridCell.Tab.1.right/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586927148581" />
     <state x="554" y="211" key="Maven.ArtifactSearchDialog" timestamp="1586514800169">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
@@ -463,15 +401,15 @@
     </state>
     <state width="498" height="446" key="SwitcherDM/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1584856707399" />
     <state width="498" height="446" key="SwitcherDM/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586563944605" />
-    <state x="616" y="289" key="Vcs.Push.Dialog.v2" timestamp="1586890548925">
+    <state x="616" y="289" key="Vcs.Push.Dialog.v2" timestamp="1586923108113">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="616" y="289" key="Vcs.Push.Dialog.v2/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586890548925" />
-    <state x="681" y="361" width="759" height="439" key="com.intellij.ide.util.TipDialog" timestamp="1586833524682">
+    <state x="616" y="289" key="Vcs.Push.Dialog.v2/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586923108113" />
+    <state x="681" y="361" width="759" height="439" key="com.intellij.ide.util.TipDialog" timestamp="1586926353480">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="721" y="381" key="com.intellij.ide.util.TipDialog/-1920.0.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1585654430188" />
-    <state x="681" y="361" width="759" height="439" key="com.intellij.ide.util.TipDialog/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586833524682" />
+    <state x="681" y="361" width="759" height="439" key="com.intellij.ide.util.TipDialog/2048.2.1536.832/0.0.2048.1112@0.0.2048.1112" timestamp="1586926353480" />
     <state x="720" y="288" width="781" height="606" key="find.popup" timestamp="1586680322274">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
