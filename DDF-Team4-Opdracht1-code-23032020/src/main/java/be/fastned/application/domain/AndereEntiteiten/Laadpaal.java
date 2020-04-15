@@ -2,7 +2,7 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
-import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.domain.PersoonEntiteiten.Locatiehouder;
 import be.fastned.application.domain.Technisch.DocumentatieDoc;
 import be.fastned.application.service.AppRunner;
@@ -19,7 +19,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Laadpaal.TABLE_NAME
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Laadpaal extends AbsoluteBase {
+public class Laadpaal extends EntiteitBaseImpl {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */

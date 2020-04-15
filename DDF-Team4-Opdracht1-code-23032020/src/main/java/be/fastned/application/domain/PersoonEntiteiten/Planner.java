@@ -1,11 +1,13 @@
 package be.fastned.application.domain.PersoonEntiteiten;
 
-import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.dao.PlannerHibernateDao;
 import be.fastned.application.domain.AndereEntiteiten.*;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
 import be.fastned.application.domain.PersoonAbstracties.PersoonDefaultImpl;
 import be.fastned.application.service.AppRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,6 +44,8 @@ public class Planner extends PersoonDefaultImpl {
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
+
+	private BaseDao klasseDao;
 
 	/* //----------------// SECTIE: Afspraken //----------------// */
 	/**
@@ -224,7 +228,7 @@ public class Planner extends PersoonDefaultImpl {
 	 */
 	private void setupInitConfig(){
 		actievePlanners.add(this);
-		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(PlannerHibernateDao.BEAN_DAO_NAME);
 	}
 
 	/**

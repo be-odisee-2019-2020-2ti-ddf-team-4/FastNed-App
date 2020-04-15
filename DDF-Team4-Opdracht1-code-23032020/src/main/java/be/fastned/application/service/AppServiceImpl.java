@@ -1,6 +1,10 @@
 package be.fastned.application.service;
 
+import be.fastned.application.dao.InstallateurHibernateDao;
+import be.fastned.application.dao.Interfaces.InstallateurDao;
+import be.fastned.application.dao.PlannerHibernateDao;
 import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
+import be.fastned.application.domain.PersoonEntiteiten.Installateur;
 import be.fastned.application.domain.PersoonEntiteiten.Planner;
 import be.fastned.application.service.Interfaces.AppService;
 import be.fastned.application.service.Interfaces.PersistenceService;
@@ -16,10 +20,9 @@ import org.springframework.stereotype.Service;
 public class AppServiceImpl implements AppService {
     public Persoon m_HuidigePersoon;
     public Object m_GetoondObject;
-    //public static Persoon actieveGebruiker = new Planner("test@email.com", "testman", "XXX");
 
     private static AppServiceImpl s_UniqueInstance;
-    private static AnnotationConfigApplicationContext s_ApplicationContext;
+    private static AnnotationConfigApplicationContext appContext;
 
     /**
      * Default private Constructor voor deze klasse. */
@@ -28,12 +31,15 @@ public class AppServiceImpl implements AppService {
         if (s_UniqueInstance == null){
             s_UniqueInstance = new AppServiceImpl();
         }
-        s_ApplicationContext = AppRunner.s_ApplicationContext;
+        appContext = AppRunner.getAppContext();
         return s_UniqueInstance;
     }
 
     public void persisteerDemoAfspraak(){
-        PersistenceService persistenceService = (PersistenceService) s_ApplicationContext.getBean("persistenceService");
+
+        Installateur persoon = new Installateur("test.vg@hmail.com", "Mr. Testudo", "ww");
+        ((InstallateurDao)appContext.getBean("installateurDao")).createItem(persoon);
+
         System.out.println();
         System.out.println("Persisteren oplossing en probleem als demo start..");
 

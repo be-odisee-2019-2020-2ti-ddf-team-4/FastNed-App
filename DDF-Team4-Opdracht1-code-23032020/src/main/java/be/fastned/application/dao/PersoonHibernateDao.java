@@ -1,16 +1,13 @@
 package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
-import be.fastned.application.dao.Interfaces.DocumentatieDocDao;
-import be.fastned.application.domain.Base.EntiteitBaseImpl;
-import be.fastned.application.domain.Technisch.DocumentatieDoc;
+import be.fastned.application.dao.Interfaces.PersoonDao;
+import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
+import be.fastned.application.domain.PersoonAbstracties.PersoonImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-
-import static be.fastned.application.dao.DocumentatieDocHibernateDao.BEAN_DAO_NAME;
+import static be.fastned.application.dao.PersoonHibernateDao.BEAN_DAO_NAME;
 
 /**
  * @author TiboVG
@@ -20,7 +17,7 @@ import static be.fastned.application.dao.DocumentatieDocHibernateDao.BEAN_DAO_NA
 @Repository(BEAN_DAO_NAME)
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
 
-public class DocumentatieDocHibernateDao extends BaseHibernateDao implements DocumentatieDocDao {
+public class PersoonHibernateDao extends BaseHibernateDao implements PersoonDao {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
     /* //----------------// -#########- &|& INSTANTIE VARIABELEN &|& -#########- //----------------// */
@@ -31,14 +28,14 @@ public class DocumentatieDocHibernateDao extends BaseHibernateDao implements Doc
     /* //----------------// -#########-----------------------------#########- //----------------// */
 
     /* //----------------// SECTIE: Constanten //----------------// */
-    public static final String BEAN_DAO_NAME = "documentatieDocDao";
-    private static final String DOCUMENTATIEDOC_ENTITY_NAME = DocumentatieDoc.ENTITY_NAME;
+    public static final String BEAN_DAO_NAME = "persoonDao";
+    private static final String PERSOON_ENTITY_NAME = PersoonImpl.ENTITY_NAME;
 
     /* //----------------// -#########------------------------#########- //----------------// */
     /* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
     /* //----------------// -#########------------------------#########- //----------------// */
 
-    DocumentatieDocHibernateDao() {
+    PersoonHibernateDao() {
         configureAbstractOperations();
     }
 
@@ -46,31 +43,11 @@ public class DocumentatieDocHibernateDao extends BaseHibernateDao implements Doc
     /* //----------------// -#########- &|& FUNCTIES &|& -#########- //----------------// */
     /* //----------------// -#########--------------------#########- //----------------// */
 
-    public ArrayList<DocumentatieDoc> getInstallatieDocumentaties(){
-        ArrayList<DocumentatieDoc> list = new ArrayList<DocumentatieDoc>();
-        for (EntiteitBaseImpl item : getAllItems()) {
-            if (((DocumentatieDoc)item).getDocumentatieType()=="installatie"){
-                list.add((DocumentatieDoc)item);
-            }
-        }
-        return list;
-    }
-
-    public ArrayList<DocumentatieDoc> getReparatieDocumentaties(){
-        ArrayList<DocumentatieDoc> list = new ArrayList<DocumentatieDoc>();
-        for (EntiteitBaseImpl item : getAllItems()) {
-            if (((DocumentatieDoc)item).getDocumentatieType()=="reparatie"){
-                list.add((DocumentatieDoc)item);
-            }
-        }
-        return list;
-    }
-
     /* //----------------\\ # ------------------ # //----------------\\ */
     /* //----------------\\ # Functies Technisch # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = DOCUMENTATIEDOC_ENTITY_NAME;
+        ENTITY_NAME = PERSOON_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -82,7 +59,7 @@ public class DocumentatieDocHibernateDao extends BaseHibernateDao implements Doc
      * Voegt een instantie van deze klasse aan de DB toe als gepersisteerde entiteit.
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public DocumentatieDoc createItem(DocumentatieDoc item) {
+    public Persoon createItem(Persoon item) {
         currentSession().save(item);
         return item;
     }
@@ -95,7 +72,7 @@ public class DocumentatieDocHibernateDao extends BaseHibernateDao implements Doc
      * Updated de gepersisteerde entiteit achter een instantie.
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public void updateItem(DocumentatieDoc item) {
+    public void updateItem(Persoon item) {
         currentSession().update(item);
     }
 
@@ -104,7 +81,7 @@ public class DocumentatieDocHibernateDao extends BaseHibernateDao implements Doc
      * Deleted de gepersisteerde entiteit achter een instantie.
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public DocumentatieDoc deleteItem(DocumentatieDoc item){
-        return (DocumentatieDoc) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+    public Persoon deleteItem(Persoon item){
+        return (Persoon) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getSuperId())).uniqueResult();
     }
 }

@@ -13,9 +13,8 @@ import static be.fastned.application.dao.PlannerHibernateDao.BEAN_DAO_NAME;
  * @version 6.0
  */
 
-@Repository(BEAN_DAO_NAME)
+@Repository("plannerDao")
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
-
 public class PlannerHibernateDao extends BaseHibernateDao implements PlannerDao {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */

@@ -2,7 +2,7 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
-import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Laadsessie.TABLE_NA
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Laadsessie extends AbsoluteBase {
+public class Laadsessie extends EntiteitBaseImpl {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */

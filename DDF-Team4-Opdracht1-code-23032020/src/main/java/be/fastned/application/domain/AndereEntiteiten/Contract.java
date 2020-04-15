@@ -2,13 +2,12 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.ContractHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
-import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import static be.fastned.application.domain.AndereEntiteiten.Contract.ENTITY_NAME;
-import static be.fastned.application.domain.AndereEntiteiten.Contract.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -18,7 +17,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Contract.TABLE_NAME
 @Entity(name = ENTITY_NAME)
 @Table(name = Oplossing.TABLE_NAME)
 
-public class Contract extends AbsoluteBase {
+public class Contract extends EntiteitBaseImpl {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */

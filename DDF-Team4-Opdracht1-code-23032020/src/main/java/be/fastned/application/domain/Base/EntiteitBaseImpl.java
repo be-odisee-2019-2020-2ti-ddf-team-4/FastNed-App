@@ -3,7 +3,7 @@ package be.fastned.application.domain.Base;
 import be.fastned.application.dao.Base.BaseDao;
 import java.io.Serializable;
 
-public abstract class AbsoluteBase implements Serializable {
+public abstract class EntiteitBaseImpl implements Serializable, EntiteitBase {
 
     static protected final String AFSPRAAK_ID_PREFIX = "AFSPRK_";
     static protected final String CONTRACT_ID_PREFIX = "CNTRCT_";
@@ -16,7 +16,7 @@ public abstract class AbsoluteBase implements Serializable {
     static protected final String REPARATIE_ID_PREFIX = "RPRTIE_";
     static protected final String DOCUMENTATIEDOC_ID_PREFIX = "DCMNTTIEDC_";
 
-    static protected final String PERSONEN_ID_PREFIX = "PRSN_";
+    static protected final String PERSOON_ID_PREFIX = "PRSN_";
     static protected final String INSTALLATEUR_ID_PREFIX = "INSTLR_";
     static protected final String LAADKLANT_ID_PREFIX = "LDKLNT_";
     static protected final String LOCATIEHOUDER_ID_PREFIX = "LCTHDR_";
@@ -27,7 +27,9 @@ public abstract class AbsoluteBase implements Serializable {
     /**
      * Deze technische functie leidt het id voor deze instantie af v.h. laatste record in de DB.
      */
-    protected String baseExtrapolateId(String PREFIX, BaseDao objectDao){
+    protected String
+    baseExtrapolateId(String PREFIX, BaseDao objectDao){
+
 
         if (!objectDao.isTableEmpty()){
             System.out.println("TEST");

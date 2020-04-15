@@ -1,8 +1,5 @@
 package be.fastned.application.service;
 
-import be.fastned.application.domain.PersoonEntiteiten.Planner;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
-import be.fastned.application.service.Interfaces.PersistenceService;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
@@ -74,18 +71,18 @@ public class AppConfig {
         return null;
     }
 
-    @Bean
-    public PersistenceService persistenceService() {
-        try{
-            PersistenceService persistenceService = new PersistenceServiceImpl();
-            System.out.println("Bean persistenceService is aangemaakt!");
-            return persistenceService;
-        }
-        catch(Exception ex){
-            System.out.println("Bean persistenceService is niet aangemaakt met exception: " + ex.getMessage());
-        }
-        return null;
-    }
+//    @Bean
+//    public PersistenceService persistenceService() {
+//        try{
+//            PersistenceService persistenceService = new PersistenceServiceImpl();
+//            System.out.println("Bean persistenceService is aangemaakt!");
+//            return persistenceService;
+//        }
+//        catch(Exception ex){
+//            System.out.println("Bean persistenceService is niet aangemaakt met exception: " + ex.getMessage());
+//        }
+//        return null;
+//    }
 
     /*@Bean
     Persoon actieveGebruiker(){

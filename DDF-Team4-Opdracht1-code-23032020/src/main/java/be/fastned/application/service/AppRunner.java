@@ -4,18 +4,15 @@ import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
 import be.fastned.application.service.Interfaces.AppService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import javax.persistence.Column;
-import javax.persistence.Transient;
-
 public class AppRunner {
-    private static AppService s_AppService = null;
-    public static AnnotationConfigApplicationContext s_ApplicationContext = null;
+    private static AppService appService = null;
+    private static AnnotationConfigApplicationContext s_ApplicationContext = null;
     private static Persoon actieveGebruiker;
 
     public static void main(String[] args) {
         s_ApplicationContext = initieerContext();
-        s_AppService = AppServiceImpl.getInstance();
-        s_AppService.persisteerDemoAfspraak();
+        appService = AppServiceImpl.getInstance();
+        appService.persisteerDemoAfspraak();
 
         // Isoleren van appContext-initiatie errors en verdere errors bij appContext-gebruik.
         /*try{

@@ -2,7 +2,7 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
-import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.domain.Technisch.Bezoek;
 import be.fastned.application.domain.Technisch.EnumStatus;
 import be.fastned.application.domain.PersoonEntiteiten.Installateur;
@@ -20,7 +20,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Afspraak.TABLE_NAME
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Afspraak extends AbsoluteBase {
+public class Afspraak extends EntiteitBaseImpl {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */

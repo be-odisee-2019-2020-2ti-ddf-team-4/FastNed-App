@@ -1,12 +1,12 @@
 package be.fastned.application.dao.Base;
 
-import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.Base.EntiteitBaseImpl;
 
 import java.util.ArrayList;
 
 public interface BaseDao {
-    AbsoluteBase getItemById (String id);
-    ArrayList<AbsoluteBase> getAllItems ();
+    EntiteitBaseImpl getItemById (String id);
+    ArrayList<EntiteitBaseImpl> getAllItems ();
     String getLastItemId();
     Boolean isTableEmpty ();
 }

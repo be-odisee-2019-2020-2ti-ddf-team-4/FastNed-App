@@ -2,7 +2,7 @@ package be.fastned.application.domain.Technisch;
 
 import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.dao.DocumentatieDocHibernateDao;
-import be.fastned.application.domain.Base.AbsoluteBase;
+import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import static be.fastned.application.domain.Technisch.DocumentatieDoc.TABLE_NAME
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class DocumentatieDoc extends AbsoluteBase {
+public class DocumentatieDoc extends EntiteitBaseImpl {
 
     /* //----------------// -##########-----------------------------##########- //----------------// */
     /* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
