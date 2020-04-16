@@ -1,7 +1,7 @@
 package be.fastned.application.domain.Personen;
 
-import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.dao.Andere.InstallateurHibernateDao;
+import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.domain.Andere.Afspraak;
 import be.fastned.application.domain.Andere.Laadpaal;
 import be.fastned.application.domain.Andere.Oplossing;

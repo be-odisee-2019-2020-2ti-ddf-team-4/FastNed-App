@@ -6,6 +6,7 @@ import be.fastned.application.domain.Andere.Contract;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import static be.fastned.application.dao.Andere.ContractHibernateDao.BEAN_DAO_NAME;
 
 /**

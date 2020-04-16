@@ -7,12 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.sql.DataSource;
-
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
-
 import static be.fastned.application.dao.Andere.InstallateurHibernateDao.BEAN_DAO_NAME;
 
 /**

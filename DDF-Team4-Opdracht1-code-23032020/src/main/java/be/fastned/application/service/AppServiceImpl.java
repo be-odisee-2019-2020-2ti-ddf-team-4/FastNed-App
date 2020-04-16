@@ -41,7 +41,7 @@ public class AppServiceImpl implements AppService {
         Installateur testInstallateur = new Installateur("Mr. Testudo 2", "test.vg2@gmail.com", "ww2");
         InstallateurDao installateurDao = (InstallateurDao)appContext.getBean("installateurDao");
 
-        boolean doCreate = true,
+        boolean doCreate = false,
                 doUpdate = false;
 
         if (doCreate) {
