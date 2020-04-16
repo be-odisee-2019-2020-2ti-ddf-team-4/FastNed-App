@@ -1,7 +1,7 @@
 package be.fastned.application.service;
 
-import be.fastned.application.domain.AndereEntiteiten.Oplossing;
-import be.fastned.application.domain.AndereEntiteiten.Probleem;
+import be.fastned.application.domain.Andere.Oplossing;
+import be.fastned.application.domain.Andere.Probleem;
 import be.fastned.application.service.Interfaces.PersistenceService;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

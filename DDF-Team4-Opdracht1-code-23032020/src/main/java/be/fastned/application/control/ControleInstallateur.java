@@ -2,12 +2,12 @@ package be.fastned.application.control;
 
 import be.fastned.application.boundary.SchermInstallateur;
 import be.fastned.application.control.Base.ControleBaseImpl;
-import be.fastned.application.domain.AndereEntiteiten.Afspraak;
-import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
-import be.fastned.application.domain.AndereEntiteiten.Oplossing;
-import be.fastned.application.domain.AndereEntiteiten.Probleem;
-import be.fastned.application.domain.PersoonEntiteiten.Installateur;
-import be.fastned.application.domain.PersoonEntiteiten.PersoonDefault;
+import be.fastned.application.domain.Andere.Afspraak;
+import be.fastned.application.domain.Andere.Laadpaal;
+import be.fastned.application.domain.Andere.Oplossing;
+import be.fastned.application.domain.Andere.Probleem;
+import be.fastned.application.domain.Personen.Installateur;
+import be.fastned.application.domain.Personen.PersoonDefault;
 
 import java.util.*;
 

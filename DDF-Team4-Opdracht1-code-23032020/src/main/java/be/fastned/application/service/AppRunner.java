@@ -1,6 +1,6 @@
 package be.fastned.application.service;
 
-import be.fastned.application.domain.PersoonEntiteiten.Persoon;
+import be.fastned.application.domain.Personen.Persoon;
 import be.fastned.application.service.Interfaces.AppService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

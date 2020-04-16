@@ -2,9 +2,9 @@ package be.fastned.application.control;
 
 import be.fastned.application.boundary.Technisch.SchermRegisterUser;
 import be.fastned.application.control.Base.ControleBaseImpl;
-import be.fastned.application.domain.PersoonEntiteiten.PersoonFactory;
+import be.fastned.application.domain.Personen.PersoonFactory;
 import be.fastned.application.domain.Technisch.EnumPersoon;
-import be.fastned.application.domain.PersoonEntiteiten.Persoon;
+import be.fastned.application.domain.Personen.Persoon;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

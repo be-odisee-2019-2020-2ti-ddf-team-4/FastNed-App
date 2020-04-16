@@ -2,10 +2,10 @@ package be.fastned.application.boundary;
 
 import be.fastned.application.boundary.Technisch.SchermBase;
 import be.fastned.application.control.ControleLaadklant;
-import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
-import be.fastned.application.domain.AndereEntiteiten.Laadsessie;
-import be.fastned.application.domain.AndereEntiteiten.Probleem;
-import be.fastned.application.domain.PersoonEntiteiten.PersoonDefault;
+import be.fastned.application.domain.Andere.Laadpaal;
+import be.fastned.application.domain.Andere.Laadsessie;
+import be.fastned.application.domain.Andere.Probleem;
+import be.fastned.application.domain.Personen.PersoonDefault;
 
 /**
  * @author TiboVG

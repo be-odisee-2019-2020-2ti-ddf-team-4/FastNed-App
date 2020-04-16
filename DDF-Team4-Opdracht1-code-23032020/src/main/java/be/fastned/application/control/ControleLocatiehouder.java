@@ -2,12 +2,12 @@ package be.fastned.application.control;
 
 import be.fastned.application.boundary.SchermLocatiehouder;
 import be.fastned.application.control.Base.ControleBaseImpl;
-import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
-import be.fastned.application.domain.AndereEntiteiten.Locatietoestemming;
-import be.fastned.application.domain.AndereEntiteiten.Probleem;
-import be.fastned.application.domain.PersoonEntiteiten.Locatiehouder;
-import be.fastned.application.domain.PersoonEntiteiten.Persoon;
-import be.fastned.application.domain.PersoonEntiteiten.PersoonExtended;
+import be.fastned.application.domain.Andere.Laadpaal;
+import be.fastned.application.domain.Andere.Locatietoestemming;
+import be.fastned.application.domain.Andere.Probleem;
+import be.fastned.application.domain.Personen.Locatiehouder;
+import be.fastned.application.domain.Personen.Persoon;
+import be.fastned.application.domain.Personen.PersoonExtended;
 
 import java.util.ArrayList;
 import java.util.HashMap;

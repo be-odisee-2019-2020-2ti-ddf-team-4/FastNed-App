@@ -2,10 +2,10 @@ package be.fastned.application.boundary;
 
 import be.fastned.application.boundary.Technisch.SchermBase;
 import be.fastned.application.control.ControleLocatiehouder;
-import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
-import be.fastned.application.domain.AndereEntiteiten.Locatietoestemming;
-import be.fastned.application.domain.AndereEntiteiten.Probleem;
-import be.fastned.application.domain.PersoonEntiteiten.PersoonExtended;
+import be.fastned.application.domain.Andere.Laadpaal;
+import be.fastned.application.domain.Andere.Locatietoestemming;
+import be.fastned.application.domain.Andere.Probleem;
+import be.fastned.application.domain.Personen.PersoonExtended;
 
 /**
  * @author TiboVG
