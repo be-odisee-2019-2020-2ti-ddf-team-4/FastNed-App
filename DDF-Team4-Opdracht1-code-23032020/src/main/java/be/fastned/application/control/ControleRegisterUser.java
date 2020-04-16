@@ -2,14 +2,12 @@ package be.fastned.application.control;
 
 import be.fastned.application.boundary.Technisch.SchermRegisterUser;
 import be.fastned.application.control.Base.ControleBaseImpl;
-import be.fastned.application.domain.PersoonAbstracties.EnumPersoon;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
-import be.fastned.application.domain.PersoonAbstracties.PersoonFactory;
-import org.springframework.stereotype.Component;
+import be.fastned.application.domain.PersoonEntiteiten.PersoonFactory;
+import be.fastned.application.domain.Technisch.EnumPersoon;
+import be.fastned.application.domain.PersoonEntiteiten.Persoon;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLEREGISTERUSER;
 
 /**
  * @author TiboVG
@@ -85,11 +83,11 @@ public class ControleRegisterUser extends ControleBaseImpl {
             }};
 
             // Check parentAfspraak-/defecteLaadpaal-/probleemBeschrijving-argument via helper functie.
-            ArrayList<Integer> violationIndexes = tf_checkAgainstNullOrEmpty(new Object[]{type, emailAdres, gebruikersnaam, wachtwoord, voornaam, naam, geslacht, gsm}, false);
+            ArrayList<Integer> violationIndexes = tf_checkAgainstNullOrEmpty(new Object[]{type, gebruikersnaam, emailAdres, wachtwoord, voornaam, naam, geslacht, gsm}, false);
 
             // Afhandeling: er zijn geen problemen.
             if (violationIndexes != null){
-                return PersoonFactory.createPersoon(type, emailAdres, gebruikersnaam, wachtwoord, voornaam, naam, geslacht, gsm);
+                return PersoonFactory.createPersoon(type, gebruikersnaam, emailAdres, wachtwoord, voornaam, naam, geslacht, gsm);
             }
             // Afhandeling: er zijn problemen opgetreden.
             else{
@@ -127,11 +125,11 @@ public class ControleRegisterUser extends ControleBaseImpl {
             }};
 
             // Check parentAfspraak-/defecteLaadpaal-/probleemBeschrijving-argument via helper functie.
-            ArrayList<Integer> violationIndexes = tf_checkAgainstNullOrEmpty(new Object[]{type, emailAdres, gebruikersnaam, wachtwoord, adres, bedrijfsNaam, btwNummer, voornaam, naam, geslacht, gsm}, false);
+            ArrayList<Integer> violationIndexes = tf_checkAgainstNullOrEmpty(new Object[]{type, gebruikersnaam, emailAdres, wachtwoord, adres, bedrijfsNaam, btwNummer, voornaam, naam, geslacht, gsm}, false);
 
             // Afhandeling: er zijn geen problemen.
             if (violationIndexes != null){
-                return (Persoon) PersoonFactory.createPersoon(type, emailAdres, gebruikersnaam, wachtwoord, adres, bedrijfsNaam, btwNummer, voornaam, naam, geslacht, gsm);
+                return (Persoon) PersoonFactory.createPersoon(type, gebruikersnaam, emailAdres, wachtwoord, adres, bedrijfsNaam, btwNummer, voornaam, naam, geslacht, gsm);
             }
             // Afhandeling: er zijn problemen opgetreden.
             else{

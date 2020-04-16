@@ -1,14 +1,14 @@
-package be.fastned.application.domain.PersoonAbstracties;
+package be.fastned.application.domain.PersoonEntiteiten;
 
 import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.dao.PersoonHibernateDao;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
-import static be.fastned.application.domain.PersoonAbstracties.PersoonImpl.ENTITY_NAME;
-import static be.fastned.application.domain.PersoonAbstracties.PersoonImpl.TABLE_NAME;
+import static be.fastned.application.domain.PersoonEntiteiten.PersoonImpl.ENTITY_NAME;
+import static be.fastned.application.domain.PersoonEntiteiten.PersoonImpl.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -17,9 +17,10 @@ import static be.fastned.application.domain.PersoonAbstracties.PersoonImpl.TABLE
 
 @Entity(name = ENTITY_NAME)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-//@Table(name = TABLE_NAME)
+@Table(name = TABLE_NAME)
 
-public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
+// public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
+public class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
     /* //----------------// -##########-----------------------------##########- //----------------// */
     /* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
     /* //----------------// -##########-----------------------------##########- //----------------// */
@@ -35,7 +36,7 @@ public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
     /* //----------------\\ # ------------------------------- # //----------------\\ */
     /* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
     /* //----------------\\ # ------------------------------- # //----------------\\ */
-    protected String id;
+    protected String persoonId;
     protected String naam = null;
     protected String voornaam = null;
     protected String geslacht = null;
@@ -59,10 +60,10 @@ public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
     public static final String TABLE_NAME = "tbl_personen";
 
     // Lokale constante (id prefix) overkopieëren naar super-variabel
-    public static final String ID_PREFIX = PERSOON_ID_PREFIX;
+    public static final String ID_PREFIX_PERSOON = PERSOON_ID_PREFIX;
 
     // Constanten met kolom-namen
-    public static final String ID_COL_NAME = ID_PREFIX + "ID";
+    public static final String ID_COL_NAME_PERSOON = ID_PREFIX_PERSOON + "ID";
     public static final String NAAM_COL_NAME = "Naam";
     public static final String GSM_COL_NAME = "GSM";
     public static final String VOORNAAM_COL_NAME = "Voornaam";
@@ -99,29 +100,25 @@ public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
      */
     public PersoonImpl(){
         setupInitConfig();
-        id = extrapolateId();
     }
     /**
-     * Default constructor voor deze klasse. (Geen configuratie)
+     * Default constructor voor deze klasse. (Optionele Configuratie)
      */
     public PersoonImpl (boolean noConfig){
         if (!noConfig) { setupInitConfig(); }
-        id = extrapolateId();
     }
 
-    public PersoonImpl(String emailadres, String gebruikersnaam, String wachtwoord ){
+    public PersoonImpl(String gebruikersnaam, String emailadres, String wachtwoord){
         setupInitConfig();
-        this.id = extrapolateId();
-        this.emailadres = emailadres;
         this.gebruikersnaam = gebruikersnaam;
+        this.emailadres = emailadres;
         this.wachtwoord = wachtwoord;
     }
 
-    public PersoonImpl(String emailadres, String gebruikersnaam, String wachtwoord, String naam, String voornaam, String geslacht, String gsm ){
+    public PersoonImpl(String gebruikersnaam, String emailadres, String wachtwoord, String naam, String voornaam, String geslacht, String gsm ){
         setupInitConfig();
-        this.id = extrapolateId();
-        this.emailadres = emailadres;
         this.gebruikersnaam = gebruikersnaam;
+        this.emailadres = emailadres;
         this.wachtwoord = wachtwoord;
         this.naam = naam;
         this.voornaam = voornaam;
@@ -134,11 +131,11 @@ public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
     /* //----------------// -#########--------------------#########- //----------------// */
 
     /* //----------------\\ # ------------------------- # //----------------\\ */
-    /* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+    /* //----------------\\ # Functie Domein # //----------------\\ */
     /* //----------------\\ # ------------------------- # //----------------\\ */
 
     /* //----------------\\ # ---------------------------- # //----------------\\ */
-    /* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+    /* //----------------\\ # Functie Technisch # //----------------\\ */
     /* //----------------\\ # ---------------------------- # //----------------\\ */
 
     /**
@@ -158,13 +155,14 @@ public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
         actieveSuperInstanties.add(this);
         actieveChildInstanties.add(this);
         klasseDao = (BaseDao) AppRunner.getAppContext().getBean(PersoonHibernateDao.BEAN_DAO_NAME);
+        this.persoonId = (klasseDao.isTableEmpty()) ? (ID_PREFIX_PERSOON + "0") : extrapolateId();
     }
 
     /**
      * Deze technische functie leidt het id af via het laatste record in de tabel.
      */
     private String extrapolateId(){
-        return baseExtrapolateId(ID_PREFIX, klasseDao);
+        return klasseDao.getLastItemId();
     }
 
     /**
@@ -189,23 +187,23 @@ public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
     /* //----------------// -#########- |------------| -#########- //----------------// */
 
     /* //----------------\\ # ------------------------- # //----------------\\ */
-    /* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+    /* //----------------\\ # Property Domein # //----------------\\ */
     /* //----------------\\ # ------------------------- # //----------------\\ */
 
     /* //----------------// PROPERTY: ID //----------------// */
     /**
      * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
      */
-    @Id @Column(name = ID_COL_NAME)
-    public String getSuperId(){
-        return this.id;
+    @Id @Column(name = ID_COL_NAME_PERSOON)
+    public String getId(){
+        return this.persoonId;
     }
     /**
      * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
      */
     @Transient
-    public void setSuperId(String value){
-        this.id = value;
+    public void setId(String value){
+        this.persoonId = value;
     }
 
     /* //----------------// PROPERTY: Persoon-Naam //----------------// */
@@ -256,18 +254,6 @@ public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
     @Transient
     public void setGsm(String value) { gsm = value; }
 
-    /* //----------------// PROPERTY: Persoon-Emailadres //----------------// */
-    /**
-     * Deze domein-attribuut-getter vertegenwoordigt het Emailadres-attribuut van deze instantie.
-     */
-    @Column(name = EMAILADRES_COL_NAME)
-    public String getEmailadres() { return emailadres; }
-    /**
-     * Deze domein-attribuut-setter vertegenwoordigt het Emailadres-attribuut van deze instantie.
-     */
-    @Transient
-    public void setEmailadres(String value) { emailadres = value; }
-
     /* //----------------// PROPERTY: Persoon-Gebruikersnaam //----------------// */
     /**
      * Deze domein-attribuut-getter vertegenwoordigt het Gebruikersnaam-attribuut van deze instantie.
@@ -280,6 +266,18 @@ public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
     @Transient
     public void setGebruikersnaam(String value) { gebruikersnaam = value; }
 
+    /* //----------------// PROPERTY: Persoon-Emailadres //----------------// */
+    /**
+     * Deze domein-attribuut-getter vertegenwoordigt het Emailadres-attribuut van deze instantie.
+     */
+    @Column(name = EMAILADRES_COL_NAME)
+    public String getEmailadres() { return emailadres; }
+    /**
+     * Deze domein-attribuut-setter vertegenwoordigt het Emailadres-attribuut van deze instantie.
+     */
+    @Transient
+    public void setEmailadres(String value) { emailadres = value; }
+
     /* //----------------// PROPERTY: Persoon-Wachtwoord //----------------// */
     /**
      * Deze domein-attribuut-getter vertegenwoordigt het Wachtwoord-attribuut van deze instantie.
@@ -291,6 +289,110 @@ public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
      */
     @Transient
     public void setWachtwoord(String value) { wachtwoord = value; }
+
+    /* //----------------\\ <||> ----------------------------- <||> //----------------\\ */
+    /* //----------------\\ <||> PRIVATE TECHNISCHE Properties <||> //----------------\\ */
+    /* //----------------\\ <||> ----------------------------- <||> //----------------\\ */
+
+    /* //----------------// PROPERTY: ID //----------------// */
+    /**
+     * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
+     */
+    @Id @Column(name = ID_COL_NAME_PERSOON)
+    private String getIdPrivate(){
+        return this.persoonId;
+    }
+    /**
+     * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
+     */
+    @Transient
+    private void setIdPrivate(String value){
+        this.persoonId = value;
+    }
+
+    /* //----------------// PROPERTY: Persoon-Naam //----------------// */
+    /**
+     * Deze domein-attribuut-getter vertegenwoordigt het Naam-attribuut van deze instantie.
+     */
+    @Column(name = NAAM_COL_NAME)
+    private String getNaamPrivate() { return naam; }
+    /**
+     * Deze domein-attribuut-setter vertegenwoordigt het Naam-attribuut van deze instantie.
+     */
+    @Transient
+    private void setNaamPrivate(String value) { naam = value; }
+
+    /* //----------------// PROPERTY: Persoon-Voornaam //----------------// */
+    /**
+     * Deze domein-attribuut-getter vertegenwoordigt het Voornaam-attribuut van deze instantie.
+     */
+    @Column(name = VOORNAAM_COL_NAME)
+    private String getVoorNaamPrivate() { return voornaam; }
+    /**
+     * Deze domein-attribuut-setter vertegenwoordigt het Voornaam-attribuut van deze instantie.
+     */
+    @Transient
+    private void setVoorNaamPrivate(String value) { voornaam = value; }
+
+    /* //----------------// PROPERTY: Persoon-Geslacht //----------------// */
+    /**
+     * Deze domein-attribuut-getter vertegenwoordigt het Geslacht-attribuut van deze instantie.
+     */
+    @Column(name = GESLACHT_COL_NAME)
+    private String getGeslachtPrivate() { return geslacht; }
+    /**
+     * Deze domein-attribuut-setter vertegenwoordigt het Geslacht-attribuut van deze instantie.
+     */
+    @Transient
+    private void setGeslachtPrivate(String value) { geslacht = value; }
+
+    /* //----------------// PROPERTY: Persoon-Gsm //----------------// */
+    /**
+     * Deze domein-attribuut-getter vertegenwoordigt het Gsm-attribuut van deze instantie.
+     */
+    @Column(name = GSM_COL_NAME)
+    private String getGsmPrivate() { return gsm; }
+    /**
+     * Deze domein-attribuut-setter vertegenwoordigt het Gsm-attribuut van deze instantie.
+     */
+    @Transient
+    private void setGsmPrivate(String value) { gsm = value; }
+
+    /* //----------------// PROPERTY: Persoon-Gebruikersnaam //----------------// */
+    /**
+     * Deze domein-attribuut-getter vertegenwoordigt het Gebruikersnaam-attribuut van deze instantie.
+     */
+    @Column(name = GEBRUIKERSNAAM_COL_NAME)
+    private String getGebruikersnaamPrivate() { return gebruikersnaam; }
+    /**
+     * Deze domein-attribuut-setter vertegenwoordigt het Gebruikersnaam-attribuut van deze instantie.
+     */
+    @Transient
+    private void setGebruikersnaamPrivate(String value) { gebruikersnaam = value; }
+
+    /* //----------------// PROPERTY: Persoon-Emailadres //----------------// */
+    /**
+     * Deze domein-attribuut-getter vertegenwoordigt het Emailadres-attribuut van deze instantie.
+     */
+    @Column(name = EMAILADRES_COL_NAME)
+    private String getEmailadresPrivate() { return emailadres; }
+    /**
+     * Deze domein-attribuut-setter vertegenwoordigt het Emailadres-attribuut van deze instantie.
+     */
+    @Transient
+    private void setEmailadresPrivate(String value) { emailadres = value; }
+
+    /* //----------------// PROPERTY: Persoon-Wachtwoord //----------------// */
+    /**
+     * Deze domein-attribuut-getter vertegenwoordigt het Wachtwoord-attribuut van deze instantie.
+     */
+    @Column(name = WACHTWOORD_COL_NAME)
+    private String getWachtwoordPrivate() { return wachtwoord; }
+    /**
+     * Deze domein-attribuut-setter vertegenwoordigt het Wachtwoord-attribuut van deze instantie.
+     */
+    @Transient
+    private void setWachtwoordPrivate(String value) { wachtwoord = value; }
 
     /* //----------------\\ <||> --------------------- <||> //----------------\\ */
     /* //----------------\\ <||> TECHNISCHE Properties <||> //----------------\\ */

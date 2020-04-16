@@ -2,6 +2,7 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
@@ -17,7 +18,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Locatietoestemming.
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Locatietoestemming extends EntiteitBaseImpl {
+public class Locatietoestemming extends EntiteitBaseImpl implements Entiteit {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -86,7 +87,7 @@ public class Locatietoestemming extends EntiteitBaseImpl {
 	}
 
 	/**
-	 * Default constructor voor deze klasse. (Geen configuratie)
+	 * Default constructor voor deze klasse. (Optionele Configuratie)
 	 */
 	public Locatietoestemming(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
@@ -109,11 +110,11 @@ public class Locatietoestemming extends EntiteitBaseImpl {
 	/* //----------------// -#########--------------------#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Technisch # //----------------\\ */
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
 
 	/**
@@ -144,7 +145,7 @@ public class Locatietoestemming extends EntiteitBaseImpl {
 	/* //----------------// -#########- |------------| -#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Property Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: ID //----------------// */

@@ -1,7 +1,7 @@
 package be.fastned.application.boundary.Technisch;
 
-import be.fastned.application.domain.PersoonAbstracties.EnumPersoon;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
+import be.fastned.application.domain.Technisch.EnumPersoon;
+import be.fastned.application.domain.PersoonEntiteiten.Persoon;
 import be.fastned.application.control.ControleRegisterUser;
 
 /**
@@ -48,14 +48,14 @@ public class SchermRegisterUser{
      * @return De aangemaakte persoon.
      */
     public Persoon register(EnumPersoon type, String emailAdres, String gebruikersnaam, String wachtwoord, String voornaam, String naam, String geslacht, String gsm){
-        return m_ParentControleInstance.register(type, emailAdres, gebruikersnaam, wachtwoord, voornaam, naam, geslacht, gsm);
+        return m_ParentControleInstance.register(type, gebruikersnaam, emailAdres, wachtwoord, voornaam, naam, geslacht, gsm);
     }
     /**
      * Deze Domein-functie retourneert een aangemaakte persoon. (extra param adres/bedrijfsnaam/BTWNummer)
      * @return De aangemaakte persoon. (extra param adres/bedrijfsnaam/BTWNummer)
      */
     public Persoon register(EnumPersoon type, String emailAdres, String gebruikersnaam, String wachtwoord, String adres, String bedrijfsNaam, String btwNummer, String voornaam, String naam, String geslacht, String gsm){
-        return m_ParentControleInstance.register(type, emailAdres, gebruikersnaam, wachtwoord, adres, bedrijfsNaam, btwNummer, voornaam, naam, geslacht, gsm);
+        return m_ParentControleInstance.register(type, gebruikersnaam, emailAdres, wachtwoord, adres, bedrijfsNaam, btwNummer, voornaam, naam, geslacht, gsm);
     }
 
     /* //----------------// SECTIE: Technische-Functies //----------------// */

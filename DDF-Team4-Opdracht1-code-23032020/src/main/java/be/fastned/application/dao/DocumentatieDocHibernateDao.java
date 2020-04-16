@@ -2,8 +2,9 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.DocumentatieDocDao;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
-import be.fastned.application.domain.Technisch.DocumentatieDoc;
+import be.fastned.application.domain.AndereEntiteiten.DocumentatieDoc;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +49,7 @@ public class DocumentatieDocHibernateDao extends BaseHibernateDao implements Doc
 
     public ArrayList<DocumentatieDoc> getInstallatieDocumentaties(){
         ArrayList<DocumentatieDoc> list = new ArrayList<DocumentatieDoc>();
-        for (EntiteitBaseImpl item : getAllItems()) {
+        for (Entiteit item : getAllItems()) {
             if (((DocumentatieDoc)item).getDocumentatieType()=="installatie"){
                 list.add((DocumentatieDoc)item);
             }
@@ -58,7 +59,7 @@ public class DocumentatieDocHibernateDao extends BaseHibernateDao implements Doc
 
     public ArrayList<DocumentatieDoc> getReparatieDocumentaties(){
         ArrayList<DocumentatieDoc> list = new ArrayList<DocumentatieDoc>();
-        for (EntiteitBaseImpl item : getAllItems()) {
+        for (Entiteit item : getAllItems()) {
             if (((DocumentatieDoc)item).getDocumentatieType()=="reparatie"){
                 list.add((DocumentatieDoc)item);
             }

@@ -4,7 +4,7 @@ import be.fastned.application.boundary.Technisch.SchermBase;
 import be.fastned.application.control.ControlePlanner;
 import be.fastned.application.domain.AndereEntiteiten.*;
 import be.fastned.application.domain.PersoonEntiteiten.Installateur;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
+import be.fastned.application.domain.PersoonEntiteiten.PersoonDefault;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

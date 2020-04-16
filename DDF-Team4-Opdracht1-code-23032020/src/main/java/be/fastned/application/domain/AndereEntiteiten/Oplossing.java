@@ -2,6 +2,7 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.dao.OplossingHibernateDao;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
@@ -17,7 +18,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Oplossing.TABLE_NAM
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Oplossing extends EntiteitBaseImpl {
+public class Oplossing extends EntiteitBaseImpl implements Entiteit {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -82,7 +83,7 @@ public class Oplossing extends EntiteitBaseImpl {
 	}
 
 	/**
-	 * Default constructor voor deze klasse. (Geen configuratie)
+	 * Default constructor voor deze klasse. (Optionele Configuratie)
 	 */
 	public Oplossing(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
@@ -103,11 +104,11 @@ public class Oplossing extends EntiteitBaseImpl {
 	/* //----------------// -#########--------------------#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Technisch # //----------------\\ */
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
 
 	/**

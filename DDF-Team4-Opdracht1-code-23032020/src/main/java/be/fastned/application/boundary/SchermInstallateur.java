@@ -7,7 +7,7 @@ import be.fastned.application.domain.AndereEntiteiten.Afspraak;
 import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
 import be.fastned.application.domain.AndereEntiteiten.Oplossing;
 import be.fastned.application.domain.AndereEntiteiten.Probleem;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
+import be.fastned.application.domain.PersoonEntiteiten.PersoonDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

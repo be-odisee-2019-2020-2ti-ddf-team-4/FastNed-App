@@ -1,5 +1,5 @@
 package be.fastned.application.domain.Base;
 
-public interface EntiteitBase {
+public interface Entiteit {
     String getId();
 }

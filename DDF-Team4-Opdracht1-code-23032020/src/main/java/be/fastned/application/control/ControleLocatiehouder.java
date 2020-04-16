@@ -6,13 +6,12 @@ import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
 import be.fastned.application.domain.AndereEntiteiten.Locatietoestemming;
 import be.fastned.application.domain.AndereEntiteiten.Probleem;
 import be.fastned.application.domain.PersoonEntiteiten.Locatiehouder;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonProfessional;
-import org.springframework.stereotype.Component;
+import be.fastned.application.domain.PersoonEntiteiten.Persoon;
+import be.fastned.application.domain.PersoonEntiteiten.PersoonExtended;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLELOCATIEHOUDER;
 
 /**
  * @author TiboVG
@@ -72,7 +71,7 @@ public class ControleLocatiehouder extends ControleBaseImpl {
     /**
      * Deze Domein-functie updated de actieve persoon met persoons-/gebruikersgegevens na argumentencontroles na argumentcontroles.
      */
-    public PersoonProfessional identificeer(String adres, String bedrijfsNaam, String btwNummer, String voornaam, String naam, String geslacht, String gsm){
+    public PersoonExtended identificeer(String adres, String bedrijfsNaam, String btwNummer, String voornaam, String naam, String geslacht, String gsm){
         try{
             // Setup technische helper-variabelen
             StringBuilder samengesteldeError = new StringBuilder();

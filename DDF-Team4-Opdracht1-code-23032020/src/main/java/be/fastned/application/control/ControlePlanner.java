@@ -4,14 +4,13 @@ import be.fastned.application.boundary.SchermPlanner;
 import be.fastned.application.control.Base.ControleBaseImpl;
 import be.fastned.application.domain.AndereEntiteiten.*;
 import be.fastned.application.domain.PersoonEntiteiten.Installateur;
+import be.fastned.application.domain.PersoonEntiteiten.PersoonDefault;
 import be.fastned.application.domain.PersoonEntiteiten.Planner;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
-import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLEPLANNER;
 
 /**
  * @author TiboVG

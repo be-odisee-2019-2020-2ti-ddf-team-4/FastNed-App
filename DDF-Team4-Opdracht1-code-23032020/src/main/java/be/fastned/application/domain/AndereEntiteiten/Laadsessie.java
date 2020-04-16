@@ -2,6 +2,7 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
@@ -18,7 +19,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Laadsessie.TABLE_NA
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Laadsessie extends EntiteitBaseImpl {
+public class Laadsessie extends EntiteitBaseImpl implements Entiteit {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -88,7 +89,7 @@ public class Laadsessie extends EntiteitBaseImpl {
 	}
 
 	/**
-	 * Default constructor voor deze klasse. (Geen configuratie)
+	 * Default constructor voor deze klasse. (Optionele Configuratie)
 	 */
 	public Laadsessie(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
@@ -111,7 +112,7 @@ public class Laadsessie extends EntiteitBaseImpl {
 	/* //----------------// -#########--------------------#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	public double berekenLaadtijd(){
@@ -119,7 +120,7 @@ public class Laadsessie extends EntiteitBaseImpl {
 	}
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Technisch # //----------------\\ */
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
 
 	/**
@@ -150,7 +151,7 @@ public class Laadsessie extends EntiteitBaseImpl {
 	/* //----------------// -#########- |------------| -#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Property Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: ID //----------------// */

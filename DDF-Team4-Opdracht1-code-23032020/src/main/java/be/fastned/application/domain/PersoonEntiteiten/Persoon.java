@@ -1,17 +1,15 @@
-package be.fastned.application.domain.PersoonAbstracties.Interfaces;
-
-import java.util.ArrayList;
+package be.fastned.application.domain.PersoonEntiteiten;
 
 /**
  * @author TiboVG
- * @version 1.0
- * @created 15-Mar-2020 14:24:54
+ * @version 6.0
  */
+
 public interface Persoon {
 	Object hf_CheckIsActive(Object arg);
 
-	String getSuperId();
-	void setSuperId(String value);
+	String getId();
+	void setId(String value);
 
 	String getNaam();
 	void setNaam(String value);

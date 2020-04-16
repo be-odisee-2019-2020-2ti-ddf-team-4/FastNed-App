@@ -1,6 +1,6 @@
 package be.fastned.application.dao.Interfaces;
 
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
+import be.fastned.application.domain.PersoonEntiteiten.Persoon;
 
 public interface PersoonDao {
     Persoon createItem(Persoon item);

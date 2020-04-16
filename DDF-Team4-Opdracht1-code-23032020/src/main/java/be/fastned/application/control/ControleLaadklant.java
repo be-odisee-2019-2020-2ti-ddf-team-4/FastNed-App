@@ -6,12 +6,11 @@ import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
 import be.fastned.application.domain.AndereEntiteiten.Laadsessie;
 import be.fastned.application.domain.AndereEntiteiten.Probleem;
 import be.fastned.application.domain.PersoonEntiteiten.Laadklant;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
-import org.springframework.stereotype.Component;
+import be.fastned.application.domain.PersoonEntiteiten.PersoonDefault;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLELAADKLANT;
 
 /**
  * @author TiboVG

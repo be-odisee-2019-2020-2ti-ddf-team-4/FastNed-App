@@ -1,5 +1,6 @@
 package be.fastned.application.dao.Base;
 
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.domain.AndereEntiteiten.Oplossing;
 import be.fastned.application.service.AppConfig;
@@ -22,20 +23,20 @@ public abstract class BaseHibernateDao implements BaseDao {
         return sf.getCurrentSession();
     }
 
-    public EntiteitBaseImpl getItemById(String id) {
-        return (EntiteitBaseImpl) currentSession().createQuery(String.format("from %s where id = \'%s\'", ENTITY_NAME,id)).uniqueResult();
+    public Entiteit getItemById(String id) {
+        return (Entiteit) currentSession().createQuery(String.format("from %s where id = \'%s\'", ENTITY_NAME,id)).uniqueResult();
     }
-    public ArrayList<EntiteitBaseImpl> getAllItems() {
-        return (ArrayList<EntiteitBaseImpl>) currentSession().createQuery(String.format("from %s", ENTITY_NAME)).list();
+    public ArrayList<Entiteit> getAllItems() {
+        return (ArrayList<Entiteit>) currentSession().createQuery(String.format("from %s", ENTITY_NAME)).list();
     }
 
     public String getLastItemId() {
-        EntiteitBaseImpl lastItem = (EntiteitBaseImpl) (((ArrayList<Oplossing>)currentSession().createQuery(String.format("select t from %s t order by t.id desc", ENTITY_NAME)).setMaxResults(1).getResultList()).get(0));
+        Entiteit lastItem = (Entiteit) (((ArrayList<Entiteit>)currentSession().createQuery(String.format("select t from %s t order by t.id desc", ENTITY_NAME)).setMaxResults(1).getResultList()).get(0));
         String lastItemId = lastItem.getId();
         return lastItemId;
     }
     public Boolean isTableEmpty() {
-        int resultSize = ((ArrayList<EntiteitBaseImpl>)currentSession().createQuery(String.format("from %s", ENTITY_NAME)).setMaxResults(1).getResultList()).size();
-        return (resultSize == 0);
+        ArrayList<Entiteit> list = (ArrayList<Entiteit>)currentSession().createQuery(String.format("from %s", ENTITY_NAME)).setMaxResults(1).getResultList();
+        return list.isEmpty();
     }
 }

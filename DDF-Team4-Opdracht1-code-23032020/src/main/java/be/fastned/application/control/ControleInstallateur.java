@@ -7,11 +7,9 @@ import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
 import be.fastned.application.domain.AndereEntiteiten.Oplossing;
 import be.fastned.application.domain.AndereEntiteiten.Probleem;
 import be.fastned.application.domain.PersoonEntiteiten.Installateur;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import be.fastned.application.domain.PersoonEntiteiten.PersoonDefault;
+
 import java.util.*;
-import static be.fastned.application.control.Base.ControleBaseImpl.BEAN_CONTROLEINSTALLATEUR;
 
 /**
  * @author TiboVG

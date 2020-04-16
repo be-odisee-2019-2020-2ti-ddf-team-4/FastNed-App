@@ -1,13 +1,14 @@
-package be.fastned.application.domain.Technisch;
+package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.dao.DocumentatieDocHibernateDao;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
-import static be.fastned.application.domain.Technisch.DocumentatieDoc.ENTITY_NAME;
-import static be.fastned.application.domain.Technisch.DocumentatieDoc.TABLE_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.DocumentatieDoc.ENTITY_NAME;
+import static be.fastned.application.domain.AndereEntiteiten.DocumentatieDoc.TABLE_NAME;
 
 /**
  * @author TiboVG
@@ -17,7 +18,7 @@ import static be.fastned.application.domain.Technisch.DocumentatieDoc.TABLE_NAME
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class DocumentatieDoc extends EntiteitBaseImpl {
+public class DocumentatieDoc extends EntiteitBaseImpl implements Entiteit {
 
     /* //----------------// -##########-----------------------------##########- //----------------// */
     /* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -139,7 +140,7 @@ public class DocumentatieDoc extends EntiteitBaseImpl {
     /* //----------------// -#########- |------------| -#########- //----------------// */
 
     /* //----------------\\ # ------------------------- # //----------------\\ */
-    /* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+    /* //----------------\\ # Property Domein # //----------------\\ */
     /* //----------------\\ # ------------------------- # //----------------\\ */
 
     /* //----------------// PROPERTY: ID //----------------// */

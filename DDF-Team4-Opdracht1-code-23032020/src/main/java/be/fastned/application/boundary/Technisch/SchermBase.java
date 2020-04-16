@@ -1,6 +1,6 @@
 package be.fastned.application.boundary.Technisch;
 
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
+import be.fastned.application.domain.PersoonEntiteiten.Persoon;
 
 public abstract class SchermBase {
     /* //----------------// -#####----------------------------#####- //----------------// */

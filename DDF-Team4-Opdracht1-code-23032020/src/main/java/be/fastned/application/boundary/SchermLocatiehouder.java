@@ -5,7 +5,7 @@ import be.fastned.application.control.ControleLocatiehouder;
 import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
 import be.fastned.application.domain.AndereEntiteiten.Locatietoestemming;
 import be.fastned.application.domain.AndereEntiteiten.Probleem;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonProfessional;
+import be.fastned.application.domain.PersoonEntiteiten.PersoonExtended;
 
 /**
  * @author TiboVG
@@ -51,7 +51,7 @@ public class SchermLocatiehouder extends SchermBase {
      * Deze Domein-functie updated de actieve persoon met persoons-/gebruikersgegevens.
      * @return Het aangevulde persoon-object van de actieve gebruiker.
      */
-    public PersoonProfessional identificeer(String adres, String bedrijfsNaam, String btwNumer, String voornaam, String naam, String geslacht, String gsm){
+    public PersoonExtended identificeer(String adres, String bedrijfsNaam, String btwNumer, String voornaam, String naam, String geslacht, String gsm){
         return m_ParentControleInstance.identificeer(adres, bedrijfsNaam, btwNumer, voornaam, naam, geslacht, gsm);
     }
 

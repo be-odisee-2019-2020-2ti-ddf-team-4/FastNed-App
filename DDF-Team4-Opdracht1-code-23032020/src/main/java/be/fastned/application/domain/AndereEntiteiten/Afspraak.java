@@ -2,6 +2,7 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.domain.Technisch.Bezoek;
 import be.fastned.application.domain.Technisch.EnumStatus;
@@ -20,7 +21,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Afspraak.TABLE_NAME
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Afspraak extends EntiteitBaseImpl {
+public class Afspraak extends EntiteitBaseImpl implements Entiteit {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -94,7 +95,7 @@ public class Afspraak extends EntiteitBaseImpl {
 	}
 
 	/**
-	 * Default constructor voor deze klasse. (Geen configuratie)
+	 * Default constructor voor deze klasse. (Optionele Configuratie)
 	 */
 	public Afspraak(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
@@ -118,11 +119,11 @@ public class Afspraak extends EntiteitBaseImpl {
 	/* //----------------// -#########--------------------#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Technisch # //----------------\\ */
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
 
 	/**
@@ -154,7 +155,7 @@ public class Afspraak extends EntiteitBaseImpl {
 	/* //----------------// -#########- |------------| -#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Property Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: ID //----------------// */
@@ -191,21 +192,21 @@ public class Afspraak extends EntiteitBaseImpl {
 	}
 
 	/* //----------------// PROPERTY: Installateur //----------------// */
-	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het installateur-attribuut van deze instantie.
-	 */
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name=INSTALLATEUR_COL_NAME, referencedColumnName = Installateur.ID_COL_NAME)
-	public Installateur getInstallateur(){
-		return this.installateur;
-	}
-	/**
-	 * Deze domein-attribuut-setter vertegenwoordigt het installateur-attribuut van deze instantie.
-	 */
-	@Transient
-	public void setInstallateur(Installateur value){
-		this.installateur = value;
-	}
+//	/**
+//	 * Deze domein-attribuut-getter vertegenwoordigt het installateur-attribuut van deze instantie.
+//	 */
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name=INSTALLATEUR_COL_NAME, referencedColumnName = Installateur.ID_COL_NAME)
+//	public Installateur getInstallateur(){
+//		return this.installateur;
+//	}
+//	/**
+//	 * Deze domein-attribuut-setter vertegenwoordigt het installateur-attribuut van deze instantie.
+//	 */
+//	@Transient
+//	public void setInstallateur(Installateur value){
+//		this.installateur = value;
+//	}
 
 	/* //----------------// PROPERTY: Contract //----------------// */
 	/**

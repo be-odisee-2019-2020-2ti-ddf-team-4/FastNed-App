@@ -1,16 +1,13 @@
 package be.fastned.application.domain.AndereEntiteiten;
 
-import be.fastned.application.domain.PersoonAbstracties.EnumPersoon;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
-import be.fastned.application.domain.PersoonAbstracties.PersoonFactory;
-
-
+import be.fastned.application.domain.PersoonEntiteiten.PersoonFactory;
+import be.fastned.application.domain.Technisch.EnumPersoon;
+import be.fastned.application.domain.PersoonEntiteiten.Persoon;
 import java.util.ArrayList;
 
 /**
  * @author TiboVG
- * @version 1.0
- * @created 15-Mar-2020 14:24:54
+ * @version 6.0
  */
 public class Register {
     /* //----------------// -#####- |----------------------| -#####- //----------------// */

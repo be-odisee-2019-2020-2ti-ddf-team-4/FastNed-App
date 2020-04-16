@@ -1,9 +1,6 @@
 package be.fastned.application.control.Base;
 
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
-import be.fastned.application.service.AppRunner;
-import be.fastned.application.service.AppServiceImpl;
-import be.fastned.application.service.Interfaces.AppService;
+import be.fastned.application.domain.PersoonEntiteiten.Persoon;
 
 public class ControleBaseImpl extends ControleBase {
     /* //----------------// -#####----------------------------#####- //----------------// */

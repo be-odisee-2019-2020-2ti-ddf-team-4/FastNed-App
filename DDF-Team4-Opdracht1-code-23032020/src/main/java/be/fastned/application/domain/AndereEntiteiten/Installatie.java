@@ -2,9 +2,9 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.InstallatieHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.domain.Technisch.Bezoek;
-import be.fastned.application.domain.Technisch.DocumentatieDoc;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,7 +20,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Installatie.TABLE_N
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Installatie extends EntiteitBaseImpl implements Bezoek {
+public class Installatie extends EntiteitBaseImpl implements Bezoek, Entiteit {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -90,7 +90,7 @@ public class Installatie extends EntiteitBaseImpl implements Bezoek {
 	}
 
 	/**
-	 * Default constructor voor deze klasse. (Geen configuratie)
+	 * Default constructor voor deze klasse. (Optionele Configuratie)
 	 */
 	public Installatie(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
@@ -110,7 +110,7 @@ public class Installatie extends EntiteitBaseImpl implements Bezoek {
 	/* //----------------// -#########--------------------#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/**
@@ -121,7 +121,7 @@ public class Installatie extends EntiteitBaseImpl implements Bezoek {
 	}
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Technisch # //----------------\\ */
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
 
 	/**
@@ -152,7 +152,7 @@ public class Installatie extends EntiteitBaseImpl implements Bezoek {
 	/* //----------------// -#########- |------------| -#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Property Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: ID //----------------// */

@@ -3,6 +3,7 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
@@ -18,7 +19,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Probleem.TABLE_NAME
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Probleem extends EntiteitBaseImpl {
+public class Probleem extends EntiteitBaseImpl implements Entiteit {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -87,7 +88,7 @@ public class Probleem extends EntiteitBaseImpl {
 	}
 
 	/**
-	 * Default constructor voor deze klasse. (Geen configuratie)
+	 * Default constructor voor deze klasse. (Optionele Configuratie)
 	 */
 	public Probleem(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
@@ -109,11 +110,11 @@ public class Probleem extends EntiteitBaseImpl {
 	/* //----------------// -#########--------------------#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Technisch # //----------------\\ */
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
 
 	/**
@@ -144,7 +145,7 @@ public class Probleem extends EntiteitBaseImpl {
 	/* //----------------// -#########- |------------| -#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Property Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: ID //----------------// */

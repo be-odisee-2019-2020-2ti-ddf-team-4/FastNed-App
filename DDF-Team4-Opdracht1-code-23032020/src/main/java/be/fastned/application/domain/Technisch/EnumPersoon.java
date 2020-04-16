@@ -1,4 +1,4 @@
-package be.fastned.application.domain.PersoonAbstracties;
+package be.fastned.application.domain.Technisch;
 
 public enum EnumPersoon {
     INSTALLATEUR("installateur"),

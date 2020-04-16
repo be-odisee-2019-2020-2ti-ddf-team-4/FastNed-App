@@ -3,7 +3,7 @@ package be.fastned.application.domain.Base;
 import be.fastned.application.dao.Base.BaseDao;
 import java.io.Serializable;
 
-public abstract class EntiteitBaseImpl implements Serializable, EntiteitBase {
+public abstract class EntiteitBaseImpl implements Serializable {
 
     static protected final String AFSPRAAK_ID_PREFIX = "AFSPRK_";
     static protected final String CONTRACT_ID_PREFIX = "CNTRCT_";

@@ -2,8 +2,8 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.PersoonDao;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.Persoon;
-import be.fastned.application.domain.PersoonAbstracties.PersoonImpl;
+import be.fastned.application.domain.PersoonEntiteiten.Persoon;
+import be.fastned.application.domain.PersoonEntiteiten.PersoonImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,6 +82,6 @@ public class PersoonHibernateDao extends BaseHibernateDao implements PersoonDao 
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Persoon deleteItem(Persoon item){
-        return (Persoon) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getSuperId())).uniqueResult();
+        return (Persoon) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
     }
 }

@@ -2,9 +2,9 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.domain.PersoonEntiteiten.Locatiehouder;
-import be.fastned.application.domain.Technisch.DocumentatieDoc;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Laadpaal.TABLE_NAME
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Laadpaal extends EntiteitBaseImpl {
+public class Laadpaal extends EntiteitBaseImpl implements Entiteit {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -97,7 +97,7 @@ public class Laadpaal extends EntiteitBaseImpl {
 	}
 
 	/**
-	 * Default constructor voor deze klasse. (Geen configuratie)
+	 * Default constructor voor deze klasse. (Optionele Configuratie)
 	 */
 	public Laadpaal(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
@@ -122,11 +122,11 @@ public class Laadpaal extends EntiteitBaseImpl {
 	/* //----------------// -#########--------------------#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Technisch # //----------------\\ */
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
 
 	/**
@@ -157,7 +157,7 @@ public class Laadpaal extends EntiteitBaseImpl {
 	/* //----------------// -#########- |------------| -#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Property Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: ID //----------------// */
@@ -177,21 +177,21 @@ public class Laadpaal extends EntiteitBaseImpl {
 	}
 
 	/* //----------------// PROPERTY: Locatiehouder //----------------// */
-	/**
-	 * Deze domein-attribuut getter vertegenwoordigt het locatiehouder-attribuut.
-	 */
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name=LOCATIEHOUDER_COL_NAME, referencedColumnName = Locatiehouder.ID_COL_NAME)
-	public Locatiehouder getLocatiehouder(){
-		return this.locatiehouder;
-	}
-	/**
-	 * Deze domein-attribuut setter vertegenwoordigt het locatiehouder-attribuut.
-	 */
-	@Transient
-	public void setLocatiehouder(Locatiehouder value){
-		this.locatiehouder = value;
-	}
+//	/**
+//	 * Deze domein-attribuut getter vertegenwoordigt het locatiehouder-attribuut.
+//	 */
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name=LOCATIEHOUDER_COL_NAME, referencedColumnName = Locatiehouder.ID_COL_NAME)
+//	public Locatiehouder getLocatiehouder(){
+//		return this.locatiehouder;
+//	}
+//	/**
+//	 * Deze domein-attribuut setter vertegenwoordigt het locatiehouder-attribuut.
+//	 */
+//	@Transient
+//	public void setLocatiehouder(Locatiehouder value){
+//		this.locatiehouder = value;
+//	}
 
 	/* //----------------// PROPERTY: Laadpaal-Type //----------------// */
 	/**

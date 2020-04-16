@@ -5,7 +5,7 @@ import be.fastned.application.control.ControleLaadklant;
 import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
 import be.fastned.application.domain.AndereEntiteiten.Laadsessie;
 import be.fastned.application.domain.AndereEntiteiten.Probleem;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonDefault;
+import be.fastned.application.domain.PersoonEntiteiten.PersoonDefault;
 
 /**
  * @author TiboVG

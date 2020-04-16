@@ -1,10 +1,8 @@
 package be.fastned.application.service;
 
-import be.fastned.application.dao.Interfaces.ProbleemDao;
 import be.fastned.application.domain.AndereEntiteiten.Oplossing;
 import be.fastned.application.domain.AndereEntiteiten.Probleem;
 import be.fastned.application.service.Interfaces.PersistenceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 

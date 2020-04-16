@@ -3,11 +3,9 @@ package be.fastned.application.domain.PersoonEntiteiten;
 import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonExtension;
-import be.fastned.application.domain.PersoonAbstracties.PersoonDefaultImpl;
 import be.fastned.application.domain.AndereEntiteiten.Probleem;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.service.AppRunner;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import static be.fastned.application.domain.PersoonEntiteiten.Laadklant.ENTITY_NAME;
@@ -21,7 +19,7 @@ import static be.fastned.application.domain.PersoonEntiteiten.Laadklant.TABLE_NA
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
+public class Laadklant extends PersoonImpl implements PersoonDefault, Entiteit {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -40,6 +38,7 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 
 	private String id;
+	private PersoonImpl parentPersoon;
 
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
@@ -69,21 +68,19 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	public static final String ID_PREFIX = LAADKLANT_ID_PREFIX;
 
 	// Constanten met kolom-namen
-	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	private static final String ID_COL_NAME = ID_PREFIX + "ID";
+	public static final String PERSOON_COL_NAME = "Persoon_FK";
 
 	/* //----------------// SECTIE: Laadklanten //----------------// */
 	/**
 	 * (ACT-LAADKLANTEN) Collectie van actieve & nieuwe instanties via deze klasse.
 	 */
-	public static ArrayList<PersoonExtension> actieveLaadklanten = new ArrayList<PersoonExtension>();
+	public static ArrayList<PersoonDefault> actieveLaadklanten = new ArrayList<PersoonDefault>();
 	/**
 	 * (ARCH-LAADKLANTEN) Collectie van verlopen & afgehandelde instanties via deze klasse.
 	 */
-	public static ArrayList<PersoonExtension> gearchiveerdeLaadklanten = new ArrayList<PersoonExtension>();
+	public static ArrayList<PersoonDefault> gearchiveerdeLaadklanten = new ArrayList<PersoonDefault>();
 
-	/* //----------------// -#####--------------------#####- //----------------// */
-	/* //----------------// -#####- | CONSTRUCTORS | -#####- //----------------// */
-	/* //----------------// -#####--------------------#####- //----------------// */
 	/* //----------------// -#########------------------------#########- //----------------// */
 	/* //----------------// -#########- &|& CONSTRUCTORS &|& -#########- //----------------// */
 	/* //----------------// -#########------------------------#########- //----------------// */
@@ -92,33 +89,31 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	 * Default constructor voor deze klasse. (Wel configuratie)
 	 */
 	public Laadklant(){
+		super();
 		setupInitConfig();
-		id = extrapolateId();
 	}
 
 	/**
-	 * Default constructor voor deze klasse. (Geen configuratie)
+	 * Default constructor voor deze klasse. (Optionele Configuratie)
 	 */
 	public Laadklant(boolean noConfig){
+		super(noConfig);
 		if (!noConfig) { setupInitConfig(); }
-		id = extrapolateId();
 	}
 
 	/**
 	 * Basische constructor voor deze klasse. (enkel accountgegevens)
 	 */
-	public Laadklant(String emailadres, String gebruikersnaam, String wachtwoord){
-		super(emailadres, gebruikersnaam, wachtwoord);
+	public Laadklant(String gebruikersnaam, String emailadres, String wachtwoord) {
+		super(gebruikersnaam, emailadres, wachtwoord);
 		setupInitConfig();
-		id = extrapolateId();
 	}
 	/**
 	 * Volledige constructor voor deze klasse. (accountgegevens + persoonsgegevens)
 	 */
-	public Laadklant(String emailadres, String gebruikersnaam, String wachtwoord, String naam, String voornaam, String geslacht, String gsm ){
-		super(emailadres, gebruikersnaam, wachtwoord, naam, voornaam, geslacht, gsm);
+	public Laadklant(String gebruikersnaam, String emailadres, String wachtwoord, String naam, String voornaam, String geslacht, String gsm ){
+		super(gebruikersnaam, emailadres, wachtwoord, naam, voornaam, geslacht, gsm);
 		setupInitConfig();
-		id = extrapolateId();
 	}
 
 	/* //----------------// -#########--------------------#########- //----------------// */
@@ -126,7 +121,7 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	/* //----------------// -#########--------------------#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/**
@@ -144,9 +139,20 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 		return probleem;
 	}
 
-	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
-	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/**
+	 * Deze domein-functie identificeert resterende attributen bij registratie zonder persoonsgegevens.
+	 */
+	public PersoonDefault identificeer(String naam, String voornaam, String geslacht, String gsm){
+		this.naam = naam;
+		this.voornaam = voornaam;
+		this.geslacht = geslacht;
+		this.gsm = gsm;
+		return this;
+	}
+
+	/* //----------------\\ # ----------------- # //----------------\\ */
+	/* //----------------\\ # Functie Technisch # //----------------\\ */
+	/* //----------------\\ # ----------------- # //----------------\\ */
 
 	/**
 	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
@@ -162,28 +168,30 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 	private void setupInitConfig(){
 		actieveLaadklanten.add(this);
 		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
+		this.id = (klasseDao.isTableEmpty()) ? (ID_PREFIX_PERSOON + "0") : extrapolateId();
+		this.parentPersoon = this;
 	}
 
 	/**
 	 * Deze technische functie leidt het id af via het laatste record in de tabel.
 	 */
 	private String extrapolateId(){
-		return baseExtrapolateId(ID_PREFIX, klasseDao);
+		return klasseDao.getLastItemId();
 	}
 
 	/* //----------------// -#########- |------------| -#########- //----------------// */
 	/* //----------------// -#########- | PROPERTIES | -#########- //----------------// */
 	/* //----------------// -#########- |------------| -#########- //----------------// */
 
-	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
-	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # --------------- # //----------------\\ */
+	/* //----------------\\ # Property Domein # //----------------\\ */
+	/* //----------------\\ # --------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: ID //----------------// */
 	/**
 	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
 	 */
-	@Id @Column(name = ID_COL_NAME)
+	@Transient
 	public String getId(){
 		return this.id;
 	}
@@ -195,21 +203,38 @@ public class Laadklant extends PersoonDefaultImpl implements PersoonExtension {
 		this.id = value;
 	}
 
-	/* //----------------\\ # ------------------------------ # //----------------\\ */
-	/* //----------------\\ # Property Technische Variabelen # //----------------\\ */
-	/* //----------------\\ # ------------------------------ # //----------------\\ */
+	/* //----------------// PROPERTY: Persoon-FK //----------------// */
+	/**
+	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name=PERSOON_COL_NAME, referencedColumnName = PersoonImpl.ID_COL_NAME_PERSOON)
+	public PersoonImpl getPersoon(){
+		return this.parentPersoon;
+	}
+	/**
+	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
+	 */
+	@Transient
+	public void setPersoon(PersoonImpl value){
+		this.parentPersoon = value;
+	}
+
+	/* //----------------\\ # ------------------- # //----------------\\ */
+	/* //----------------\\ # Property Technische # //----------------\\ */
+	/* //----------------\\ # ------------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: Actieve & Gearchiveerde LAADKLANTEN //----------------// */
 	/**
 	 * (ACT-LAADKLANTEN) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. actieve installateurs.
 	 */
 	@Transient
-	public static ArrayList<PersoonExtension> getActieveInstanties() { return actieveLaadklanten; }
+	public static ArrayList<PersoonDefault> getActieveInstanties() { return actieveLaadklanten; }
 	/**
 	 * (ARCH-LAADKLANTEN) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. gearchiveerde installateurs.
 	 */
 	@Transient
-	public static ArrayList<PersoonExtension> getGearchiveerdeInstanties() { return gearchiveerdeLaadklanten; }
+	public static ArrayList<PersoonDefault> getGearchiveerdeInstanties() { return gearchiveerdeLaadklanten; }
 
 	/* //----------------// PROPERTY: Actieve & Gearchiveerde aangemaakte PROBLEMEN //----------------// */
 	/**

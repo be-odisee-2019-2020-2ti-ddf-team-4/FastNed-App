@@ -2,9 +2,9 @@ package be.fastned.application.domain.AndereEntiteiten;
 
 import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
 import be.fastned.application.domain.Technisch.Bezoek;
-import be.fastned.application.domain.Technisch.DocumentatieDoc;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,7 +20,7 @@ import static be.fastned.application.domain.AndereEntiteiten.Reparatie.TABLE_NAM
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Reparatie extends EntiteitBaseImpl implements Bezoek {
+public class Reparatie extends EntiteitBaseImpl implements Bezoek, Entiteit {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -61,7 +61,7 @@ public class Reparatie extends EntiteitBaseImpl implements Bezoek {
 	// Constanten met kolom-namen
 	public static final String ID_COL_NAME = ID_PREFIX + "ID";
 	public static final String REPARATIECOMPLEET_COL_NAME = "ReparatieCompleet";
-	public static final String PROBLEEM_COL_NAME = "Probleem";
+	public static final String PROBLEEM_COL_NAME = "Probleem_FK";
 
 	// Technische constanten
 	public static DocumentatieDoc repo = new DocumentatieDoc();
@@ -90,7 +90,7 @@ public class Reparatie extends EntiteitBaseImpl implements Bezoek {
 	}
 
 	/**
-	 * Default constructor voor deze klasse. (Geen configuratie)
+	 * Default constructor voor deze klasse. (Optionele Configuratie)
 	 */
 	public Reparatie(boolean noConfig){
 		if (!noConfig) { setupInitConfig(); }
@@ -111,7 +111,7 @@ public class Reparatie extends EntiteitBaseImpl implements Bezoek {
 	/* //----------------// -#########--------------------#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 	// TODO laadpaal heeft geen prop!
 	// TODO DocumentatieDoc wordt als static gebruikt in instanties
@@ -124,7 +124,7 @@ public class Reparatie extends EntiteitBaseImpl implements Bezoek {
 	}
 
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Technisch # //----------------\\ */
 	/* //----------------\\ # ---------------------------- # //----------------\\ */
 
 	/**
@@ -155,7 +155,7 @@ public class Reparatie extends EntiteitBaseImpl implements Bezoek {
 	/* //----------------// -#########- |------------| -#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Property Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: ID //----------------// */

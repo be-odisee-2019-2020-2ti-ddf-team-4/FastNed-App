@@ -5,10 +5,8 @@ import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.domain.AndereEntiteiten.Afspraak;
 import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
 import be.fastned.application.domain.AndereEntiteiten.Oplossing;
-import be.fastned.application.domain.PersoonAbstracties.PersoonDefaultImpl;
-import be.fastned.application.domain.PersoonAbstracties.Interfaces.PersoonExtension;
 import be.fastned.application.domain.AndereEntiteiten.Probleem;
-import be.fastned.application.domain.PersoonAbstracties.PersoonImpl;
+import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.service.AppRunner;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,10 +18,11 @@ import static be.fastned.application.domain.PersoonEntiteiten.Installateur.TABLE
  * @version 6.0
  */
 
+
 @Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
-public class Installateur extends PersoonDefaultImpl implements PersoonExtension {
+public class Installateur extends PersoonImpl implements PersoonDefault, Entiteit {
 
 	/* //----------------// -##########-----------------------------##########- //----------------// */
 	/* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
@@ -41,8 +40,8 @@ public class Installateur extends PersoonDefaultImpl implements PersoonExtension
 	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 
-	private String id = null;
-	private PersoonImpl persoon;
+	private String id;
+	private PersoonImpl parentPersoon;
 
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */
@@ -76,24 +75,24 @@ public class Installateur extends PersoonDefaultImpl implements PersoonExtension
 	/* //----------------// SECTIE: Constanten //----------------// */
 	// Configureren @Table en @Entity
 	public static final String ENTITY_NAME = "Installateur";
-	public static final String TABLE_NAME = "tbl_Installateurs";
+	public static final String TABLE_NAME = "tbl_installateurs";
 
 	// Lokale constante (id prefix) overkopieëren naar super-variabel
 	public static final String ID_PREFIX = INSTALLATEUR_ID_PREFIX;
 
 	// Constanten met kolom-namen
-	public static final String ID_COL_NAME = ID_PREFIX + "Id";
+	private static final String ID_COL_NAME = ID_PREFIX + "ID";
 	public static final String PERSOON_COL_NAME = "Persoon_FK";
 
 	/* //----------------// SECTIE: Installateurs //----------------// */
 	/**
 	 * (ACT-INSTALLATEURS) Collectie van actieve & nieuwe instanties via deze klasse.
 	 */
-	public static ArrayList<PersoonExtension> actieveInstallateurs = new ArrayList<PersoonExtension>();
+	public static ArrayList<PersoonDefault> actieveInstallateurs = new ArrayList<PersoonDefault>();
 	/**
 	 * (ARCH-INSTALLATEURS) Collectie van verlopen & afgehandelde instanties via deze klasse.
 	 */
-	public static ArrayList<PersoonExtension> gearchiveerdeInstallateurs = new ArrayList<PersoonExtension>();
+	public static ArrayList<PersoonDefault> gearchiveerdeInstallateurs = new ArrayList<PersoonDefault>();
 
 
 	/* //----------------// -#########------------------------#########- //----------------// */
@@ -104,33 +103,30 @@ public class Installateur extends PersoonDefaultImpl implements PersoonExtension
 	 * Default constructor voor deze klasse. (Wel configuratie)
 	 */
 	public Installateur(){
+		super();
 		setupInitConfig();
-		id = extrapolateId();
 	}
 
 	/**
-	 * Default constructor voor deze klasse. (Geen configuratie)
+	 * Default constructor voor deze klasse. (Optionele Configuratie)
 	 */
 	public Installateur(boolean noConfig){
+		super(noConfig);
 		if (!noConfig) { setupInitConfig(); }
-		id = extrapolateId();
 	}
 	/**
 	 * Basische constructor voor deze klasse. (enkel accountgegevens)
 	 */
-	public Installateur(String emailadres, String gebruikersnaam, String wachtwoord ){
-		super(emailadres, gebruikersnaam, wachtwoord);
+	public Installateur(String gebruikersnaam, String emailadres, String wachtwoord) {
+		super(gebruikersnaam, emailadres, wachtwoord);
 		setupInitConfig();
-		this.persoon = (PersoonImpl)this;
-		id = extrapolateId();
 	}
 	/**
 	 * Volledige constructor voor deze klasse. (accountgegevens + persoonsgegevens)
 	 */
-	public Installateur(String emailadres, String gebruikersnaam, String wachtwoord, String naam, String voornaam, String geslacht, String gsm ){
-		super(emailadres, gebruikersnaam, wachtwoord, naam, voornaam, geslacht, gsm);
+	public Installateur(String gebruikersnaam, String emailadres, String wachtwoord, String naam, String voornaam, String geslacht, String gsm ){
+		super(gebruikersnaam, emailadres, wachtwoord, naam, voornaam, geslacht, gsm);
 		setupInitConfig();
-		id = extrapolateId();
 	}
 
 	/* //----------------// -#########--------------------#########- //----------------// */
@@ -138,7 +134,7 @@ public class Installateur extends PersoonDefaultImpl implements PersoonExtension
 	/* //----------------// -#########--------------------#########- //----------------// */
 
 	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Domein Variabelen # //----------------\\ */
+	/* //----------------\\ # Functie Domein # //----------------\\ */
 	/* //----------------\\ # ------------------------- # //----------------\\ */
 	/**
 	 * Deze domein-functie maakt een probleem aan (i.v.m. installatie/reparatie in afspraak) via deze persoon
@@ -185,9 +181,20 @@ public class Installateur extends PersoonDefaultImpl implements PersoonExtension
 		toBeUpdatedAfspraak.setStatus(nieuweStatus);
 	}
 
-	/* //----------------\\ # ---------------------------- # //----------------\\ */
-	/* //----------------\\ # Functie Technisch Variabelen # //----------------\\ */
-	/* //----------------\\ # ---------------------------- # //----------------\\ */
+	/**
+	 * Deze domein-functie identificeert resterende attributen bij registratie zonder persoonsgegevens.
+	 */
+	public PersoonDefault identificeer(String naam, String voornaam, String geslacht, String gsm){
+		this.naam = naam;
+		this.voornaam = voornaam;
+		this.geslacht = geslacht;
+		this.gsm = gsm;
+		return this;
+	}
+
+	/* //----------------\\ # ----------------- # //----------------\\ */
+	/* //----------------\\ # Functie Technisch # //----------------\\ */
+	/* //----------------\\ # ----------------- # //----------------\\ */
 
 	/**
 	 * Deze technische functie zet deze instantie over van de actieve- naar de gearchiveerde arraylist.
@@ -203,28 +210,31 @@ public class Installateur extends PersoonDefaultImpl implements PersoonExtension
 	private void setupInitConfig(){
 		actieveInstallateurs.add(this);
 		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
+		this.id = (klasseDao.isTableEmpty()) ? (ID_PREFIX_PERSOON + "0") : extrapolateId();
+		this.parentPersoon = this;
 	}
 
 	/**
 	 * Deze technische functie leidt het id af via het laatste record in de tabel.
 	 */
 	private String extrapolateId(){
-		return baseExtrapolateId(ID_PREFIX, klasseDao);
+		return klasseDao.getLastItemId();
 	}
 
 	/* //----------------// -#########- |------------| -#########- //----------------// */
 	/* //----------------// -#########- | PROPERTIES | -#########- //----------------// */
 	/* //----------------// -#########- |------------| -#########- //----------------// */
 
-	/* //----------------\\ # ------------------------- # //----------------\\ */
-	/* //----------------\\ # Property Domein Variabelen # //----------------\\ */
-	/* //----------------\\ # ------------------------- # //----------------\\ */
+	/* //----------------\\ # --------------- # //----------------\\ */
+	/* //----------------\\ # Property Domein # //----------------\\ */
+	/* //----------------\\ # --------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: ID //----------------// */
 	/**
 	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
 	 */
-	@Id @Column(name = ID_COL_NAME)
+	@Transient
+	//@Id @Column(name = ID_COL_NAME)
 	public String getId(){
 		return this.id;
 	}
@@ -241,33 +251,33 @@ public class Installateur extends PersoonDefaultImpl implements PersoonExtension
 	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
 	 */
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name=PERSOON_COL_NAME, referencedColumnName = PersoonImpl.ID_COL_NAME)
+	@JoinColumn(name=PERSOON_COL_NAME, referencedColumnName = PersoonImpl.ID_COL_NAME_PERSOON)
 	public PersoonImpl getPersoon(){
-		return this.persoon;
+		return this.parentPersoon;
 	}
 	/**
 	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
 	 */
 	@Transient
 	public void setPersoon(PersoonImpl value){
-		this.persoon = value;
+		this.parentPersoon = value;
 	}
 
-	/* //----------------\\ # ------------------------------ # //----------------\\ */
-	/* //----------------\\ # Property Technische Variabelen # //----------------\\ */
-	/* //----------------\\ # ------------------------------ # //----------------\\ */
+	/* //----------------\\ # ------------------- # //----------------\\ */
+	/* //----------------\\ # Property Technische # //----------------\\ */
+	/* //----------------\\ # ------------------- # //----------------\\ */
 
 	/* //----------------// PROPERTY: Actieve & Gearchiveerde INSTALLATEURS //----------------// */
 	/**
 	 * (ACT-INSTALLATEUR) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. actieve installateurs.
 	 */
 	@Transient
-	public static ArrayList<PersoonExtension> getActieveInstanties() { return actieveInstallateurs; }
+	public static ArrayList<PersoonDefault> getActieveInstanties() { return actieveInstallateurs; }
 	/**
 	 * (ARCH-INSTALLATEUR) Deze domein-attribuut-setter vertegenwoordigt de collectie v.d. gearchiveerde installateurs.
 	 */
 	@Transient
-	public static ArrayList<PersoonExtension> getGearchiveerdeInstanties() { return gearchiveerdeInstallateurs; }
+	public static ArrayList<PersoonDefault> getGearchiveerdeInstanties() { return gearchiveerdeInstallateurs; }
 
 	/* //----------------// PROPERTY: Actieve & Gearchiveerde aangemaakte PROBLEMEN //----------------// */
 	/**
