@@ -7,9 +7,7 @@ import be.fastned.application.domain.Andere.DocumentatieDoc;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
-
 import static be.fastned.application.dao.Andere.DocumentatieDocHibernateDao.BEAN_DAO_NAME;
 
 /**

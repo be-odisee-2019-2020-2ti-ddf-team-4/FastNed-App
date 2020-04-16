@@ -35,6 +35,7 @@ public abstract class BaseHibernateDao implements BaseDao {
     }
     public Boolean isTableEmpty() {
         ArrayList<Entiteit> list = (ArrayList<Entiteit>)currentSession().createQuery(String.format("from %s", ENTITY_NAME)).setMaxResults(1).getResultList();
+        System.out.println("test + " +  ENTITY_NAME.toString());
         return list.isEmpty();
     }
 }

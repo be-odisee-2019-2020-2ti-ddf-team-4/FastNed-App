@@ -7,13 +7,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import static be.fastned.application.dao.Andere.PlannerHibernateDao.BEAN_DAO_NAME;
+
 /**
  * @author TiboVG
  * @version 6.0
  */
 
-@Repository("plannerDao")
+@Repository(BEAN_DAO_NAME)
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
+
 public class PlannerHibernateDao extends BaseHibernateDao implements PlannerDao {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
@@ -57,7 +60,7 @@ public class PlannerHibernateDao extends BaseHibernateDao implements PlannerDao 
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Planner createItem(Planner item) {
-        currentSession().save(item);
+        currentSession().persist(item);
         return item;
     }
 
