@@ -1,11 +1,8 @@
 package be.fastned.application.service;
 
-import be.fastned.application.dao.Interfaces.InstallateurDao;
-import be.fastned.application.dao.Interfaces.PersoonDao;
-import be.fastned.application.dao.Interfaces.PlannerDao;
-import be.fastned.application.domain.PersoonEntiteiten.Installateur;
-import be.fastned.application.domain.PersoonEntiteiten.PersoonImpl;
-import be.fastned.application.domain.PersoonEntiteiten.Planner;
+import be.fastned.application.dao.Personen.InstallateurDao;
+import be.fastned.application.dao.Personen.PersoonDao;
+import be.fastned.application.domain.Personen.Installateur;
 import be.fastned.application.service.Interfaces.AppService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;

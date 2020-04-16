@@ -1,7 +1,7 @@
 package be.fastned.application.boundary.Technisch;
 
 import be.fastned.application.domain.Technisch.EnumPersoon;
-import be.fastned.application.domain.PersoonEntiteiten.Persoon;
+import be.fastned.application.domain.Personen.Persoon;
 import be.fastned.application.control.ControleRegisterUser;
 
 /**

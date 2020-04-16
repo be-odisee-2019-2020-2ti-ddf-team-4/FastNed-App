@@ -1,6 +1,6 @@
 package be.fastned.application.dao.Interfaces;
 
-import be.fastned.application.domain.AndereEntiteiten.Afspraak;
+import be.fastned.application.domain.Andere.Afspraak;
 
 public interface AfspraakDao {
     Afspraak createItem(Afspraak item);

@@ -1,6 +1,6 @@
 package be.fastned.application.dao.Interfaces;
 
-import be.fastned.application.domain.AndereEntiteiten.Probleem;
+import be.fastned.application.domain.Andere.Probleem;
 
 public interface ProbleemDao {
     Probleem createItem(Probleem item);

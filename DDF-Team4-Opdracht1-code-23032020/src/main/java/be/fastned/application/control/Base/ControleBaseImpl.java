@@ -1,6 +1,6 @@
 package be.fastned.application.control.Base;
 
-import be.fastned.application.domain.PersoonEntiteiten.Persoon;
+import be.fastned.application.domain.Personen.Persoon;
 
 public class ControleBaseImpl extends ControleBase {
     /* //----------------// -#####----------------------------#####- //----------------// */

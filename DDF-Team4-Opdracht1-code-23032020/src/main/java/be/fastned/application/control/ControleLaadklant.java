@@ -2,11 +2,11 @@ package be.fastned.application.control;
 
 import be.fastned.application.boundary.SchermLaadklant;
 import be.fastned.application.control.Base.ControleBaseImpl;
-import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
-import be.fastned.application.domain.AndereEntiteiten.Laadsessie;
-import be.fastned.application.domain.AndereEntiteiten.Probleem;
-import be.fastned.application.domain.PersoonEntiteiten.Laadklant;
-import be.fastned.application.domain.PersoonEntiteiten.PersoonDefault;
+import be.fastned.application.domain.Andere.Laadpaal;
+import be.fastned.application.domain.Andere.Laadsessie;
+import be.fastned.application.domain.Andere.Probleem;
+import be.fastned.application.domain.Personen.Laadklant;
+import be.fastned.application.domain.Personen.PersoonDefault;
 
 import java.util.ArrayList;
 import java.util.HashMap;
