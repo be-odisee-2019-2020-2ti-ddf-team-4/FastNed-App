@@ -38,8 +38,8 @@ public class Installatie extends EntiteitBaseImpl implements Bezoek, Entiteit {
 	/* //----------------\\ # Instantie Domein Variabelen # //----------------\\ */
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	private String id;
-	private LocalDateTime installatieCompleet;
 	private Probleem probleem;
+	private LocalDateTime installatieCompleet;
 
 	/* //----------------\\ # ------------------------------- # //----------------\\ */
 	/* //----------------\\ # Instantie Technische Variabelen # //----------------\\ */

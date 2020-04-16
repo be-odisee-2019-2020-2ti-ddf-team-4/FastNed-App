@@ -1,7 +1,7 @@
 package be.fastned.application.domain.PersoonEntiteiten;
 
-import be.fastned.application.dao.AfspraakHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
+import be.fastned.application.dao.InstallateurHibernateDao;
 import be.fastned.application.domain.AndereEntiteiten.Afspraak;
 import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
 import be.fastned.application.domain.AndereEntiteiten.Oplossing;
@@ -103,7 +103,6 @@ public class Installateur extends PersoonImpl implements PersoonDefault, Entitei
 	 * Default constructor voor deze klasse. (Wel configuratie)
 	 */
 	public Installateur(){
-		super();
 		setupInitConfig();
 	}
 
@@ -118,7 +117,10 @@ public class Installateur extends PersoonImpl implements PersoonDefault, Entitei
 	 * Basische constructor voor deze klasse. (enkel accountgegevens)
 	 */
 	public Installateur(String gebruikersnaam, String emailadres, String wachtwoord) {
-		super(gebruikersnaam, emailadres, wachtwoord);
+		//super(gebruikersnaam, emailadres, wachtwoord);
+		this.gebruikersnaam = gebruikersnaam;
+		this.emailadres = emailadres;
+		this.wachtwoord = wachtwoord;
 		setupInitConfig();
 	}
 	/**
@@ -209,8 +211,9 @@ public class Installateur extends PersoonImpl implements PersoonDefault, Entitei
 	 */
 	private void setupInitConfig(){
 		actieveInstallateurs.add(this);
-		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(AfspraakHibernateDao.BEAN_DAO_NAME);
-		this.id = (klasseDao.isTableEmpty()) ? (ID_PREFIX_PERSOON + "0") : extrapolateId();
+		klasseDao = (BaseDao) AppRunner.getAppContext().getBean(InstallateurHibernateDao.BEAN_DAO_NAME);
+		System.out.println(klasseDao);
+		this.id = (klasseDao.isTableEmpty()) ? (ID_PREFIX + "0") : extrapolateId();
 		this.parentPersoon = this;
 	}
 
@@ -244,23 +247,6 @@ public class Installateur extends PersoonImpl implements PersoonDefault, Entitei
 	@Transient
 	public void setId(String value){
 		this.id = value;
-	}
-
-	/* //----------------// PROPERTY: Persoon-FK //----------------// */
-	/**
-	 * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
-	 */
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name=PERSOON_COL_NAME, referencedColumnName = PersoonImpl.ID_COL_NAME_PERSOON)
-	public PersoonImpl getPersoon(){
-		return this.parentPersoon;
-	}
-	/**
-	 * Deze domein-attribuut-setter vertegenwoordigt het id-attribuut van deze instantie.
-	 */
-	@Transient
-	public void setPersoon(PersoonImpl value){
-		this.parentPersoon = value;
 	}
 
 	/* //----------------\\ # ------------------- # //----------------\\ */

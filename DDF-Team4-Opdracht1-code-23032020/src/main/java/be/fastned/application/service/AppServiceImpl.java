@@ -38,7 +38,7 @@ public class AppServiceImpl implements AppService {
     public void testPersistentie(){
         System.out.println("\nPersisteren oplossing en probleem als demo start..");
 
-        PersoonImpl testPersoon = new PersoonImpl("Mr. Testudo", "test.vg@gmail.com", "ww");
+        //PersoonImpl testPersoon = new PersoonImpl("Mr. Testudo", "test.vg@gmail.com", "ww");
         PersoonDao persoonDao = (PersoonDao)appContext.getBean("persoonDao");
 
         Installateur testInstallateur = new Installateur("Mr. Testudo 2", "test.vg2@gmail.com", "ww2");

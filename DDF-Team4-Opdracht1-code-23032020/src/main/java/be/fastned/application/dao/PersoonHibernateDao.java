@@ -60,7 +60,7 @@ public class PersoonHibernateDao extends BaseHibernateDao implements PersoonDao 
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Persoon createItem(Persoon item) {
-        currentSession().save(item);
+        currentSession().persist(item);
         return item;
     }
 

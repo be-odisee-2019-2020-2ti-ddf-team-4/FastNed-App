@@ -15,12 +15,12 @@ import static be.fastned.application.domain.PersoonEntiteiten.PersoonImpl.TABLE_
  * @version 6.0
  */
 
-@Entity(name = ENTITY_NAME)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity(name = ENTITY_NAME)
 @Table(name = TABLE_NAME)
 
 // public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon {
-public class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
+public abstract class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
     /* //----------------// -##########-----------------------------##########- //----------------// */
     /* //----------------// -##########- | ! VERDUIDELIJKINGEN ! | -##########- //----------------// */
     /* //----------------// -##########-----------------------------##########- //----------------// */
@@ -152,6 +152,7 @@ public class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
      * Deze technische functie abstraheert alle overige configuraties i.v.m. instantie-constructie.
      */
     private void setupInitConfig(){
+        System.out.println("t");
         actieveSuperInstanties.add(this);
         actieveChildInstanties.add(this);
         klasseDao = (BaseDao) AppRunner.getAppContext().getBean(PersoonHibernateDao.BEAN_DAO_NAME);
@@ -194,7 +195,8 @@ public class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
     /**
      * Deze domein-attribuut-getter vertegenwoordigt het id-attribuut van deze instantie.
      */
-    @Id @Column(name = ID_COL_NAME_PERSOON)
+    @Transient
+    //@Id @Column(name = ID_COL_NAME_PERSOON)
     public String getId(){
         return this.persoonId;
     }
@@ -210,7 +212,8 @@ public class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
     /**
      * Deze domein-attribuut-getter vertegenwoordigt het Naam-attribuut van deze instantie.
      */
-    @Column(name = NAAM_COL_NAME)
+    @Transient
+    //@Column(name = NAAM_COL_NAME)
     public String getNaam() { return naam; }
     /**
      * Deze domein-attribuut-setter vertegenwoordigt het Naam-attribuut van deze instantie.
@@ -222,7 +225,8 @@ public class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
     /**
      * Deze domein-attribuut-getter vertegenwoordigt het Voornaam-attribuut van deze instantie.
      */
-    @Column(name = VOORNAAM_COL_NAME)
+    @Transient
+    //@Column(name = VOORNAAM_COL_NAME)
     public String getVoorNaam() { return voornaam; }
     /**
      * Deze domein-attribuut-setter vertegenwoordigt het Voornaam-attribuut van deze instantie.
@@ -234,7 +238,8 @@ public class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
     /**
      * Deze domein-attribuut-getter vertegenwoordigt het Geslacht-attribuut van deze instantie.
      */
-    @Column(name = GESLACHT_COL_NAME)
+    @Transient
+    //@Column(name = GESLACHT_COL_NAME)
     public String getGeslacht() { return geslacht; }
     /**
      * Deze domein-attribuut-setter vertegenwoordigt het Geslacht-attribuut van deze instantie.
@@ -246,7 +251,8 @@ public class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
     /**
      * Deze domein-attribuut-getter vertegenwoordigt het Gsm-attribuut van deze instantie.
      */
-    @Column(name = GSM_COL_NAME)
+    @Transient
+    //@Column(name = GSM_COL_NAME)
     public String getGsm() { return gsm; }
     /**
      * Deze domein-attribuut-setter vertegenwoordigt het Gsm-attribuut van deze instantie.
@@ -258,7 +264,8 @@ public class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
     /**
      * Deze domein-attribuut-getter vertegenwoordigt het Gebruikersnaam-attribuut van deze instantie.
      */
-    @Column(name = GEBRUIKERSNAAM_COL_NAME)
+    @Transient
+    //@Column(name = GEBRUIKERSNAAM_COL_NAME)
     public String getGebruikersnaam() { return gebruikersnaam; }
     /**
      * Deze domein-attribuut-setter vertegenwoordigt het Gebruikersnaam-attribuut van deze instantie.
@@ -270,7 +277,8 @@ public class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
     /**
      * Deze domein-attribuut-getter vertegenwoordigt het Emailadres-attribuut van deze instantie.
      */
-    @Column(name = EMAILADRES_COL_NAME)
+    @Transient
+    //@Column(name = EMAILADRES_COL_NAME)
     public String getEmailadres() { return emailadres; }
     /**
      * Deze domein-attribuut-setter vertegenwoordigt het Emailadres-attribuut van deze instantie.
@@ -282,7 +290,8 @@ public class PersoonImpl extends EntiteitBaseImpl implements Persoon, Entiteit {
     /**
      * Deze domein-attribuut-getter vertegenwoordigt het Wachtwoord-attribuut van deze instantie.
      */
-    @Column(name = WACHTWOORD_COL_NAME)
+    @Transient
+    //@Column(name = WACHTWOORD_COL_NAME)
     public String getWachtwoord() { return wachtwoord; }
     /**
      * Deze domein-attribuut-setter vertegenwoordigt het Wachtwoord-attribuut van deze instantie.
