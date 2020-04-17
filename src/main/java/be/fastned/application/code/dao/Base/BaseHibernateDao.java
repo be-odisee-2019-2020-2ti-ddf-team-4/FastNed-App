@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
 public abstract class BaseHibernateDao implements BaseDao {
 
-    protected String ENTITY_NAME_BASE;
+    protected String ENTITY_NAME_BASE; // TEST
 
     protected Session currentSession(){
         SessionFactory sf =(SessionFactory) AppRunner.getAppContext().getBean(AppConfig.BEAN_SESSIONFACTORY);
