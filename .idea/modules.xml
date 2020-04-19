@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ProjectFastNed.iml" filepath="$PROJECT_DIR$/.idea/ProjectFastNed.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FastNedApplication.iml" filepath="$PROJECT_DIR$/FastNedApplication.iml" />
     </modules>
   </component>
 </project>
