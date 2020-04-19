@@ -13,6 +13,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class AppRunner {
     private static AnnotationConfigApplicationContext appContext = null;
     private static AppService appService = null;
+    private static AppService appServiceTest = null;
 
     private static Persoon actieveGebruiker;
 
