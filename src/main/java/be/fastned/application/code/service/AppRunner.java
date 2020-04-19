@@ -21,7 +21,7 @@ public class AppRunner {
         appService = AppServiceImpl.getInstance();
         appService.testPersistentie();
 
-        // Afsluiten van het systeem.
+        // Afsluiten van het systeem. Test
         System.out.println("\n[!!!]  Geen fouten -> systeem sluit af");
         closeApplication();
     }
