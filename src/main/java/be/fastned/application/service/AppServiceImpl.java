@@ -1,14 +1,17 @@
 package be.fastned.application.service;
 
-import be.fastned.application.dao.Interfaces.InstallateurDao;
+import be.fastned.application.dao.Interfaces.AfspraakDao;
 import be.fastned.application.dao.Interfaces.PersoonDao;
-import be.fastned.application.dao.Interfaces.PlannerDao;
-import be.fastned.application.domain.PersoonEntiteiten.Installateur;
-import be.fastned.application.domain.PersoonEntiteiten.PersoonImpl;
-import be.fastned.application.domain.PersoonEntiteiten.Planner;
+import be.fastned.application.domain.Afspraak;
+import be.fastned.application.domain.Contract;
+import be.fastned.application.domain.Laadpaal;
+import be.fastned.application.domain.Personen.Installateur;
+import be.fastned.application.domain.Personen.Locatiehouder;
 import be.fastned.application.service.Interfaces.AppService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  * @author TiboVG
@@ -36,26 +39,34 @@ public class AppServiceImpl implements AppService {
     }
 
     public void testPersistentie(){
-        System.out.println("\nPersisteren oplossing en probleem als demo start..");
+        System.out.println("\n[!!!]  Persisteren oplossing en probleem als demo start..");
 
-        //PersoonImpl testPersoon = new PersoonImpl("Mr. Testudo", "test.vg@gmail.com", "ww");
+//        Installateur installateurTest = new Installateur("Mr. Testudo 2", "test.vg2@gmail.com", "ww2");
+//        InstallateurDao installateurDao = (InstallateurDao)appContext.getBean("installateurDao");
+//
+//        PersoonImpl persoonTest = installateurTest;
         PersoonDao persoonDao = (PersoonDao)appContext.getBean("persoonDao");
+        AfspraakDao afspraakDao = (AfspraakDao)appContext.getBean("afspraakDao");
 
-        Installateur testInstallateur = new Installateur("Mr. Testudo 2", "test.vg2@gmail.com", "ww2");
-        InstallateurDao installateurDao = (InstallateurDao)appContext.getBean("installateurDao");
-
-        boolean doCreate = true,
+        boolean doCreate = false,
                 doUpdate = false;
 
         if (doCreate) {
-            installateurDao.createItem(testInstallateur);
+            for (int i = 0; i < 2; i++) {
+
+                Locatiehouder locatiehouderTest = new Locatiehouder("Mr. Testudo 2", "test.vg2@gmail.com", "ww2");
+                Laadpaal laadpaalTest = new Laadpaal(locatiehouderTest,"A");
+                Installateur installateurTest = new Installateur("Mr. Testudo 2", "test.vg2@gmail.com", "ww2");
+                Contract contractTest = new Contract(LocalDateTime.now(),LocalDateTime.now());
+                Afspraak afspraakTest = new Afspraak(laadpaalTest, installateurTest, contractTest);
+                afspraakDao.createItem(afspraakTest);
+            }
         }
 
         if (doUpdate){
-            testInstallateur.setGebruikersnaam("Updated");
-            installateurDao.updateItem(testInstallateur);
+            // Do update
         }
 
-        System.out.println("Persisteren oplossing en probleem als demo beëndigd..\n");
+        System.out.println("[!!!]  Persisteren oplossing en probleem als demo beëndigd..\n");
     }
 }

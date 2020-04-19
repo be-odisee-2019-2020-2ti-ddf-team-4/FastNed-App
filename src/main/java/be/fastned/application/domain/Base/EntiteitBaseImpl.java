@@ -1,6 +1,7 @@
 package be.fastned.application.domain.Base;
 
 import be.fastned.application.dao.Base.BaseDao;
+
 import java.io.Serializable;
 
 public abstract class EntiteitBaseImpl implements Serializable {
@@ -22,7 +23,7 @@ public abstract class EntiteitBaseImpl implements Serializable {
     static protected final String LOCATIEHOUDER_ID_PREFIX = "LCTHDR_";
     static protected final String PLANNER_ID_PREFIX = "PLNNR_";
 
-    static protected BaseDao klasseDao;
+
 
     /**
      * Deze technische functie leidt het id voor deze instantie af v.h. laatste record in de DB.

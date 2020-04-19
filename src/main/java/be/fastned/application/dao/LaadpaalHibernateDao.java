@@ -2,10 +2,11 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.LaadpaalDao;
-import be.fastned.application.domain.AndereEntiteiten.Laadpaal;
+import be.fastned.application.domain.Laadpaal;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import static be.fastned.application.dao.LaadpaalHibernateDao.BEAN_DAO_NAME;
 
 /**
@@ -43,10 +44,10 @@ public class LaadpaalHibernateDao extends BaseHibernateDao implements LaadpaalDa
     /* //----------------// -#########--------------------#########- //----------------// */
 
     /* //----------------\\ # ------------------ # //----------------\\ */
-    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # Functies Base # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = LAADPAAL_ENTITY_NAME;
+        ENTITY_NAME_BASE = LAADPAAL_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -81,6 +82,6 @@ public class LaadpaalHibernateDao extends BaseHibernateDao implements LaadpaalDa
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Laadpaal deleteItem(Laadpaal item){
-        return (Laadpaal) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+        return (Laadpaal) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME_BASE, item.getId())).uniqueResult();
     }
 }

@@ -1,6 +1,6 @@
 package be.fastned.application.service.Interfaces;
 
-import be.fastned.application.domain.AndereEntiteiten.Oplossing;
+import be.fastned.application.domain.Oplossing;
 
 public interface PersistenceService {
     // Een afspraak managen

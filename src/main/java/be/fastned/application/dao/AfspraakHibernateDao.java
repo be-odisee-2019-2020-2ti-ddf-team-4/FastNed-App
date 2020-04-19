@@ -2,10 +2,11 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.AfspraakDao;
-import be.fastned.application.domain.AndereEntiteiten.Afspraak;
+import be.fastned.application.domain.Afspraak;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import static be.fastned.application.dao.AfspraakHibernateDao.BEAN_DAO_NAME;
 
 /**
@@ -43,10 +44,10 @@ public class AfspraakHibernateDao extends BaseHibernateDao implements AfspraakDa
     /* //----------------// -#########--------------------#########- //----------------// */
 
     /* //----------------\\ # ------------------ # //----------------\\ */
-    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # Functies Base # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = AFSPRAAK_ENTITY_NAME;
+        ENTITY_NAME_BASE = AFSPRAAK_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -81,6 +82,6 @@ public class AfspraakHibernateDao extends BaseHibernateDao implements AfspraakDa
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Afspraak deleteItem(Afspraak item){
-        return (Afspraak) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+        return (Afspraak) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME_BASE, item.getId())).uniqueResult();
     }
 }

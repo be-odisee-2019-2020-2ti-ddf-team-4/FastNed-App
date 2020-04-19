@@ -2,10 +2,11 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.InstallatieDao;
-import be.fastned.application.domain.AndereEntiteiten.Installatie;
+import be.fastned.application.domain.Installatie;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import static be.fastned.application.dao.InstallatieHibernateDao.BEAN_DAO_NAME;
 
 /**
@@ -43,10 +44,10 @@ public class InstallatieHibernateDao extends BaseHibernateDao implements Install
     /* //----------------// -#########--------------------#########- //----------------// */
 
     /* //----------------\\ # ------------------ # //----------------\\ */
-    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # Functies Base # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = INSTALLATIE_ENTITY_NAME;
+        ENTITY_NAME_BASE = INSTALLATIE_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -81,6 +82,6 @@ public class InstallatieHibernateDao extends BaseHibernateDao implements Install
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Installatie deleteItem(Installatie item){
-        return (Installatie) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+        return (Installatie) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME_BASE, item.getId())).uniqueResult();
     }
 }

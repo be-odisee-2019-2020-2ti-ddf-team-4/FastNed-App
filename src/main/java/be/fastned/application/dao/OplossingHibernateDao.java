@@ -2,10 +2,11 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.OplossingDao;
-import be.fastned.application.domain.AndereEntiteiten.Oplossing;
+import be.fastned.application.domain.Oplossing;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import static be.fastned.application.dao.OplossingHibernateDao.BEAN_DAO_NAME;
 
 /**
@@ -43,10 +44,10 @@ public class OplossingHibernateDao extends BaseHibernateDao implements Oplossing
     /* //----------------// -#########--------------------#########- //----------------// */
 
     /* //----------------\\ # ------------------ # //----------------\\ */
-    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # Functies Base # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = OPLOSSING_ENTITY_NAME;
+        ENTITY_NAME_BASE = OPLOSSING_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -81,6 +82,6 @@ public class OplossingHibernateDao extends BaseHibernateDao implements Oplossing
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Oplossing deleteItem(Oplossing item){
-        return (Oplossing) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+        return (Oplossing) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME_BASE, item.getId())).uniqueResult();
     }
 }

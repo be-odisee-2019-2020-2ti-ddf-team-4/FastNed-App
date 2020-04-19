@@ -1,11 +1,12 @@
 package be.fastned.application.dao.Interfaces;
 
-import be.fastned.application.domain.PersoonEntiteiten.Persoon;
+import be.fastned.application.domain.Personen.Persoon;
+import be.fastned.application.domain.Personen.PersoonImpl;
 
 public interface PersoonDao {
-    Persoon createItem(Persoon item);
+    PersoonImpl createItem(PersoonImpl item);
 
     Persoon deleteItem(Persoon item);
 
-    void updateItem (Persoon item);
+    void updateItem(Persoon item);
 }

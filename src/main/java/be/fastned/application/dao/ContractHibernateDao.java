@@ -2,10 +2,11 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.ContractDao;
-import be.fastned.application.domain.AndereEntiteiten.Contract;
+import be.fastned.application.domain.Contract;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import static be.fastned.application.dao.ContractHibernateDao.BEAN_DAO_NAME;
 
 /**
@@ -43,10 +44,10 @@ public class ContractHibernateDao extends BaseHibernateDao implements ContractDa
     /* //----------------// -#########--------------------#########- //----------------// */
 
     /* //----------------\\ # ------------------ # //----------------\\ */
-    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # Functies Base # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = CONTRACT_ENTITY_NAME;
+        ENTITY_NAME_BASE = CONTRACT_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -81,6 +82,6 @@ public class ContractHibernateDao extends BaseHibernateDao implements ContractDa
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Contract deleteItem(Contract item){
-        return (Contract) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+        return (Contract) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME_BASE, item.getId())).uniqueResult();
     }
 }

@@ -2,10 +2,11 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.LaadsessieDao;
-import be.fastned.application.domain.AndereEntiteiten.Laadsessie;
+import be.fastned.application.domain.Laadsessie;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import static be.fastned.application.dao.LaadsessieHibernateDao.BEAN_DAO_NAME;
 
 /**
@@ -43,10 +44,10 @@ public class LaadsessieHibernateDao extends BaseHibernateDao implements Laadsess
     /* //----------------// -#########--------------------#########- //----------------// */
 
     /* //----------------\\ # ------------------ # //----------------\\ */
-    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # Functies Base # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = LAADSESSIE_ENTITY_NAME;
+        ENTITY_NAME_BASE = LAADSESSIE_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -81,6 +82,6 @@ public class LaadsessieHibernateDao extends BaseHibernateDao implements Laadsess
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Laadsessie deleteItem(Laadsessie item){
-        return (Laadsessie) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+        return (Laadsessie) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME_BASE, item.getId())).uniqueResult();
     }
 }

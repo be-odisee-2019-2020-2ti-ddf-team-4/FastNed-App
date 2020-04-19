@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import java.util.Properties;
 
 @Configuration
@@ -34,27 +35,27 @@ public class AppConfig {
             ds.setMaxActive(10);
             ds.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_SERIALIZABLE);
 
-            System.out.println("Bean datasource is aangemaakt!");
+            System.out.println("[!!!]  Bean datasource is aangemaakt!");
             return ds;
         }
         catch(Exception ex){
-            System.out.println("Bean datasource is niet aangemaakt met exception: " + ex.getMessage());
+            System.out.println("[!!!]  Bean datasource is niet aangemaakt met exception: " + ex.getMessage());
         }
         return null;
     }
 
     // HV 20150210 - Aangepast aan Hibernate 4
-    @Bean (name = BEAN_SESSIONFACTORY, destroyMethod="close")
+    @Bean(name = BEAN_SESSIONFACTORY, destroyMethod="close")
     public SessionFactory sessionFactory() throws Exception{
         LocalSessionFactoryBean sf = new LocalSessionFactoryBean();
         sf.setDataSource(datasource());
-        sf.setPackagesToScan(new String[]{"be.fastned.application.domain"});
+        sf.setPackagesToScan(new String[]{"be.fastned.application.code.domain"});
         Properties hibernateProperties = new Properties();
         hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
         sf.setHibernateProperties(hibernateProperties);
         sf.afterPropertiesSet();
 
-        System.out.println("Bean sessionFactory is aangemaakt!");
+        System.out.println("[!!!]  Bean sessionFactory is aangemaakt!");
         return sf.getObject();
     }
 
@@ -62,11 +63,11 @@ public class AppConfig {
     public HibernateTransactionManager transactionManager() throws Exception{
         try{
             HibernateTransactionManager hibernateTransactionManager = new HibernateTransactionManager(sessionFactory());
-            System.out.println("Bean transactionManager is aangemaakt!");
+            System.out.println("[!!!]  Bean transactionManager is aangemaakt!");
             return hibernateTransactionManager;
         }
         catch(Exception ex){
-            System.out.println("Bean transactionManager is niet aangemaakt met exception: " + ex.getMessage());
+            System.out.println("[!!!]  Bean transactionManager is niet aangemaakt met exception: " + ex.getMessage());
         }
         return null;
     }

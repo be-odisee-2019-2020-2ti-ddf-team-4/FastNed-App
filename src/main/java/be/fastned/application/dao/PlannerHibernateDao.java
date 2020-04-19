@@ -2,10 +2,11 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.PlannerDao;
-import be.fastned.application.domain.PersoonEntiteiten.Planner;
+import be.fastned.application.domain.Personen.Planner;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import static be.fastned.application.dao.PlannerHibernateDao.BEAN_DAO_NAME;
 
 /**
@@ -13,8 +14,9 @@ import static be.fastned.application.dao.PlannerHibernateDao.BEAN_DAO_NAME;
  * @version 6.0
  */
 
-@Repository("plannerDao")
+@Repository(BEAN_DAO_NAME)
 @Transactional(propagation= Propagation.SUPPORTS, readOnly=true)
+
 public class PlannerHibernateDao extends BaseHibernateDao implements PlannerDao {
 
     /* //----------------// -#########--------------------------------#########- //----------------// */
@@ -42,10 +44,10 @@ public class PlannerHibernateDao extends BaseHibernateDao implements PlannerDao 
     /* //----------------// -#########--------------------#########- //----------------// */
 
     /* //----------------\\ # ------------------ # //----------------\\ */
-    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # Functies Base # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = PLANNER_ENTITY_NAME;
+        ENTITY_NAME_BASE = PLANNER_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -58,7 +60,7 @@ public class PlannerHibernateDao extends BaseHibernateDao implements PlannerDao 
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Planner createItem(Planner item) {
-        currentSession().save(item);
+        currentSession().persist(item);
         return item;
     }
 
@@ -80,6 +82,6 @@ public class PlannerHibernateDao extends BaseHibernateDao implements PlannerDao 
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Planner deleteItem(Planner item){
-        return (Planner) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+        return (Planner) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME_BASE, item.getId())).uniqueResult();
     }
 }

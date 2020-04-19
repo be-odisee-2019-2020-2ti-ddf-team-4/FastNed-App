@@ -1,6 +1,6 @@
 package be.fastned.application.service;
 
-import be.fastned.application.domain.PersoonEntiteiten.Persoon;
+import be.fastned.application.domain.Personen.Persoon;
 import be.fastned.application.service.Interfaces.AppService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -13,7 +13,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class AppRunner {
     private static AnnotationConfigApplicationContext appContext = null;
     private static AppService appService = null;
-    private static AppService appServiceTest = null;
 
     private static Persoon actieveGebruiker;
 
@@ -23,18 +22,19 @@ public class AppRunner {
         appService.testPersistentie();
 
         // Afsluiten van het systeem.
+        System.out.println("\n[!!!]  Geen fouten -> systeem sluit af");
         closeApplication();
     }
 
     private static AnnotationConfigApplicationContext initieerContext(){
-        System.out.println("   !Systeemconfiguratie Start!   \n");
+        System.out.println("[!!!]  Systeemconfiguratie Start!\n");
         AnnotationConfigApplicationContext appContextLocal = new AnnotationConfigApplicationContext(AppConfig.class);
-        System.out.println("\n   !Systeemconfiguratie Succesvol Beëindigd!   \n");
+        System.out.println("\n[!!!]  Systeemconfiguratie Succesvol Beëindigd!");
         return appContextLocal;
     }
 
     private static void closeApplication(){
-        System.out.println("De applicatie sluit af..");
+        System.out.println("\n[!!!]  De applicatie sluit af...\n");
         Runtime.getRuntime().exit(0);
     }
 

@@ -2,9 +2,8 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.DocumentatieDocDao;
+import be.fastned.application.domain.DocumentatieDoc;
 import be.fastned.application.domain.Base.Entiteit;
-import be.fastned.application.domain.Base.EntiteitBaseImpl;
-import be.fastned.application.domain.AndereEntiteiten.DocumentatieDoc;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,10 +67,10 @@ public class DocumentatieDocHibernateDao extends BaseHibernateDao implements Doc
     }
 
     /* //----------------\\ # ------------------ # //----------------\\ */
-    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # Functies Base # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = DOCUMENTATIEDOC_ENTITY_NAME;
+        ENTITY_NAME_BASE = DOCUMENTATIEDOC_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -106,6 +105,6 @@ public class DocumentatieDocHibernateDao extends BaseHibernateDao implements Doc
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public DocumentatieDoc deleteItem(DocumentatieDoc item){
-        return (DocumentatieDoc) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+        return (DocumentatieDoc) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME_BASE, item.getId())).uniqueResult();
     }
 }

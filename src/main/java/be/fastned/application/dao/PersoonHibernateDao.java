@@ -2,11 +2,12 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.PersoonDao;
-import be.fastned.application.domain.PersoonEntiteiten.Persoon;
-import be.fastned.application.domain.PersoonEntiteiten.PersoonImpl;
+import be.fastned.application.domain.Personen.Persoon;
+import be.fastned.application.domain.Personen.PersoonImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import static be.fastned.application.dao.PersoonHibernateDao.BEAN_DAO_NAME;
 
 /**
@@ -44,10 +45,10 @@ public class PersoonHibernateDao extends BaseHibernateDao implements PersoonDao 
     /* //----------------// -#########--------------------#########- //----------------// */
 
     /* //----------------\\ # ------------------ # //----------------\\ */
-    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # Functies Base # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = PERSOON_ENTITY_NAME;
+        ENTITY_NAME_BASE = PERSOON_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -59,7 +60,7 @@ public class PersoonHibernateDao extends BaseHibernateDao implements PersoonDao 
      * Voegt een instantie van deze klasse aan de DB toe als gepersisteerde entiteit.
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
-    public Persoon createItem(Persoon item) {
+    public PersoonImpl createItem(PersoonImpl item) {
         currentSession().persist(item);
         return item;
     }
@@ -82,6 +83,6 @@ public class PersoonHibernateDao extends BaseHibernateDao implements PersoonDao 
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Persoon deleteItem(Persoon item){
-        return (Persoon) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+        return (Persoon) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME_BASE, item.getId())).uniqueResult();
     }
 }

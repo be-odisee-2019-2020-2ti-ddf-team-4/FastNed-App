@@ -2,10 +2,11 @@ package be.fastned.application.dao;
 
 import be.fastned.application.dao.Base.BaseHibernateDao;
 import be.fastned.application.dao.Interfaces.LocatiehouderDao;
-import be.fastned.application.domain.PersoonEntiteiten.Locatiehouder;
+import be.fastned.application.domain.Personen.Locatiehouder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import static be.fastned.application.dao.LocatiehouderHibernateDao.BEAN_DAO_NAME;
 
 /**
@@ -43,10 +44,10 @@ public class LocatiehouderHibernateDao extends BaseHibernateDao implements Locat
     /* //----------------// -#########--------------------#########- //----------------// */
 
     /* //----------------\\ # ------------------ # //----------------\\ */
-    /* //----------------\\ # Functies Technisch # //----------------\\ */
+    /* //----------------\\ # Functies Base # //----------------\\ */
     /* //----------------\\ # ------------------ # //----------------\\ */
     private void configureAbstractOperations(){
-        ENTITY_NAME = LOCATIEHOUDER_ENTITY_NAME;
+        ENTITY_NAME_BASE = LOCATIEHOUDER_ENTITY_NAME;
     }
 
     /* //----------------\\ # --------------- # //----------------\\ */
@@ -81,6 +82,6 @@ public class LocatiehouderHibernateDao extends BaseHibernateDao implements Locat
      */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
     public Locatiehouder deleteItem(Locatiehouder item){
-        return (Locatiehouder) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME, item.getId())).uniqueResult();
+        return (Locatiehouder) currentSession().createQuery(String.format("delete from %s where %s = ", ENTITY_NAME_BASE, item.getId())).uniqueResult();
     }
 }
