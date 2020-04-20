@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="author" content="Honore Pacifique Bayisenge">
+    <meta name="description" content="Fastned home page">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: auto auto;
+            align-items: center;
+        }
+
+        .secondColomn {
+            margin-top: 5em;
+        }
+
+        .right {
+            margin-left: auto;
+
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        form {
+            margin: 10px;
+        }
+
+        button {
+            width: 10em;
+            height: 2em;
+            margin: 0.5em;
+
+
+            border: 0.5px solid black;
+
+
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 0.5em;
+            cursor: pointer;
+        }
+
+        div img {
+            max-height: 5em;
+        }
+
+        div p,
+        label,
+        table,
+        #btnCreate {
+            margin-left: 3em;
+        }
+
+
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        td {
+            border: none;
+        }
+
+
+
+        #btnUpdate,
+        #btnDelete {
+
+
+            margin-top: 2em;
+            margin-left: 10em;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div><img src="fastned_logo.jpg"></div>
+        <div class="right">
+            <div class="flex">
+                <div>
+                    <button><a href="Home.html">Lijst afspraken</a> </button>
+                    <button ><a href="Create.html">Create afspraak</a></button>
+
+                </div>
+
+                <div>
+                    <form>
+                        <input type="search" id="search" placeholder="search" name="search">
+                        <input type="submit">
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="container secondColomn">
+        <div>
+            <p>Opstaande afspraken:</p>
+        </div>
+        <div class=" ">
+
+            <label for="showQ">Show:</label>
+            <select class="right" id="showQ">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+        </div>
+    </div>
+    <div class="Container">
+        <table style="width:45%">
+            <tr>
+                <td> Naam:</td>
+                <td>Installatie Ibis</td>
+
+            </tr>
+            <tr>
+                <td>Laadpaal:</td>
+                <td>Supercharger 500</td>
+
+            </tr>
+            <tr>
+                <td>Installateur:</td>
+                <td>Hendrik Pieters</td>
+
+            </tr>
+            <tr>
+                <td>Einddatum:</td>
+                <td>15/03/2021</td>
+
+            </tr>
+            <tr>
+                <td>Contract:</td>
+                <td>HPI00598</td>
+
+            </tr>
+            <tr>
+                <td>Soort afspraak:</td>
+                <td>Installatie</td>
+
+            </tr>
+            <tr>
+                <td>Installtie ID:</td>
+                <td>KAH00236</td>
+
+            </tr>
+        </table>
+
+    </div>
+    <div>
+        <button id="btnUpdate"><a href="Update.html">Update</a> </button>
+        <button id="btnDelete"><a href="Read_and_delete.html">Delete</a></button>
+    </div>
+
+
+</body>
+
+</html>
