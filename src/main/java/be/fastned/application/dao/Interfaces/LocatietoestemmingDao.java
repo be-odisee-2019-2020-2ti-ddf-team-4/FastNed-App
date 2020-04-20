@@ -1,6 +1,6 @@
 package be.fastned.application.dao.Interfaces;
 
-import be.fastned.application.domain.Locatietoestemming;
+import be.fastned.application.domain.OtherImpl.Locatietoestemming;
 
 public interface LocatietoestemmingDao {
     Locatietoestemming createItem(Locatietoestemming item);

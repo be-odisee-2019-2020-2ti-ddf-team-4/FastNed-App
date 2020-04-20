@@ -1,6 +1,6 @@
 package be.fastned.application.dao.Interfaces;
 
-import be.fastned.application.domain.Contract;
+import be.fastned.application.domain.OtherImpl.Contract;
 
 public interface ContractDao {
     Contract createItem(Contract item);

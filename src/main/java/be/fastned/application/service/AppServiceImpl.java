@@ -1,10 +1,11 @@
 package be.fastned.application.service;
 
+import be.fastned.application.AppRunner;
 import be.fastned.application.dao.Interfaces.AfspraakDao;
 import be.fastned.application.dao.Interfaces.PersoonDao;
-import be.fastned.application.domain.Afspraak;
-import be.fastned.application.domain.Contract;
-import be.fastned.application.domain.Laadpaal;
+import be.fastned.application.domain.OtherImpl.Afspraak;
+import be.fastned.application.domain.OtherImpl.Contract;
+import be.fastned.application.domain.OtherImpl.Laadpaal;
 import be.fastned.application.domain.Personen.Installateur;
 import be.fastned.application.domain.Personen.Locatiehouder;
 import be.fastned.application.service.Interfaces.AppService;

@@ -1,13 +1,13 @@
 package be.fastned.application.domain.Personen;
 
-import be.fastned.application.dao.InstallateurHibernateDao;
+import be.fastned.application.dao.implementations.InstallateurHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
-import be.fastned.application.domain.Afspraak;
-import be.fastned.application.domain.Laadpaal;
-import be.fastned.application.domain.Oplossing;
-import be.fastned.application.domain.Probleem;
+import be.fastned.application.domain.OtherImpl.Afspraak;
+import be.fastned.application.domain.OtherImpl.Laadpaal;
+import be.fastned.application.domain.OtherImpl.Oplossing;
+import be.fastned.application.domain.OtherImpl.Probleem;
 import be.fastned.application.domain.Base.Entiteit;
-import be.fastned.application.service.AppRunner;
+import be.fastned.application.AppRunner;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

@@ -1,6 +1,6 @@
 package be.fastned.application.dao.Interfaces;
 
-import be.fastned.application.domain.Laadpaal;
+import be.fastned.application.domain.OtherImpl.Laadpaal;
 
 public interface LaadpaalDao {
     Laadpaal createItem(Laadpaal item);

@@ -1,10 +1,10 @@
 package be.fastned.application.domain.Personen;
 
-import be.fastned.application.dao.PersoonHibernateDao;
+import be.fastned.application.dao.implementations.PersoonHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
 import be.fastned.application.domain.Base.Entiteit;
 import be.fastned.application.domain.Base.EntiteitBaseImpl;
-import be.fastned.application.service.AppRunner;
+import be.fastned.application.AppRunner;
 
 import javax.persistence.*;
 import java.util.ArrayList;

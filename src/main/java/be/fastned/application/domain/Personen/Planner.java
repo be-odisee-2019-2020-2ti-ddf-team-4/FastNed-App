@@ -1,10 +1,10 @@
 package be.fastned.application.domain.Personen;
 
-import be.fastned.application.dao.PlannerHibernateDao;
+import be.fastned.application.dao.implementations.PlannerHibernateDao;
 import be.fastned.application.dao.Base.BaseDao;
-import be.fastned.application.domain.*;
 import be.fastned.application.domain.Base.Entiteit;
-import be.fastned.application.service.AppRunner;
+import be.fastned.application.AppRunner;
+import be.fastned.application.domain.OtherImpl.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

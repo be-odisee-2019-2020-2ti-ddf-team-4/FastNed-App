@@ -1,8 +1,8 @@
 package be.fastned.application.dao.Base;
 
 import be.fastned.application.domain.Base.Entiteit;
-import be.fastned.application.service.AppConfig;
-import be.fastned.application.service.AppRunner;
+import be.fastned.application.AppConfig;
+import be.fastned.application.AppRunner;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Propagation;
