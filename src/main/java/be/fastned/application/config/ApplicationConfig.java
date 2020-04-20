@@ -13,8 +13,9 @@ import org.springframework.context.annotation.Bean;
 @PropertySource("classpath:application.properties")
 @ComponentScan(basePackageClasses = Application.class)
 Class ApplicationConfig {
-
+class {
 @Bean
-public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer(){
         return new PropertySourcesPlaceholderConfigurer();
+        }
         }
