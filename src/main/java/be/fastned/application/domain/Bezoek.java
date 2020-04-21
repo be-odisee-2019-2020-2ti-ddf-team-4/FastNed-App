@@ -1,5 +1,6 @@
 package be.fastned.application.domain;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -11,13 +12,13 @@ import java.time.LocalDateTime;
  * @version 6.0
  */
 
-@Entity(name = "Laadessie")
-@Table(name = "LAADSESSIES")
+@Entity(name = "Bezoek")
+@Table(name = "BEZOEKEN")
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor(force=true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force=true)
 
-public class Laadsessie {
+public class Bezoek {
 
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
@@ -25,12 +26,15 @@ public class Laadsessie {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long id;
+	private final long id;
+
+	@OneToOne
+	private final Probleem mogelijkProbleem;
 
 	@ManyToOne
-	private Laadpaal laadpaal;
+	private final Documentatie bijhorendeDoc;
 
-	private LocalDateTime startSessie;
+	private final String type, eindVerslag;
 
-	private double startPercentage;
+	private final LocalDateTime bezoekGestart, bezoekAfgerond;
 }

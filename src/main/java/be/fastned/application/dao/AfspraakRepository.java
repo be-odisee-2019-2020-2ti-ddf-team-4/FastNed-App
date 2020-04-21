@@ -1,0 +1,26 @@
+package be.fastned.application.dao;
+
+import be.fastned.application.domain.Afspraak;
+import org.springframework.data.repository.CrudRepository;
+import java.util.List;
+
+public interface AfspraakRepository extends CrudRepository<Afspraak, Long> {
+    /**
+     * The default findById would return Optional<Entry>
+     * We want a Entry object as return
+     * therefore we override this method
+     * @param id
+     * @return
+     */
+    Afspraak findById(long id);
+
+    /**
+     * @return The entry with the largest id = the most recently added entry
+     */
+    Afspraak findFirstByOrderByIdDesc();
+
+    /**
+     * List all categories, order alphabetically by name
+     */
+    List<Afspraak> findAllByOrderByName();
+}

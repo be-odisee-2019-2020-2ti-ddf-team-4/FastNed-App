@@ -33,6 +33,16 @@
 			<optional>true</optional>
 		</dependency>
 
+<<<<<<< Updated upstream
+=======
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.18.12</version>
+				<scope>provided</scope>
+			</dependency>
+
+>>>>>>> Stashed changes
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
