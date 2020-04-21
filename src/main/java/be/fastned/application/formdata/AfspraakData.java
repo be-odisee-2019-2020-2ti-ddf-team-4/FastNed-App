@@ -23,4 +23,6 @@ public class AfspraakData {
 
     @NotBlank(message= "status must be specified!")
     private String status;
+
+    private long[] contractIds, laadpaalIds, installateurIds;
 }
