@@ -1,4 +1,4 @@
-package be.fastned.application.service;
+package be.fastned.application;
 
 import be.fastned.application.dao.*;
 import be.fastned.application.domain.*;
@@ -60,6 +60,7 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
                 new Installateur("john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", 1),
                 new Installateur("blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", 2),
                 new Installateur("sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", 3)
+
         );
 
         for (Installateur installateur : installateurs) {

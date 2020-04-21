@@ -24,10 +24,10 @@ public class Probleem {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long id;
+	private final long id;
 
-	private String beschrijving, status;
+	private final String beschrijving, status;
 
 	@OneToOne
-	private Oplossing oplossing;
+	private final Oplossing oplossing;
 }

@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "AFSPRAKEN")
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force=true)
+@NoArgsConstructor( force=true)
 
 public class Afspraak {
 
