@@ -69,16 +69,17 @@ public class PlannerServiceImpl implements PlannerService {
 
         // Dit kon een update zijn (zie prepareNewAfspraakData)
         if (afspraakData.getId() == 0) {
-            afspraak = new Afspraak();
 
-            afspraak.setInstallateur(installateurRepository.findById(afspraakData.getInstallateurId()));
-            afspraak.setContract(contractRepository.findById(afspraakData.getContractId()));
-            afspraak.setBezoek(bezoekRepository.findById(afspraakData.getBezoekId()));
-            afspraak.setLaadpaal(laadpaalRepository.findById(afspraakData.getLaadpaalId()));
-            afspraak.setStatus(afspraakData.getStatus());
+            Installateur installateur = installateurRepository.findById(afspraakData.getInstallateurId());
+            Laadpaal laadpaal = laadpaalRepository.findById(afspraakData.getLaadpaalId());
+            Contract contract = contractRepository.findById(afspraakData.getContractId());
+            Bezoek bezoek = bezoekRepository.findById(afspraakData.getBezoekId());
+            String status = afspraakData.getStatus();
+
+            afspraak = new Afspraak(0,installateur, laadpaal, contract, bezoek, status);
         }
         else {
-            afspraak = afspraakRepository.findById( afspraakData.getId() );
+            afspraak = afspraakRepository.findById( afspraakData.getId());
         }
         // Save the newly created entry
         afspraakRepository.save(afspraak);

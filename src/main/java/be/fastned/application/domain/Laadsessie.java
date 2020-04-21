@@ -28,9 +28,9 @@ public class Laadsessie {
 	private final long id;
 
 	@ManyToOne
-	private Laadpaal laadpaal;
+	private final Laadpaal laadpaal;
 
-	private LocalDateTime startSessie;
+	private final LocalDateTime startSessie;
 
-	private double startPercentage;
+	private final double startPercentage;
 }

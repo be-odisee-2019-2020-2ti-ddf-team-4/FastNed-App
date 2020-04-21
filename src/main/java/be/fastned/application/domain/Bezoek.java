@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "BEZOEKEN")
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force=true)
+@NoArgsConstructor(force=true)
 
 public class Bezoek {
 

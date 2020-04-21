@@ -1,8 +1,7 @@
 package be.fastned.application.domain;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+
 import javax.persistence.*;
 
 /**
@@ -13,16 +12,21 @@ import javax.persistence.*;
 @Entity(name = "Planner")
 @Table(name = "PLANNERS")
 @Data
-@RequiredArgsConstructor
 @NoArgsConstructor(force=true)
 
-public class Planner {
+@Value
+@EqualsAndHashCode(callSuper = true)
+public class Planner extends Persoon {
 
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private final long id;
+	Planner(String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord){
+		super(emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord);
+	}
+
+//	@Id
+//	@GeneratedValue(strategy= GenerationType.IDENTITY)
+//	private final long id;
 }

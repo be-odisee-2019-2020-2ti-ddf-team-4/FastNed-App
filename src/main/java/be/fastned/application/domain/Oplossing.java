@@ -12,11 +12,9 @@ import javax.persistence.*;
 
 @Entity(name = "Oplossing")
 @Table(name = "OPLOSSINGEN")
-@NoArgsConstructor(force=true)
-@RequiredArgsConstructor
 @Data
-
-
+@RequiredArgsConstructor
+@NoArgsConstructor(force=true)
 
 public class Oplossing {
 

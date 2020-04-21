@@ -1,17 +1,17 @@
 package be.fastned.application.formdata;
 
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-@NoArgsConstructor(force=true)
-@RequiredArgsConstructor
+
 @Data
+@RequiredArgsConstructor
+@NoArgsConstructor(force=true)
 public class AfspraakData {
 
-    private long id = 0;
+    private final long id = 0;
 
     // TODO: capitalise first letter
     @NotBlank(message= "contract must be specified!")
@@ -27,5 +27,7 @@ public class AfspraakData {
     private long bezoekId;
 
     @NotBlank(message= "status must be specified!")
-    private  String status;
+    private String status;
+
+    private final long[] contractIds, laadpaalIds, installateurIds;
 }

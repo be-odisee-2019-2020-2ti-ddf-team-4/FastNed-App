@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "CONTRACTEN")
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor(access= AccessLevel.PRIVATE,force=true)
+@NoArgsConstructor(force=true)
 
 public class Contract {
 
@@ -29,6 +29,4 @@ public class Contract {
 	private final long id;
 
 	private final LocalDateTime contractDatum, uitvoeringsDatum;
-
-
 }

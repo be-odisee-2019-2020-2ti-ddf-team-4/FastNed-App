@@ -39,5 +39,5 @@ public class Afspraak {
 	@OneToOne
 	private final Bezoek bezoek;
 
-	private final String status;
+	private final String  status;
 }

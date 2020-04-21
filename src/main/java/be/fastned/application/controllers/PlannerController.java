@@ -35,7 +35,7 @@ public class PlannerController {
      * Prepares the form with data for projects- and objectives comboboxes
      */
     private void prepareForm(AfspraakData afspraakData, Model model) {
-        model.addAttribute("availablePlanners", plannerService.getAvailableInstallateurs());
+        model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());
         model.addAttribute("uncheckedLocatietoestemmingen", plannerService.getAvailableLocatietoestemmingen());
         model.addAttribute("uncheckedProblemen", plannerService.getAvailableProblemen());
 
