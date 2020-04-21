@@ -1,81 +1,102 @@
 package be.fastned.application.service;
 
-import be.fastned.application.dao.form.EntryAfspraakRepository;
-import be.fastned.application.domain.OtherImpl.Contract;
-import be.fastned.application.domain.OtherImpl.Laadpaal;
-import be.fastned.application.domain.Personen.Installateur;
-import be.fastned.application.domain.Technisch.Bezoek;
-import be.fastned.application.domain.form.EntryAfspraak;
-import be.fastned.application.formdata.EntryDataAfspraak;
+import be.fastned.application.dao.*;
+import be.fastned.application.domain.*;
+import be.fastned.application.formdata.AfspraakData;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class PlannerServiceImpl {
+import java.util.List;
+
+public class PlannerServiceImpl implements PlannerService {
+
     @Autowired
-    EntryAfspraakRepository entryAfspraakRepository;
+    AfspraakRepository afspraakRepository;
+    @Autowired
+    InstallateurRepository installateurRepository;
+    @Autowired
+    LocatietoestemmingRepository locatietoestemmingRepository;
+    @Autowired
+    ProbleemRepository probleemRepository;
+    @Autowired
+    LaadpaalRepository laadpaalRepository;
+    @Autowired
+    ContractRepository contractRepository;
+    @Autowired
+    BezoekRepository bezoekRepository;
 
-    /**
-     * Instantiates and initializes new EntryData-object
-     * to be used in the form
-     * @return
-     */
-    public EntryDataAfspraak prepareNewEntryData() {
+    public List<Installateur> getAvailableInstallateurs(){
+        return (List<Installateur>) installateurRepository.findAll();
+    }
 
-        EntryAfspraak lastEntry = entryAfspraakRepository.findFirstByOrderByIdDesc();
-        return prepareEntryData(lastEntry, true);
+    public List<Locatietoestemming> getAvailableLocatietoestemmingen(){
+        return (List<Locatietoestemming>) locatietoestemmingRepository.findAll();
+    }
+
+    public List<Probleem> getAvailableProblemen(){
+        return (List<Probleem>) probleemRepository.findAll();
     }
 
     /**
-     * Prepares an EntryData-object based on an Entry-object
-     * @param theEntry the Entry-object
-     * @param timeShift indicates if the startTime needs to be shifted from previous timeTo
-     * @return
+     * Instantieert- en initialiseert een nieuw AfpsraakData object voor gebruik bij een formulier.
+     * @return Een nieuw AfpsraakData-object met mogelijke aanpassingen vs een leeg object.
      */
-    private EntryDataAfspraak prepareEntryData(EntryAfspraak theEntry, boolean timeShift) {
+    public AfspraakData prepareNewAfspraakData() {
+        return prepareAfspraakData(afspraakRepository.findFirstByOrderByIdDesc());
+    }
 
-        EntryDataAfspraak entryData = new EntryDataAfspraak();
+    /**
+     * Bereidt een nieuw AfpsraakData-object voor op basis van een bestaand AfpsraakData-object. (uit DB)
+     * @param laatsteAfspraak De laatst gevonden afspraak in de DB.
+     * @return Een nieuw AfpsraakData-object met mogelijke aanpassingen vs een leeg object.
+     */
+    private AfspraakData prepareAfspraakData(Afspraak laatsteAfspraak) {
 
-        if (theEntry != null) {
+        AfspraakData afspraakData = new AfspraakData();
 
-            // TODO: Null-checks niet nodig bij non-nullable types
-            // TODO: Versimpel codeduplicatie naar methode --> gemeenschappelijke interface met .getId() implementeren in domeinObj
-            // Pick up an entry objective provided there was one
-            Contract lastContract = theEntry.getContract();
+        afspraakData.setInstallateurId(null);
+        afspraakData.setContractId(null);
+        afspraakData.setBezoekId(null);
+        afspraakData.setLaadpaalId(null);
+        afspraakData.setStatus(null);
 
-            String ContractId = ((lastContract==null) ? null : lastContract.getId());
-            entryData.setContractId(ContractId);
+        return afspraakData;
+    }
 
-            // Pick up an entry objective provided there was one
-            Installateur lastInstallateur = theEntry.getInstallateur();
+    @Override
+    public String processEntry(AfspraakData afspraakData) {
 
-            String installateurId = ((lastInstallateur==null) ? null : lastInstallateur.getId());
-            entryData.setInstallateurId(installateurId);
+        Afspraak afspraak;
 
-            // Pick up an entry objective provided there was one
-            Laadpaal lastLaadpaal = theEntry.getLaadpaal();
+        // Dit kon een update zijn (zie prepareNewAfspraakData)
+        if (afspraakData.getId() == 0) {
+            afspraak = new Afspraak();
 
-            String laadpaalId = ((lastLaadpaal==null) ? null : lastLaadpaal.getId());
-            entryData.setLaadpaalId(laadpaalId);
-
-            // TODO: .getId() is nu enkel een lijn in de interface --> Kan niet Werken!
-            // Pick up an entry objective provided there was one
-            Bezoek lastBezoek = theEntry.getBezoek();
-
-            String bezoekId = ((lastBezoek==null) ? null : lastBezoek.getId());
-            entryData.setBezoekId(bezoekId);
-
-            // Pick up an entry objective provided there was one
-            String lastStatus = theEntry.getStatus();
-
-            String status = ((lastStatus==null) ? null : lastStatus);
-            entryData.setStatus(status);
+            afspraakData.setInstallateur(installateurRepository.findById(afspraakData.getInstallateurId()));
+            afspraakData.setContract(contractRepository.findById(afspraakData.getContractId()));
+            afspraakData.setBezoek(bezoekRepository.findById(afspraakData.getBezoekId()));
+            afspraakData.setLaadpaal(laadpaalRepository.findById(afspraakData.getLaadpaalId()));
+            afspraakData.setStatus(afspraakData.getStatus());
         }
         else {
-            entryData.setInstallateurId(null);
-            entryData.setContractId(null);
-            entryData.setBezoekId(null);
-            entryData.setLaadpaalId(null);
-            entryData.setStatus(null);
+            afspraak = afspraakRepository.findById( afspraakData.getId() );
         }
-        return entryData;
+        // Save the newly created entry
+        afspraakRepository.save(afspraak);
+        return String.format("Afspraak (id = \"%s\") is verwerkt!", afspraak.getId());
+    }
+
+    @Override
+    public AfspraakData prepareAfspraakDataToEdit(long id) {
+
+        Afspraak deAfspraak = afspraakRepository.findById(id);
+        AfspraakData deAfspraakData = prepareAfspraakData(deAfspraak);
+        deAfspraakData.setId(id);
+        return deAfspraakData;
+    }
+
+    @Override
+    public void deleteAfspraak(long id) {
+        Afspraak afspraak = afspraakRepository.findById(id);
+        afspraakRepository.delete(afspraak);
     }
 }
