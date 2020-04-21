@@ -4,20 +4,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 /**
  * @author TiboVG
  * @version 6.0
  */
 
-@Entity(name = "Laadessie")
-@Table(name = "LAADSESSIES")
+@Entity(name = "Locatiehouder")
+@Table(name = "LOCATIEHOUDERS")
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor(force=true)
 
-public class Laadsessie {
+public class Locatiehouder {
 
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
@@ -27,10 +26,5 @@ public class Laadsessie {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 
-	@ManyToOne
-	private Laadpaal laadpaal;
-
-	private LocalDateTime startSessie;
-
-	private double startPercentage;
+	private String bedrijfsnaam, btwNummer, adres;
 }
