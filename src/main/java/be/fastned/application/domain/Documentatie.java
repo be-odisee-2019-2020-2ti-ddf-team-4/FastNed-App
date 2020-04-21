@@ -24,7 +24,7 @@ public class Documentatie {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private final long id;
+    private long id;
 
     private final String laadpaalType, documentatieType, documentatieBeschr;
 }

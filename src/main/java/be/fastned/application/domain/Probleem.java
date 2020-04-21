@@ -24,7 +24,7 @@ public class Probleem {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private final long id;
+	private long id;
 
 	private final String beschrijving, status;
 

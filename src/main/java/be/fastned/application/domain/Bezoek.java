@@ -26,7 +26,7 @@ public class Bezoek {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private final long id;
+	private  long id;
 
 	@OneToOne
 	private final Probleem mogelijkProbleem;

@@ -25,7 +25,7 @@ public class Afspraak {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private final long id;
+	private  long id;
 
 	@ManyToOne
 	private final Installateur installateur;
