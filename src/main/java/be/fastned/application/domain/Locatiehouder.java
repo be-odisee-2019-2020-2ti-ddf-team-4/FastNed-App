@@ -16,7 +16,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @NoArgsConstructor(force=true)
 
-public class Locatiehouder {
+public final class Locatiehouder extends Persoon{
 
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
@@ -24,7 +24,7 @@ public class Locatiehouder {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long id;
+	private final long id;
 
-	private String bedrijfsnaam, btwNummer, adres;
+	private final String bedrijfsnaam, btwNummer, adres;
 }

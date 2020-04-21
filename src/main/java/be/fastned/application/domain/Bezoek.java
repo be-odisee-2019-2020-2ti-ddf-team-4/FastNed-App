@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "BEZOEKEN")
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force=true)
+@NoArgsConstructor(force=true)
 
 public class Bezoek {
 
@@ -26,15 +26,15 @@ public class Bezoek {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long id;
+	private final long id;
 
 	@OneToOne
-	private Probleem mogelijkProbleem;
+	private final Probleem mogelijkProbleem;
 
 	@ManyToOne
-	private Documentatie bijhorendeDoc;
+	private final Documentatie bijhorendeDoc;
 
-	private String type, eindVerslag;
+	private final String type, eindVerslag;
 
-	private LocalDateTime bezoekGestart, bezoekAfgerond;
+	private final LocalDateTime bezoekGestart, bezoekAfgerond;
 }

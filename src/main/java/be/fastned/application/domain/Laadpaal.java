@@ -24,13 +24,13 @@ public class Laadpaal {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long id;
+	private final long id;
 
 	@ManyToOne
-	private Locatiehouder locatiehouder;
+	private final Locatiehouder locatiehouder;
 
 	@OneToOne
-	private Documentatie installatieDocType, reparatieDocType;
+	private final Documentatie installatieDocType, reparatieDocType;
 
-	private String laadpaalType, status;
+	private final String laadpaalType, status;
 }

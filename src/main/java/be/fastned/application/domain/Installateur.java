@@ -24,5 +24,5 @@ public class Installateur {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long id;
+	private final long id;
 }

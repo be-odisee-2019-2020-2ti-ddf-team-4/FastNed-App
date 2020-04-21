@@ -3,6 +3,7 @@ package be.fastned.application.dao;
 import be.fastned.application.domain.Afspraak;
 import org.springframework.data.repository.CrudRepository;
 import java.util.List;
+import java.util.Optional;
 
 public interface AfspraakRepository extends CrudRepository<Afspraak, String> {
     /**

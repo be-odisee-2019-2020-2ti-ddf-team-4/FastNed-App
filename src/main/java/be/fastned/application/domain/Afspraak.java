@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "AFSPRAKEN")
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force=true)
+@NoArgsConstructor(force=true)
 
 public class Afspraak {
 
@@ -25,19 +25,19 @@ public class Afspraak {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long id;
+	private final long id;
 
 	@ManyToOne
-	private Installateur installateur;
+	private final Installateur installateur;
 
 	@ManyToOne
-	private Laadpaal laadpaal;
+	private final Laadpaal laadpaal;
 
 	@OneToOne
-	private Contract contract;
+	private final Contract contract;
 
 	@OneToOne
-	private Bezoek bezoek;
+	private final Bezoek bezoek;
 
-	private String  status;
+	private final String  status;
 }

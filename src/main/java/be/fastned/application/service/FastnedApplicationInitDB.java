@@ -74,9 +74,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Locatiehouders
         List<Locatiehouder> locatiehouders = Arrays.asList(
-                new Locatiehouder("john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", 1),
-                new Locatiehouder("blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", 2),
-                new Locatiehouder("sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", 3)
+                new Locatiehouder("john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
+                new Locatiehouder("blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
+                new Locatiehouder("sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", 3, "bedrijfsnaam", "btwNummer", "adres"),
+                new Locatiehouder(3, "bedrijfsnaam", "btwNummer", "adres"), new Locatiehouder()
         );
 
         for (Locatiehouder locatiehouder : locatiehouders) {
@@ -102,7 +103,7 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
         );
 
         for (Laadpaal laadpaal : laadpalen) {
-            locatiehouderRepository.save(laadpaal);
+            laadpaalRepository.save(laadpaal);
         };
 
         // Contracten

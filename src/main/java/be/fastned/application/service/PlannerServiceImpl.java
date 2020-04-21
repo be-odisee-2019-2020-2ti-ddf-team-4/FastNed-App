@@ -71,14 +71,14 @@ public class PlannerServiceImpl implements PlannerService {
         if (afspraakData.getId() == 0) {
             afspraak = new Afspraak();
 
-            afspraakData.setInstallateur(installateurRepository.findById(afspraakData.getInstallateurId()));
+            afspraak.setInstallateur(installateurRepository.findById(afspraakData.getInstallateurId()));
             afspraakData.setContract(contractRepository.findById(afspraakData.getContractId()));
             afspraakData.setBezoek(bezoekRepository.findById(afspraakData.getBezoekId()));
             afspraakData.setLaadpaal(laadpaalRepository.findById(afspraakData.getLaadpaalId()));
             afspraakData.setStatus(afspraakData.getStatus());
         }
         else {
-            afspraak = afspraakRepository.findById( afspraakData.getId() );
+            afspraak = afspraakRepository.findById( afspraakData.getId());
         }
         // Save the newly created entry
         afspraakRepository.save(afspraak);

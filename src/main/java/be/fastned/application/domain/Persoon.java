@@ -1,5 +1,6 @@
 package be.fastned.application.domain;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -13,18 +14,18 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity(name = "Persoon")
 @Table(name = "PERSONEN")
-@Data
-@RequiredArgsConstructor
-@NoArgsConstructor(force=true)
 
-public class Persoon {
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force=true)
+@Data()
+
+public final class Persoon {
 
     /* //----------------// -##########--------------------------------##########- //----------------// */
     /* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
     /* //----------------// -##########--------------------------------##########- //----------------// */
 
     @Id
-    private String emailadres;
+    protected final String emailadres;
 
-    protected String naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord;
+    protected final String naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord;
 }
