@@ -53,10 +53,10 @@ public class PlannerServiceImpl implements PlannerService {
 
         AfspraakData afspraakData = new AfspraakData();
 
-        afspraakData.setInstallateurId(null);
-        afspraakData.setContractId(null);
-        afspraakData.setBezoekId(null);
-        afspraakData.setLaadpaalId(null);
+        afspraakData.setInstallateurId(0);
+        afspraakData.setContractId(0);
+        afspraakData.setBezoekId(0);
+        afspraakData.setLaadpaalId(0);
         afspraakData.setStatus(null);
 
         return afspraakData;
@@ -69,13 +69,14 @@ public class PlannerServiceImpl implements PlannerService {
 
         // Dit kon een update zijn (zie prepareNewAfspraakData)
         if (afspraakData.getId() == 0) {
-            afspraak = new Afspraak();
 
-            afspraak.setInstallateur(installateurRepository.findById(afspraakData.getInstallateurId()));
-            afspraakData.setContract(contractRepository.findById(afspraakData.getContractId()));
-            afspraakData.setBezoek(bezoekRepository.findById(afspraakData.getBezoekId()));
-            afspraakData.setLaadpaal(laadpaalRepository.findById(afspraakData.getLaadpaalId()));
-            afspraakData.setStatus(afspraakData.getStatus());
+            Installateur installateur = installateurRepository.findById(afspraakData.getInstallateurId());
+            Laadpaal laadpaal = laadpaalRepository.findById(afspraakData.getLaadpaalId());
+            Contract contract = contractRepository.findById(afspraakData.getContractId());
+            Bezoek bezoek = bezoekRepository.findById(afspraakData.getBezoekId());
+            String status = afspraakData.getStatus();
+
+            afspraak = new Afspraak(0,installateur, laadpaal, contract, bezoek, status);
         }
         else {
             afspraak = afspraakRepository.findById( afspraakData.getId());
@@ -90,7 +91,6 @@ public class PlannerServiceImpl implements PlannerService {
 
         Afspraak deAfspraak = afspraakRepository.findById(id);
         AfspraakData deAfspraakData = prepareAfspraakData(deAfspraak);
-        deAfspraakData.setId(id);
         return deAfspraakData;
     }
 

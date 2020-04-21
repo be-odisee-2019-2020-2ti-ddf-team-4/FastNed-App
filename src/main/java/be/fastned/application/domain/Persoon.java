@@ -14,18 +14,18 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity(name = "Persoon")
 @Table(name = "PERSONEN")
-
+@RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force=true)
 @Data()
 
-public final class Persoon {
+public class Persoon {
 
     /* //----------------// -##########--------------------------------##########- //----------------// */
     /* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
     /* //----------------// -##########--------------------------------##########- //----------------// */
 
     @Id
-    protected final String emailadres;
+    private final String emailadres;
 
-    protected final String naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord;
+    private final String naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord;
 }
