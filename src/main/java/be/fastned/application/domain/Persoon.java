@@ -24,7 +24,9 @@ public class Persoon {
     /* //----------------// -##########--------------------------------##########- //----------------// */
 
     @Id
-    private String emailadres;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private final long id;
+    private final String emailadres;
 
-    protected String naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord;
+    protected final String naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord;
 }

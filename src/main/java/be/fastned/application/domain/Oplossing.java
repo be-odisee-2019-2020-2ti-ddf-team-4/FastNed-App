@@ -12,9 +12,11 @@ import javax.persistence.*;
 
 @Entity(name = "Oplossing")
 @Table(name = "OPLOSSINGEN")
-@Data
-@RequiredArgsConstructor
 @NoArgsConstructor(force=true)
+@RequiredArgsConstructor
+@Data
+
+
 
 public class Oplossing {
 
@@ -24,7 +26,7 @@ public class Oplossing {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long id;
+	private final long id;
 
-	private String oplossing;
+	private final String oplossing;
 }

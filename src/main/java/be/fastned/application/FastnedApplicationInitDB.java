@@ -23,7 +23,7 @@ import java.util.List;
 public class FastnedApplicationInitDB implements CommandLineRunner {
 
     @Autowired
-    AfspraakRepository AfspraakRepository;
+    AfspraakRepository afspraakRepository;
     @Autowired
     InstallateurRepository installateurRepository;
     @Autowired
@@ -96,7 +96,7 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
         );
 
         for (Laadpaal laadpaal : laadpalen) {
-            locatiehouderRepository.save(laadpaal);
+            laadpaalRepository.save(laadpaal);
         };
 
         // Contracten

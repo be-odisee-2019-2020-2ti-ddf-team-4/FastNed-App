@@ -121,7 +121,7 @@ public class PlannerController {
         plannerService.deleteAfspraak(afspraakData.getId());
         AfspraakData afspraakDataNieuw = plannerService.prepareNewAfspraakData();
         prepareForm(afspraakDataNieuw, model);
-        model.addAttribute("message", String.format("Afspraak succesvol verwijderd met id \"%s\"", afspraakData.getid()));
+        model.addAttribute("message", String.format("Afspraak succesvol verwijderd met id \"%s\"", afspraakData.getId()));
         return "afspraak";
     }
 

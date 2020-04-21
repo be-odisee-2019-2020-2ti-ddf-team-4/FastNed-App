@@ -26,7 +26,7 @@ public class Locatietoestemming {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private final long id;
 
-	private byte aantalLaadpalen;
+	private final byte aantalLaadpalen;
 
-	private String typeLaadpaal, status;
+	private final String typeLaadpaal, status;
 }
