@@ -22,8 +22,8 @@ public class Locatiehouder extends Persoon{
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 
-	public Locatiehouder(String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord, String bedrijfsnaam, String btwNummer, String adres){
-		super(emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord);
+	public Locatiehouder(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord, String bedrijfsnaam, String btwNummer, String adres){
+		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord);
 		this.bedrijfsnaam = bedrijfsnaam;
 		this.btwNummer = btwNummer;
 		this.adres = adres;

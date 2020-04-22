@@ -5,10 +5,7 @@ import be.fastned.application.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -48,9 +45,9 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Problemen
         List<Probleem> problemen = Arrays.asList(
-                new Probleem("laadpaal is geschaafd", "net aangemaakt", null),
-                new Probleem("laadpaal is gestolen", "net aangemaakt", null),
-                new Probleem("laadpaal is ontploft", "net aangemaakt", null)
+                new Probleem(1, "laadpaal is geschaafd", "net aangemaakt", null),
+                new Probleem(2, "laadpaal is gestolen", "net aangemaakt", null),
+                new Probleem(3, "laadpaal is ontploft", "net aangemaakt", null)
         );
 
         for (Probleem probleem : problemen) {
@@ -59,9 +56,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Installateurs
         List<Installateur> installateurs = Arrays.asList(
-                new Installateur("john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww"),
-                new Installateur("blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww"),
-                new Installateur("sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww")
+                new Installateur(11, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww"),
+                new Installateur(12, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww"),
+                new Installateur(13, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww"),
+                new Installateur(14, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww")
         );
 
         for (Installateur installateur : installateurs) {
@@ -70,9 +68,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Locatiehouders
         List<Locatiehouder> locatiehouders = Arrays.asList(
-                new Locatiehouder("john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
-                new Locatiehouder("blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
-                new Locatiehouder("sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", "bedrijfsnaam", "btwNummer", "adres")
+                new Locatiehouder(31, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
+                new Locatiehouder(32, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
+                new Locatiehouder(33, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", "bedrijfsnaam", "btwNummer", "adres"),
+                new Locatiehouder(34, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww", "bedrijfsnaam", "btwNummer", "adres")
         );
 
         for (Locatiehouder locatiehouder : locatiehouders) {
@@ -81,10 +80,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Documentaties
         List<Documentatie> documentaties = Arrays.asList(
-                new Documentatie( "A", "installatie", "X installeer je op Y manier"),
-                new Documentatie( "B", "installatie", "X installeer je op Y manier"),
-                new Documentatie( "A", "reparatie", "X fix je op Y manier"),
-                new Documentatie( "B", "reparatie", "X fix je op Y manier")
+                new Documentatie(41, "A", "installatie", "X installeer je op Y manier"),
+                new Documentatie(42, "B", "installatie", "X installeer je op Y manier"),
+                new Documentatie(43, "A", "reparatie", "X fix je op Y manier"),
+                new Documentatie(44, "B", "reparatie", "X fix je op Y manier")
         );
 
         for (Documentatie documentatie : documentaties) {
@@ -93,8 +92,8 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Laadpalen
         List<Laadpaal> laadpalen = Arrays.asList(
-                new Laadpaal(locatiehouderRepository.findById(1), documentatieRepository.findById(1), documentatieRepository.findById(3), "A", "net aangemaakt"),
-                new Laadpaal(locatiehouderRepository.findById(2), documentatieRepository.findById(2), documentatieRepository.findById(4), "B", "net aangemaakt")
+                new Laadpaal(1, locatiehouderRepository.findById(1), documentatieRepository.findById(1), documentatieRepository.findById(3), "A", "net aangemaakt"),
+                new Laadpaal(2, locatiehouderRepository.findById(2), documentatieRepository.findById(2), documentatieRepository.findById(4), "B", "net aangemaakt")
         );
 
         for (Laadpaal laadpaal : laadpalen) {
@@ -103,11 +102,11 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Contracten
         List<Contract> contracten = Arrays.asList(
-                new Contract(LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Contract(LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Contract(LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Contract(LocalDateTime.now(), LocalDateTime.now().plusDays(5))
-                );
+                new Contract(1, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                new Contract(2, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                new Contract(3, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                new Contract(4, LocalDateTime.now(), LocalDateTime.now().plusDays(5))
+        );
 
         for (Contract contract : contracten) {
             contractRepository.save(contract);
@@ -115,11 +114,11 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Bezoeken
         List<Bezoek> bezoeken = Arrays.asList(
-                new Bezoek(probleemRepository.findById(1), documentatieRepository.findById(1), "Installatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Bezoek( probleemRepository.findById(2), documentatieRepository.findById(2), "Installatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Bezoek( probleemRepository.findById(3), documentatieRepository.findById(3), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Bezoek( null, documentatieRepository.findById(1), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5))
-                );
+                new Bezoek(1, probleemRepository.findById(1), documentatieRepository.findById(1), "Installatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                new Bezoek(2, probleemRepository.findById(2), documentatieRepository.findById(2), "Installatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                new Bezoek(3, probleemRepository.findById(3), documentatieRepository.findById(3), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                new Bezoek(4, null, documentatieRepository.findById(1), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5))
+        );
 
         for (Bezoek bezoek : bezoeken) {
             bezoekRepository.save(bezoek);
@@ -127,13 +126,14 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Afspraken
         List<Afspraak> afspraken = Arrays.asList(
-                new Afspraak( installateurRepository.findById(1), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
-                new Afspraak( installateurRepository.findById(2), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
-                new Afspraak( installateurRepository.findById(3), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
-                new Afspraak( installateurRepository.findById(4), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
-                );
+                new Afspraak(51, installateurRepository.findById(11), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
+                new Afspraak(52, installateurRepository.findById(12), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
+                new Afspraak(53, installateurRepository.findById(13), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
+                new Afspraak(54, installateurRepository.findById(14), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
+        );
 
         for (Afspraak afspraak : afspraken) {
+            // TODO: (Niels) Error: Een vereiste subklasse "Locatiehouder" was gevraagd, in de plaats kwam "Installateur". (Uncomment & Shift+F10 om te beginnen)
             afspraakRepository.save(afspraak);
         };
     }
