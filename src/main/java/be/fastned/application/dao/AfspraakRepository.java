@@ -3,6 +3,7 @@ package be.fastned.application.dao;
 import be.fastned.application.domain.Afspraak;
 import org.springframework.data.repository.CrudRepository;
 import java.util.List;
+import java.util.Optional;
 
 public interface AfspraakRepository extends CrudRepository<Afspraak, String> {
     /**
@@ -18,9 +19,4 @@ public interface AfspraakRepository extends CrudRepository<Afspraak, String> {
      * @return The entry with the largest id = the most recently added entry
      */
     Afspraak findFirstByOrderByIdDesc();
-
-    /**
-     * List all categories, order alphabetically by name
-     */
-    List<Afspraak> findAllByOrderByName();
 }

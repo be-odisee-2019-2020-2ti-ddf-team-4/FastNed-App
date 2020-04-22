@@ -1,10 +1,8 @@
 package be.fastned.application.domain;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 
 /**
  * @author TiboVG
@@ -14,31 +12,21 @@ import javax.validation.constraints.Email;
 @Entity(name = "Installateur")
 @Table(name = "INSTALLATEURS")
 @Data
-@RequiredArgsConstructor
 @NoArgsConstructor(force=true)
 
-public class Installateur {
+@Value
+@EqualsAndHashCode(callSuper = true)
+public class Installateur extends Persoon {
 
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
 	/* //----------------// -##########--------------------------------##########- //----------------// */
-	private final long email;
 
-	private final	long naam;
+	public Installateur(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord){
+		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord);
+	}
 
-	private final long voornaam;
-
-
-	private final long geslacht;
-
-
-	private final 	long gsm;
-
-	private final long username;
-
-	private final long password;
-
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private final long id;
+//	@Id
+//	@GeneratedValue(strategy= GenerationType.IDENTITY)
+//	private final long id;
 }

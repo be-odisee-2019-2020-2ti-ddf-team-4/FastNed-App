@@ -28,14 +28,14 @@ public class PlannerController {
     public String entryCreateForm(Model model) {
         AfspraakData afspraak = plannerService.prepareNewAfspraakData();
         prepareForm(afspraak, model);
-        return "entryAfspraak";
+        return "afspraak";
     }
 
     /**
      * Prepares the form with data for projects- and objectives comboboxes
      */
     private void prepareForm(AfspraakData afspraakData, Model model) {
-        model.addAttribute("availablePlanners", plannerService.getAvailableInstallateurs());
+        model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());
         model.addAttribute("uncheckedLocatietoestemmingen", plannerService.getAvailableLocatietoestemmingen());
         model.addAttribute("uncheckedProblemen", plannerService.getAvailableProblemen());
 
@@ -106,7 +106,7 @@ public class PlannerController {
 
         AfspraakData entryData = plannerService.prepareAfspraakDataToEdit(id);
         prepareForm(entryData, model);
-        // TODO: Niet zeker of dit nog iets te maken heeft met onze afspraak tov het voorbeeld zijn "Entry"
+        // TODO: (Tibo) Niet zeker of dit nog iets te maken heeft met onze afspraak tov het voorbeeld zijn "Entry"
         model.addAttribute("message", "Update of Verwijder deze afspraak a.u.b. - of Cancel");
         return "afspraak";
     }

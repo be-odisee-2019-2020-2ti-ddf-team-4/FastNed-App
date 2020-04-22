@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "CONTRACTEN")
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor(access= AccessLevel.PRIVATE,force=true)
+@NoArgsConstructor(force=true)
 
 public class Contract {
 
@@ -26,7 +26,7 @@ public class Contract {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long id;
+	private final long id;
 
-	private LocalDateTime contractDatum, uitvoeringsDatum;
+	private final LocalDateTime contractDatum, uitvoeringsDatum;
 }

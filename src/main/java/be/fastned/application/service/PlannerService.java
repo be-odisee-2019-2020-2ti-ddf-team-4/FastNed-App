@@ -4,6 +4,7 @@ import be.fastned.application.domain.Installateur;
 import be.fastned.application.domain.Locatietoestemming;
 import be.fastned.application.domain.Probleem;
 import be.fastned.application.formdata.AfspraakData;
+import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.util.List;

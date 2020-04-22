@@ -24,7 +24,7 @@ public class Oplossing {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long id;
+	private final long id;
 
-	private String oplossing;
+	private final String oplossing;
 }
