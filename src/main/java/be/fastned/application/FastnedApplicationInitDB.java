@@ -1,4 +1,4 @@
-package be.fastned.application.service;
+package be.fastned.application;
 
 import be.fastned.application.dao.*;
 import be.fastned.application.domain.*;
@@ -56,9 +56,9 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Installateurs
         List<Installateur> installateurs = Arrays.asList(
-                new Installateur("john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww"),
-                new Installateur("blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww"),
-                new Installateur("sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww")
+                new Installateur(1, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww"),
+                new Installateur(2, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww"),
+                new Installateur(3, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww")
         );
 
         for (Installateur installateur : installateurs) {
@@ -67,9 +67,9 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Locatiehouders
         List<Locatiehouder> locatiehouders = Arrays.asList(
-                new Locatiehouder("john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
-                new Locatiehouder("blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
-                new Locatiehouder("sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", "bedrijfsnaam", "btwNummer", "adres")
+                new Locatiehouder(1, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
+                new Locatiehouder(2, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
+                new Locatiehouder(3, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", "bedrijfsnaam", "btwNummer", "adres")
         );
 
         for (Locatiehouder locatiehouder : locatiehouders) {
@@ -131,7 +131,8 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
                 );
 
         for (Afspraak afspraak : afspraken) {
-            afspraakRepository.save(afspraak);
+            // TODO: (Niels) Error: Een vereiste subklasse "Locatiehouder" was gevraagd, in de plaats kwam "Installateur". (Uncomment & Shift+F10 om te beginnen)
+            //afspraakRepository.save(afspraak);
         };
     }
 }

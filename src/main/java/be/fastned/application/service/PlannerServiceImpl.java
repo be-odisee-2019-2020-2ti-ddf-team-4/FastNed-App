@@ -3,10 +3,14 @@ package be.fastned.application.service;
 import be.fastned.application.dao.*;
 import be.fastned.application.domain.*;
 import be.fastned.application.formdata.AfspraakData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
+@Service
 public class PlannerServiceImpl implements PlannerService {
 
     @Autowired

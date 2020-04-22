@@ -28,7 +28,7 @@ public class PlannerController {
     public String entryCreateForm(Model model) {
         AfspraakData afspraak = plannerService.prepareNewAfspraakData();
         prepareForm(afspraak, model);
-        return "entryAfspraak";
+        return "afspraak";
     }
 
     /**
@@ -106,7 +106,7 @@ public class PlannerController {
 
         AfspraakData entryData = plannerService.prepareAfspraakDataToEdit(id);
         prepareForm(entryData, model);
-        // TODO: Niet zeker of dit nog iets te maken heeft met onze afspraak tov het voorbeeld zijn "Entry"
+        // TODO: (Tibo) Niet zeker of dit nog iets te maken heeft met onze afspraak tov het voorbeeld zijn "Entry"
         model.addAttribute("message", "Update of Verwijder deze afspraak a.u.b. - of Cancel");
         return "afspraak";
     }

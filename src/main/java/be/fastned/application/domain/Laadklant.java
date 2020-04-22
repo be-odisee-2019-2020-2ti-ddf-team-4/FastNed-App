@@ -22,8 +22,8 @@ public class Laadklant extends Persoon {
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 
-	Laadklant(String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord){
-		super(emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord);
+	Laadklant(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord){
+		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord);
 	}
 
 //	@Id

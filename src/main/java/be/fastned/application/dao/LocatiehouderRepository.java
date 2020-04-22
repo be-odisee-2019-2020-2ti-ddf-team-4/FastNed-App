@@ -18,9 +18,4 @@ public interface LocatiehouderRepository extends CrudRepository<Locatiehouder, S
      * @return The entry with the largest id = the most recently added entry
      */
     Locatiehouder findFirstByOrderByIdDesc();
-
-    /**
-     * List all categories, order alphabetically by name
-     */
-    List<Locatiehouder> findAllByOrderByName();
 }
