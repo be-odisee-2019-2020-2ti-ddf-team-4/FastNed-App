@@ -19,9 +19,4 @@ public interface AfspraakRepository extends CrudRepository<Afspraak, String> {
      * @return The entry with the largest id = the most recently added entry
      */
     Afspraak findFirstByOrderByIdDesc();
-
-    /**
-     * List all categories, order alphabetically by name
-     */
-    List<Afspraak> findAllByOrderByName();
 }

@@ -18,9 +18,4 @@ public interface PlannerRepository extends CrudRepository<Planner, String> {
      * @return The entry with the largest id = the most recently added entry
      */
     Planner findFirstByOrderByIdDesc();
-
-    /**
-     * List all categories, order alphabetically by name
-     */
-     List<Planner> findAllByOrderByName();
 }

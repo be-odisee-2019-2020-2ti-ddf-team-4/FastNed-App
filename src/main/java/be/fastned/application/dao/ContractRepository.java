@@ -18,9 +18,4 @@ public interface ContractRepository extends CrudRepository<Contract, String> {
      * @return The entry with the largest id = the most recently added entry
      */
     Contract findFirstByOrderByIdDesc();
-
-    /**
-     * List all categories, order alphabetically by name
-     */
-    List<Contract> findAllByOrderByName();
 }

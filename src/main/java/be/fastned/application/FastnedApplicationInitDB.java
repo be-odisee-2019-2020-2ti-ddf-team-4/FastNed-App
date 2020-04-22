@@ -106,7 +106,7 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
                 new Contract(2, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
                 new Contract(3, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
                 new Contract(4, LocalDateTime.now(), LocalDateTime.now().plusDays(5))
-        );
+                );
 
         for (Contract contract : contracten) {
             contractRepository.save(contract);
@@ -118,7 +118,7 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
                 new Bezoek(2, probleemRepository.findById(2), documentatieRepository.findById(2), "Installatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
                 new Bezoek(3, probleemRepository.findById(3), documentatieRepository.findById(3), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
                 new Bezoek(4, null, documentatieRepository.findById(1), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5))
-        );
+                );
 
         for (Bezoek bezoek : bezoeken) {
             bezoekRepository.save(bezoek);
@@ -130,7 +130,7 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
                 new Afspraak(52, installateurRepository.findById(12), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
                 new Afspraak(53, installateurRepository.findById(13), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
                 new Afspraak(54, installateurRepository.findById(14), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
-        );
+                );
 
         for (Afspraak afspraak : afspraken) {
             // TODO: (Niels) Error: Een vereiste subklasse "Locatiehouder" was gevraagd, in de plaats kwam "Installateur". (Uncomment & Shift+F10 om te beginnen)
