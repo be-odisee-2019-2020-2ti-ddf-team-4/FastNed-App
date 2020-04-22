@@ -32,12 +32,27 @@ public class PlannerServiceImpl implements PlannerService {
         return (List<Installateur>) installateurRepository.findAll();
     }
 
+    @Override
+    public List<Contract> getAvailableContracten() {
+        return (List<Contract>) contractRepository.findAll();
+    }
+
+    @Override
+    public List<Laadpaal> getAvailableLaadpalen() {
+        return (List<Laadpaal>) laadpaalRepository.findAll();
+    }
+
     public List<Locatietoestemming> getAvailableLocatietoestemmingen(){
         return (List<Locatietoestemming>) locatietoestemmingRepository.findAll();
     }
 
     public List<Probleem> getAvailableProblemen(){
         return (List<Probleem>) probleemRepository.findAll();
+    }
+
+    @Override
+    public List<Afspraak> getAvailableAfspraken() {
+        return (List<Afspraak>) afspraakRepository.findAll();
     }
 
     /**

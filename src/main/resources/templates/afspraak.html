@@ -3,7 +3,7 @@
       xmlns:th = "http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
-    <title>Timesheet</title>
+    <title>Fastned</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <script>
@@ -13,26 +13,26 @@
     </script>
 </head>
 <body>
-<h1>Welcome to Timesheet</h1>
-<img th:src="@{/images/punch-in-cc-by-Tom-Blackwell.jpg}" style="float: right"/>
+<h1>Welcome to Fastned</h1>
+<img th:src="@{/images/fastned_logo.jpg}" style="float: right"/>
 
 <form method="POST" th:action="@{/fastned}" th:object="${afspraakData}">
 
     <input type="hidden" th:field="*{id}" />
 
     <div class="form-group">
-        <label>Status:&nbsp;</label><input type="text" th:field="*{status}"/> &nbsp;
-        <span class="validationError"
-              th:if="#{fields.hasErrors('status')}"
-              th:errors="*{status}">entryDatumError
-        </span>
+<!--        <label>Status:&nbsp;</label><input type="text" th:field="*{status}"/> &nbsp;-->
+<!--        <span class="validationError"-->
+<!--              th:if="#{fields.hasErrors('status')}"-->
+<!--              th:errors="*{status}">entryDatumError-->
+<!--        </span>-->
 
         <span>
             <label >Installateurs</label> <br/>
             <select th:field = "*{installateurIds}">
                 <option th:each = "installateur : ${availableInstallateurs}" class="installateur"
                         th:value = "${installateur.id}"
-                        th:text = "${installateur.voornaam} " + "${installateur.naam}">
+                        th:text = "${installateur.voornaam} ">
                 </option>
             </select>&nbsp;
         </span>
@@ -42,7 +42,7 @@
             <select th:field = "*{laadpaalIds}">
                 <option th:each = "laadpaal : ${availableLaadpalen}" class="laadpaal"
                         th:value = "${laadpaal.id}"
-                        th:text = "${laadpaal.voornaam} " + "${installateur.naam}">
+                        th:text = "${laadpaal.id}">
                 </option>
             </select>&nbsp;
         </span>
@@ -52,26 +52,71 @@
             <select th:field = "*{contractIds}">
                 <option th:each = "contract : ${availableContracten}" class="contract"
                         th:value = "${contract.id}"
-                        th:text = "${contract.voornaam} " + "${installateur.naam}">
+                        th:text = "${contract.id}">
                 </option>
             </select>&nbsp;
         </span>
     </div>
 
     <div th:if="${afspraakData.getId()}==0" class="form-group">
-        <button class="btn btn-success btn-md" name="startnow">Start=Now</button>
-        <button class="btn btn-success btn-md" name="endnow">End=Now</button>
-        <button class="btn btn-primary btn-md" name="submit">Create entry</button>
-    </div>
-    <div th:if="${afspraakData.getId()}!=0" class="form-group">
-        <button class="btn btn-primary btn-md" name="submit">Update entry</button>
-        <button class="btn btn-danger btn-md" name="delete">Delete entry</button>
-        <button class="btn btn-warning btn-md" name="cancel">Cancel</button>
+        <button class="btn btn-primary btn-md" name="submit">Create</button>
     </div>
 </form>
 
 <div th:if="${message}!=null" class="well" th:text="${message}">
 </div>
+<h2>Openstaande afspraken</h2>
+<table style="width:60%">
 
+    <tr th:each="afspraak : ${afspraken}">
+        <td th:text="${afspraak.id}"></td>
+        <td th:text="${afspraak.contract.getContractDatum()}">...</td>
+        <td th:text="${afspraak.status}">...</td>
+        <td><button>info</button></td>
+        <td><button>delete</button></td>
+
+    </tr>
+
+</table>
+</div>
+<h2>Read afspraak</h2>
+<div class="Container"th:each="afspraak : ${afspraken}">
+    <table style="width:45%" >
+        <tr >
+            <td> Naam: </td>
+            <td th:text="${afspraak.id}"></td>
+
+        </tr>
+        <tr>
+            <td>Laadpaal:</td>
+            <td th:text="${afspraak.laadpaal.laadpaalType}"></td>
+
+        </tr>
+        <tr>
+            <td>Installateur:</td>
+            <td th:text="${afspraak.installateur.voornaam}"></td>
+
+        </tr>
+        <tr>
+            <td>Contractdatum:</td>
+            <td th:text="${afspraak.contract.contractDatum}"></td>
+
+        </tr>
+        <tr>
+            <td>Contract:</td>
+            <td th:text="${afspraak.contract.id}"></td>
+
+        </tr>
+        <tr>
+            <td>Soort afspraak:</td>
+            <td th:text="${afspraak.bezoek.type}"></td>
+
+        </tr>
+        <tr>
+            <td>Installtie ID:</td>
+            <td th:text="${afspraak.id}"></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
