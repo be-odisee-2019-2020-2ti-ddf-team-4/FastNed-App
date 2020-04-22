@@ -1,5 +1,6 @@
 package be.fastned.application.service;
 
+import be.fastned.application.domain.Afspraak;
 import be.fastned.application.domain.Installateur;
 import be.fastned.application.domain.Locatietoestemming;
 import be.fastned.application.domain.Probleem;
@@ -11,6 +12,8 @@ import java.util.List;
 public interface PlannerService {
 
     List<Installateur> getAvailableInstallateurs();
+    List<Afspraak> getAvailableAfspraken();
+
 
     List<Locatietoestemming> getAvailableLocatietoestemmingen();
 
