@@ -18,4 +18,9 @@ public interface DocumentatieRepository extends CrudRepository<Documentatie, Str
      * @return The entry with the largest id = the most recently added entry
      */
     Documentatie findFirstByOrderByIdDesc();
+
+    /**
+     * List all categories, order alphabetically by name
+     */
+    List<Documentatie> findAllByOrderByName();
 }

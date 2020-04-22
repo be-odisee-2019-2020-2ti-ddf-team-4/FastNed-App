@@ -18,4 +18,9 @@ public interface OplossingRepository extends CrudRepository<Oplossing, String> {
      * @return The entry with the largest id = the most recently added entry
      */
     Oplossing findFirstByOrderByIdDesc();
+
+    /**
+     * List all categories, order alphabetically by name
+     */
+    List<Oplossing> findAllByOrderByName();
 }

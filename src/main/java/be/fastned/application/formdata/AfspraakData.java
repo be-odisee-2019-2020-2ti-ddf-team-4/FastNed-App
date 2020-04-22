@@ -13,6 +13,7 @@ public class AfspraakData {
 
     private final long id = 0;
 
+    // TODO: capitalise first letter
     @NotBlank(message= "contract must be specified!")
     private long contractId;
 

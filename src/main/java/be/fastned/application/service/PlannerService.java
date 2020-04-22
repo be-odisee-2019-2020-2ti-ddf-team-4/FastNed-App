@@ -1,8 +1,6 @@
 package be.fastned.application.service;
 
-import be.fastned.application.domain.Installateur;
-import be.fastned.application.domain.Locatietoestemming;
-import be.fastned.application.domain.Probleem;
+import be.fastned.application.domain.*;
 import be.fastned.application.formdata.AfspraakData;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +10,14 @@ import java.util.List;
 public interface PlannerService {
 
     List<Installateur> getAvailableInstallateurs();
+    List<Contract> getAvailableContracten();
+    List<Laadpaal> getAvailableLaadpalen();
 
     List<Locatietoestemming> getAvailableLocatietoestemmingen();
 
     List<Probleem> getAvailableProblemen();
+
+    List<Afspraak> getAvailableAfspraken();
 
     AfspraakData prepareNewAfspraakData();
 

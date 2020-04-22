@@ -3,14 +3,10 @@ package be.fastned.application.service;
 import be.fastned.application.dao.*;
 import be.fastned.application.domain.*;
 import be.fastned.application.formdata.AfspraakData;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
-@Service
 public class PlannerServiceImpl implements PlannerService {
 
     @Autowired
@@ -32,12 +28,27 @@ public class PlannerServiceImpl implements PlannerService {
         return (List<Installateur>) installateurRepository.findAll();
     }
 
+
+    public List<Contract> getAvailableContracten() {
+        return (List<Contract>) contractRepository.findAll();
+    }
+
+
+    public List<Laadpaal> getAvailableLaadpalen() {
+        return (List<Laadpaal>) laadpaalRepository.findAll();
+    }
+
     public List<Locatietoestemming> getAvailableLocatietoestemmingen(){
         return (List<Locatietoestemming>) locatietoestemmingRepository.findAll();
     }
 
     public List<Probleem> getAvailableProblemen(){
         return (List<Probleem>) probleemRepository.findAll();
+    }
+
+
+    public List<Afspraak> getAvailableAfspraken() {
+        return (List<Afspraak>) afspraakRepository.findAll();
     }
 
     /**

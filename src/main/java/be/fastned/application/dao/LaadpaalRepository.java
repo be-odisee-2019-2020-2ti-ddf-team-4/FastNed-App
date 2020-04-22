@@ -18,4 +18,9 @@ public interface LaadpaalRepository extends CrudRepository<Laadpaal, String> {
      * @return The entry with the largest id = the most recently added entry
      */
     Laadpaal findFirstByOrderByIdDesc();
+
+    /**
+     * List all categories, order alphabetically by name
+     */
+    List<Laadpaal> findAllByOrderByName();
 }

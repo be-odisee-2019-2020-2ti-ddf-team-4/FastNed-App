@@ -19,4 +19,9 @@ public interface ProbleemRepository extends CrudRepository<Probleem, String> {
      * @return The entry with the largest id = the most recently added entry
      */
     Probleem findFirstByOrderByIdDesc();
+
+    /**
+     * List all categories, order alphabetically by name
+     */
+    List<Probleem> findAllByOrderByName();
 }

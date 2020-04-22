@@ -36,9 +36,11 @@ public class PlannerController {
      */
     private void prepareForm(AfspraakData afspraakData, Model model) {
         model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());
+        model.addAttribute("availableLaadpalen", plannerService.getAvailableContracten());
+        model.addAttribute("availableContracten", plannerService.getAvailableContracten());
         model.addAttribute("uncheckedLocatietoestemmingen", plannerService.getAvailableLocatietoestemmingen());
         model.addAttribute("uncheckedProblemen", plannerService.getAvailableProblemen());
-
+        model.addAttribute("afspraken", plannerService.getAvailableAfspraken());
         model.addAttribute("afspraakData", afspraakData);
     }
 

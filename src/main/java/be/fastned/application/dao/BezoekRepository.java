@@ -18,4 +18,9 @@ public interface BezoekRepository extends CrudRepository<Bezoek, String> {
      * @return The entry with the largest id = the most recently added entry
      */
     Bezoek findFirstByOrderByIdDesc();
+
+    /**
+     * List all categories, order alphabetically by name
+     */
+    List<Bezoek> findAllByOrderByName();
 }

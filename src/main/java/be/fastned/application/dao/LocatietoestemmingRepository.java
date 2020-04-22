@@ -18,4 +18,9 @@ public interface LocatietoestemmingRepository extends CrudRepository<Locatietoes
      * @return The entry with the largest id = the most recently added entry
      */
     Locatietoestemming findFirstByOrderByIdDesc();
+
+    /**
+     * List all categories, order alphabetically by name
+     */
+    List<Locatietoestemming> findAllByOrderByName();
 }

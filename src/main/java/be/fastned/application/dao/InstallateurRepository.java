@@ -12,12 +12,15 @@ public interface InstallateurRepository extends CrudRepository<Installateur, Str
      * @param id
      * @return
      */
-    //Installateur findByEmail(String emailadres);
-
     Installateur findById(long id);
 
     /**
      * @return The entry with the largest id = the most recently added entry
      */
     Installateur findFirstByOrderByIdDesc();
+
+    /**
+     * List all categories, order alphabetically by name
+     */
+    List<Installateur> findAllByOrderByName();
 }
