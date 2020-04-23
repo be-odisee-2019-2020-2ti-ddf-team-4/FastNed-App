@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping("/fastNed")
+@RequestMapping("/fastned")
 public class PlannerController {
 
     @Autowired
@@ -42,6 +42,7 @@ public class PlannerController {
         model.addAttribute("uncheckedProblemen", plannerService.getAvailableProblemen());
         model.addAttribute("afspraken", plannerService.getAvailableAfspraken());
         model.addAttribute("afspraakData", afspraakData);
+        model.addAttribute("fullname", plannerService.getAuthenticatedFullname());
     }
 
 

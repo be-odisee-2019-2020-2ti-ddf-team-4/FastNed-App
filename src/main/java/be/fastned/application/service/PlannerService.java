@@ -24,7 +24,7 @@ public interface PlannerService {
     String processEntry(@Valid AfspraakData afspraakData);
 
     AfspraakData prepareAfspraakDataToEdit(long id);
-
+    public String getAuthenticatedFullname();
     void deleteAfspraak(long id);
 
 //    public Object getObjectives();

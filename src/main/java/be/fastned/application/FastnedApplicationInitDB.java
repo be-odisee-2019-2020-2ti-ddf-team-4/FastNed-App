@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
+
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +41,8 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
     LocatiehouderRepository locatiehouderRepository;
     @Autowired
     DocumentatieRepository documentatieRepository;
-
+    @Autowired
+    UserRepository userRepository;
     @Override
     public void run(String... args) throws Exception {
 
@@ -54,87 +57,110 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
             probleemRepository.save(probleem);
         };
 
-        // Installateurs
-        List<Installateur> installateurs = Arrays.asList(
-                new Installateur(11, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww"),
-                new Installateur(12, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww"),
-                new Installateur(13, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww"),
-                new Installateur(14, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww")
+        List<User> users = Arrays.asList(
+                new User(1, "imke",
+                        "{bcrypt}$2a$10$2o9Frax4HHJLEMMb5iKs9ONs8zEmGv51IRIURY8PkBk7GsCxy4ixO",
+                        "ROLE_USER","Imke", "Courtois","imke@courtois.be"),
+                new User(2,"tessa",
+                        "{bcrypt}$2a$10$vwKk.OxTjqkzVudfuIuUauxmIrcx8Miq6vFgmLF6sgRcu7viIxgGO",
+                        "ROLE_USER","Tessa", "Wullaert", "tessa@wullaert.be"),
+                new User(3, "nicky",
+                        "{bcrypt}$2a$10$dTj8pIUJCTDi3kr.VnNRye1E7vmG7Yitx3IFFYrqAoEWwHWTJ1Zbu",
+                        "ROLE_USER","Nicky", "Evrard", "nicky@evrard.be"),
+                new User(4, "hans",
+                        "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm",
+                        "ROLE_ADMIN","Hans", "Vandenbogaerde","hans@gmail.com"),
+                new User(5, "test",
+                        "{noop}test",
+                        "ROLE_ADMIN","Hans", "Vandenbogaerde","hans@gmail.com")
         );
 
-        for (Installateur installateur : installateurs) {
-            installateurRepository.save(installateur);
-        };
+        for (User user: users) {
+            // user must be saved for it to have an id
+            userRepository.save(user);
+// Installateurs
+            List<Installateur> installateurs = Arrays.asList(
+                    new Installateur(11, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww"),
+                    new Installateur(12, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww"),
+                    new Installateur(13, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww"),
+                    new Installateur(14, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww")
+            );
 
-        // Locatiehouders
-        List<Locatiehouder> locatiehouders = Arrays.asList(
-                new Locatiehouder(31, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
-                new Locatiehouder(32, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
-                new Locatiehouder(33, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", "bedrijfsnaam", "btwNummer", "adres"),
-                new Locatiehouder(34, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww", "bedrijfsnaam", "btwNummer", "adres")
-        );
+            for (Installateur installateur : installateurs) {
+                installateurRepository.save(installateur);
+            };
 
-        for (Locatiehouder locatiehouder : locatiehouders) {
-            locatiehouderRepository.save(locatiehouder);
-        };
+            // Locatiehouders
+            List<Locatiehouder> locatiehouders = Arrays.asList(
+                    new Locatiehouder(31, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
+                    new Locatiehouder(32, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
+                    new Locatiehouder(33, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", "bedrijfsnaam", "btwNummer", "adres"),
+                    new Locatiehouder(34, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww", "bedrijfsnaam", "btwNummer", "adres")
+            );
 
-        // Documentaties
-        List<Documentatie> documentaties = Arrays.asList(
-                new Documentatie(41, "A", "installatie", "X installeer je op Y manier"),
-                new Documentatie(42, "B", "installatie", "X installeer je op Y manier"),
-                new Documentatie(43, "A", "reparatie", "X fix je op Y manier"),
-                new Documentatie(44, "B", "reparatie", "X fix je op Y manier")
-        );
+            for (Locatiehouder locatiehouder : locatiehouders) {
+                locatiehouderRepository.save(locatiehouder);
+            };
 
-        for (Documentatie documentatie : documentaties) {
-            documentatieRepository.save(documentatie);
-        };
+            // Documentaties
+            List<Documentatie> documentaties = Arrays.asList(
+                    new Documentatie(41, "A", "installatie", "X installeer je op Y manier"),
+                    new Documentatie(42, "B", "installatie", "X installeer je op Y manier"),
+                    new Documentatie(43, "A", "reparatie", "X fix je op Y manier"),
+                    new Documentatie(44, "B", "reparatie", "X fix je op Y manier")
+            );
 
-        // Laadpalen
-        List<Laadpaal> laadpalen = Arrays.asList(
-                new Laadpaal(1, locatiehouderRepository.findById(1), documentatieRepository.findById(1), documentatieRepository.findById(3), "A", "net aangemaakt"),
-                new Laadpaal(2, locatiehouderRepository.findById(2), documentatieRepository.findById(2), documentatieRepository.findById(4), "B", "net aangemaakt")
-        );
+            for (Documentatie documentatie : documentaties) {
+                documentatieRepository.save(documentatie);
+            };
 
-        for (Laadpaal laadpaal : laadpalen) {
-            laadpaalRepository.save(laadpaal);
-        };
+            // Laadpalen
+            List<Laadpaal> laadpalen = Arrays.asList(
+                    new Laadpaal(1, locatiehouderRepository.findById(1), documentatieRepository.findById(1), documentatieRepository.findById(3), "A", "net aangemaakt"),
+                    new Laadpaal(2, locatiehouderRepository.findById(2), documentatieRepository.findById(2), documentatieRepository.findById(4), "B", "net aangemaakt")
+            );
 
-        // Contracten
-        List<Contract> contracten = Arrays.asList(
-                new Contract(1, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Contract(2, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Contract(3, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Contract(4, LocalDateTime.now(), LocalDateTime.now().plusDays(5))
-        );
+            for (Laadpaal laadpaal : laadpalen) {
+                laadpaalRepository.save(laadpaal);
+            };
 
-        for (Contract contract : contracten) {
-            contractRepository.save(contract);
-        };
+            // Contracten
+            List<Contract> contracten = Arrays.asList(
+                    new Contract(1, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                    new Contract(2, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                    new Contract(3, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                    new Contract(4, LocalDateTime.now(), LocalDateTime.now().plusDays(5))
+            );
 
-        // Bezoeken
-        List<Bezoek> bezoeken = Arrays.asList(
-                new Bezoek(1, probleemRepository.findById(1), documentatieRepository.findById(1), "Installatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Bezoek(2, probleemRepository.findById(2), documentatieRepository.findById(2), "Installatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Bezoek(3, probleemRepository.findById(3), documentatieRepository.findById(3), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Bezoek(4, null, documentatieRepository.findById(1), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5))
-        );
+            for (Contract contract : contracten) {
+                contractRepository.save(contract);
+            };
 
-        for (Bezoek bezoek : bezoeken) {
-            bezoekRepository.save(bezoek);
-        };
+            // Bezoeken
+            List<Bezoek> bezoeken = Arrays.asList(
+                    new Bezoek(1, probleemRepository.findById(1), documentatieRepository.findById(1), "Installatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                    new Bezoek(2, probleemRepository.findById(2), documentatieRepository.findById(2), "Installatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                    new Bezoek(3, probleemRepository.findById(3), documentatieRepository.findById(3), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
+                    new Bezoek(4, null, documentatieRepository.findById(1), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5))
+            );
 
-        // Afspraken
-        List<Afspraak> afspraken = Arrays.asList(
-                new Afspraak(51, installateurRepository.findById(11), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
-                new Afspraak(52, installateurRepository.findById(12), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
-                new Afspraak(53, installateurRepository.findById(13), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
-                new Afspraak(54, installateurRepository.findById(14), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
-        );
+            for (Bezoek bezoek : bezoeken) {
+                bezoekRepository.save(bezoek);
+            };
 
-        for (Afspraak afspraak : afspraken) {
-            // TODO: (Niels) Error: Een vereiste subklasse "Locatiehouder" was gevraagd, in de plaats kwam "Installateur". (Uncomment & Shift+F10 om te beginnen)
-            afspraakRepository.save(afspraak);
-        };
+            // Afspraken
+            List<Afspraak> afspraken = Arrays.asList(
+                    new Afspraak(51, installateurRepository.findById(11), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
+                    new Afspraak(52, installateurRepository.findById(12), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
+                    new Afspraak(53, installateurRepository.findById(13), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
+                    new Afspraak(54, installateurRepository.findById(14), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
+            );
+
+            for (Afspraak afspraak : afspraken) {
+                // TODO: (Niels) Error: Een vereiste subklasse "Locatiehouder" was gevraagd, in de plaats kwam "Installateur". (Uncomment & Shift+F10 om te beginnen)
+                afspraakRepository.save(afspraak);
+            };
+        }
+
     }
 }
