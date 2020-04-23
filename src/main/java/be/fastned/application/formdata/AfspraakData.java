@@ -13,6 +13,7 @@ public class AfspraakData {
 
     private final long id = 0;
 
+<<<<<<< HEAD
     @NotBlank(message= "contract must be specified!")
     private long contractId;
 
@@ -23,6 +24,18 @@ public class AfspraakData {
     private long installateurId;
 
     @NotBlank(message= "bezoek must be specified!")
+=======
+    //@NotBlank(message= "installateur must be specified!")
+    private long installateurId;
+
+    //@NotBlank(message= "laadpaal must be specified!")
+    private long laadpaalId;
+
+    //@NotBlank(message= "contract must be specified!")
+    private long contractId;
+
+    //@NotBlank(message= "bezoek must be specified!")
+>>>>>>> master
     private long bezoekId;
 
     @NotBlank(message= "status must be specified!")
