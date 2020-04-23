@@ -22,11 +22,14 @@ public class Installateur extends Persoon {
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 
-	public Installateur(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord){
+	public Installateur(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord, String test){
 		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord);
+		this.test = test;
 	}
 
 //	@Id
 //	@GeneratedValue(strategy= GenerationType.IDENTITY)
 //	private final long id;
+
+	private final String test;
 }
