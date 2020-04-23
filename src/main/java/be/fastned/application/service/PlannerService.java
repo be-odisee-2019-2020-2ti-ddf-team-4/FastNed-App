@@ -33,6 +33,8 @@ public interface PlannerService {
 
 
 
+    void updateAfspraak(AfspraakData afspraakData);
+
 //    public Object getObjectives();
 //
 
