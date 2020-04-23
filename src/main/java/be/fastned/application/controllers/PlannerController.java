@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping({"/fastNed/afspraak", "/fastNed/update"})
+@RequestMapping({"/fastned/afspraak", "/fastNed/update"})
 public class PlannerController {
 
     @Autowired
@@ -82,9 +82,9 @@ public class PlannerController {
     /**
      * Een POST-request ontvangt via /fastNed/afspraak/X een view (returnwaarde) met model.
      */
-    @PostMapping("/edit")
-    public String afspraakExecuteEdit(AfspraakData afspraakData, Model model, @RequestParam(value="action", required=true) String action) {
-        System.out.println("Action was " + action);
+    @PostMapping(params = "submit")
+    public String afspraakExecuteEdit(AfspraakData afspraakData, Model model) {
+        System.out.println("TEST ");
         //prepareModel(afspraakData, model, "Update");
         //plannerService.updateAfspraak(afspraakData);
         return "afspraak";
@@ -109,7 +109,7 @@ public class PlannerController {
     @PostMapping(params = "action")
     public String processEntry(@Valid AfspraakData afspraakData, Errors errors, Model model) {
 
-        System.out.println(String.format("You picked Installateur: %s", afspraakData.getInstallateurId()));
+        System.out.println(String.format(Integer.toString(plannerService.getAvailableAfspraken().size())));
         String message="";
 
         try {
@@ -120,17 +120,19 @@ public class PlannerController {
             }
 
             // Now that the input seems to be OK, let's create a new entry or update/delete an existing entry
-            //message = plannerService.processEntry(afspraakData);
+            message = plannerService.processEntry(afspraakData);
+
+            System.out.println(String.format(Integer.toString(plannerService.getAvailableAfspraken().size())));
 
             // Prepare form for new data-entry
-            //afspraakData = plannerService.prepareNewAfspraakData();
+            afspraakData = plannerService.prepareNewAfspraakData();
 
         } catch (IllegalArgumentException e) {
             // Nothing special needs to be done
         }
 
-        //prepareModel(afspraakData, model);
-        //model.addAttribute("message", message);
+        prepareModel(afspraakData, model, "Create");
+        model.addAttribute("message", message);
         return "afspraak";
     }
 
