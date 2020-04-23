@@ -1,3 +1,15 @@
 /FastnedApplication.iml
 /.idea/
 /target/
+src/main/java/be/fastned/application/controllers/PlannerController.java
+src/main/java/be/fastned/application/domain/Contract.java
+src/main/java/be/fastned/application/formdata/AfspraakData.java
+src/main/java/be/fastned/application/service/PlannerService.java
+src/main/java/be/fastned/application/service/PlannerServiceImpl.java
+src/main/resources/static/images/fastned_logo.jpg
+src/main/resources/static/images/Fastned_logo.jpg
+src/main/resources/templates/afspraak.html
+src/main/resources/templates/bekijk.html
+src/main/resources/templates/delete.html
+src/main/resources/templates/home.html
+src/main/resources/templates/update.html
