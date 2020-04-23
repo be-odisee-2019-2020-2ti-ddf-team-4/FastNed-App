@@ -14,7 +14,7 @@ public interface AfspraakRepository extends CrudRepository<Afspraak, String> {
      * @return
      */
 
-    //hans zoekt afspraken bij id op een andere manier ???
+    //hans zoekt afspraken bij id op een andere manier "findOne???
     Afspraak findById(long id);
 
     /**

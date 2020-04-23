@@ -137,8 +137,8 @@ public class PlannerController {
     }
 
     @RequestMapping(value = {"/afspraakInfo.html"},method = RequestMethod.GET)
-    public String afspraakDetail(@RequestParam("id") Integer id, ModelMap model){
-        Afspraak afspraak = plannerService.searchById(id);
+    public String afspraakDetail(@RequestParam("id") long id, ModelMap model){
+        Afspraak afspraak = plannerService.searchAfsrpaakById(id);
         model.addAttribute("afspraak", afspraak);
         return "/afspraakInfo";
     }

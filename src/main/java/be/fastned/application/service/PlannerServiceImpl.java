@@ -117,12 +117,15 @@ public class PlannerServiceImpl implements PlannerService {
 
     @Override
     public void deleteAfspraak(long id) {
-        Afspraak afspraak = afspraakRepository.findById(id);
+        Afspraak afspraak = searchAfsrpaakById(id);
         afspraakRepository.delete(afspraak);
     }
 
-    @Transactional(propagation= Propagation.REQUIRED,readOnly=false)
-    public Afspraak searchById(int id){
+
+
+    @Override
+    public Afspraak searchAfsrpaakById(long id)
+    {
         return afspraakRepository.findById(id);
     }
 }

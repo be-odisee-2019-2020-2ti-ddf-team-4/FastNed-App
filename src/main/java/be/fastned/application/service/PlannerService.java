@@ -27,9 +27,11 @@ public interface PlannerService {
 
 
 
-    Afspraak searchById(int id);
+    Afspraak searchAfsrpaakById(long id);
 
-    void deleteAfspraak(long id);
+    public void deleteAfspraak(long id);
+
+
 
 //    public Object getObjectives();
 //
