@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Fastned</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script>
+        function rowClicked(value) {
+            location.href = "/fastned/edit" + value
+        }
+    </script>
+</head>
+<body>
+<h1>Welcome to Fastned</h1>
+<img th:src="@{/images/fastned_logo.jpg}" style="float: right"/>
+
+<form method="POST" th:action="@{/fastned/afspraak}" th:object="${afspraakData}">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <div class="form-group">
+        <span class="installateur">>
+            <label >Installateurs</label> <br/>
+            <select th:field = "*{installateurId}">
+                <option th:each = "installateur : ${availableInstallateurs}" class="installateur"
+                        th:value = "${installateur.id}"
+                        th:text = "${installateur.voornaam} ">
+                </option>
+            </select>&nbsp;
+        </span>
+
+        <span class="laadpaal">
+            <label >Laadpaal</label> <br/>
+            <select th:field = "*{laadpaalId}">
+                <option th:each = "laadpaal : ${availableLaadpalen}" class="laadpaal"
+                        th:value = "${laadpaal.id}"
+                        th:text = "${laadpaal.id}">
+                </option>
+            </select>&nbsp;
+        </span>
+
+        <span class="contract">
+            <label >Contract</label> <br/>
+            <select th:field = "*{contractId}">
+                <option th:each = "contract : ${availableContracten}" class="contract"
+                        th:value = "${contract.id}"
+                        th:text = "${contract.id}">
+                </option>
+            </select>&nbsp;
+        </span>
+
+        <label>Status:&nbsp;</label>
+        <input type="text" th:field="*{status}"/>
+
+        <ul th:if="${#fields.hasErrors('*')}">
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+        </ul>
+    </div>
+
+    <div th:if="${afspraakData.getId()}==0" class="form-group">
+        <button class="btn btn-success btn-md" type="submit" name="action" value="test">Start=Now</button>
+    </div>
+
+    <div th:if="${afspraakData.getId()}!=0" class="form-group">
+        <button type="submit" name="action" value="delete">Delete</button>
+        <button type="submit" name="action" value="update">Update</button>
+    </div>
+</form>
+</body>
+</html>
