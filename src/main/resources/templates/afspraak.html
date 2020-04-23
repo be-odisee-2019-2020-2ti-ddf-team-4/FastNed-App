@@ -72,7 +72,7 @@
 
     <tr th:each="afspraak : ${afspraken}">
         <td>
-        <a th:href="@{/afspraakInfo.html(id=${afspraak.id})}">
+        <a  th:href="@{/afspraakInfo.html(id=${afspraak.id})}">
 
               <span th:text="${afspraak.id}">...</span>     <br>
                <span th:text="${afspraak.contract.getContractDatum()}">...</span>     <br>
@@ -81,8 +81,8 @@
         </a>
         </td>
 
-        <form method="POST" th:action="@{/afspraak.html}" th:object="${afspraak}" th:method="deleteAfspraak">
-            <!-- <input type="hidden" th:field="*{id}" /> Error met dit IDK why -->
+        <form method="POST" th:action="@{/afspraak.html}" th:object="${afspraak}" th:method="deleteAfspraak(id)">
+            <input type="text" th:field="*{id}" />
             <div th:if="${afspraak.id}!=0" class="form-group">
                 <button >delete</button>
             </div>

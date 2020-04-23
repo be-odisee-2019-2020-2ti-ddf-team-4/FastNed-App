@@ -136,13 +136,13 @@ public class PlannerController {
         return "redirect:/fastNed";
     }
 
-    @RequestMapping(value = {"/afspraakInfo.html"},method = RequestMethod.GET)
-    public String afspraakDetail(@RequestParam("id") long id, ModelMap model){
+
+    @RequestMapping(value={"/afspraakInfo.html"},method=RequestMethod.GET)
+    public String persoonDetail(@RequestParam("id") Integer id, ModelMap model){
         Afspraak afspraak = plannerService.searchAfsrpaakById(id);
         model.addAttribute("afspraak", afspraak);
         return "/afspraakInfo";
     }
-
 
 
 }
