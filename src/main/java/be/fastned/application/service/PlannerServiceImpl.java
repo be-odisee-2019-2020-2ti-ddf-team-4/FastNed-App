@@ -6,8 +6,11 @@ import be.fastned.application.formdata.AfspraakData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+<<<<<<< HEAD
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+=======
+>>>>>>> master
 
 import java.util.List;
 
@@ -121,11 +124,27 @@ public class PlannerServiceImpl implements PlannerService {
         afspraakRepository.delete(afspraak);
     }
 
+<<<<<<< HEAD
 
 
     @Override
     public Afspraak searchAfsrpaakById(long id)
     {
         return afspraakRepository.findById(id);
+=======
+    @Override
+    public void updateAfspraak(AfspraakData afspraakData) {
+
+        // TODO: Update enkel wat geüpdated moet worden, niet alles
+        Afspraak afspraakUpdated = new Afspraak(
+            afspraakData.getId(),
+            installateurRepository.findById(afspraakData.getInstallateurId()),
+            laadpaalRepository.findById(afspraakData.getLaadpaalId()),
+            contractRepository.findById(afspraakData.getContractId()),
+            bezoekRepository.findById(afspraakData.getBezoekId()),
+            afspraakData.getStatus()
+        );
+        afspraakRepository.save(afspraakUpdated);
+>>>>>>> master
     }
 }
