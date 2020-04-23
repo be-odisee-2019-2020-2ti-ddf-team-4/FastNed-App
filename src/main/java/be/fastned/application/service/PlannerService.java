@@ -11,35 +11,21 @@ public interface PlannerService {
 
     List<Installateur> getAvailableInstallateurs();
     List<Contract> getAvailableContracten();
-    List<Laadpaal> getAvailableLaadpalen();
-
-    List<Locatietoestemming> getAvailableLocatietoestemmingen();
-
-    List<Probleem> getAvailableProblemen();
 
     List<Afspraak> getAvailableAfspraken();
 
     AfspraakData prepareNewAfspraakData();
+    AfspraakData prepareNewAfspraakData(long id);
+    AfspraakData prepareNewAfspraakData(Afspraak base);
+
+    AfspraakData updateAfspraak(AfspraakData base);
+    void deleteAfspraak(long id);
 
     String processEntry(@Valid AfspraakData afspraakData);
 
-    AfspraakData prepareAfspraakDataToEdit(long id);
-
-    void deleteAfspraak(long id);
-
-    void updateAfspraak(AfspraakData afspraakData);
-
-//    public Object getObjectives();
-//
-
-//
-
-//
-//    public List<EntryAfspraak> getEntriesFromDate(LocalDate theDate);
-//
-//    public Duration getTotalDuration(List<EntryAfspraak> entries);
-//
-//    public AfspraakData prepareEntryDataToEdit(String id);
-//
-//    public void deleteEntry(String id);
+    Installateur getInstallateurById(long id);
+    Bezoek getBezoekById(long id);
+    Laadpaal getLaadpaalById(long id);
+    Contract getContractById(long id);
+    Afspraak getAfspraakById(long id);
 }

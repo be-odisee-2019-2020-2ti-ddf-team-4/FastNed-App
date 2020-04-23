@@ -32,12 +32,10 @@ public class PlannerServiceImpl implements PlannerService {
         return (List<Installateur>) installateurRepository.findAll();
     }
 
-    @Override
     public List<Contract> getAvailableContracten() {
         return (List<Contract>) contractRepository.findAll();
     }
 
-    @Override
     public List<Laadpaal> getAvailableLaadpalen() {
         return (List<Laadpaal>) laadpaalRepository.findAll();
     }
@@ -50,7 +48,6 @@ public class PlannerServiceImpl implements PlannerService {
         return (List<Probleem>) probleemRepository.findAll();
     }
 
-    @Override
     public List<Afspraak> getAvailableAfspraken() {
         return (List<Afspraak>) afspraakRepository.findAll();
     }
@@ -60,15 +57,21 @@ public class PlannerServiceImpl implements PlannerService {
      * @return Een nieuw AfpsraakData-object met mogelijke aanpassingen vs een leeg object.
      */
     public AfspraakData prepareNewAfspraakData() {
-        return prepareAfspraakData(afspraakRepository.findFirstByOrderByIdDesc());
+        return prepareAfspraakData();
+    }
+
+    public AfspraakData prepareNewAfspraakData(long id) {
+        return prepareAfspraakData(id);
+    }
+    public AfspraakData prepareNewAfspraakData(Afspraak base) {
+        return prepareAfspraakData(base);
     }
 
     /**
      * Bereidt een nieuw AfpsraakData-object voor op basis van een bestaand AfpsraakData-object. (uit DB)
-     * @param laatsteAfspraak De laatst gevonden afspraak in de DB.
      * @return Een nieuw AfpsraakData-object met mogelijke aanpassingen vs een leeg object.
      */
-    private AfspraakData prepareAfspraakData(Afspraak laatsteAfspraak) {
+    private AfspraakData prepareAfspraakData() {
 
         AfspraakData afspraakData = new AfspraakData();
 
@@ -77,6 +80,31 @@ public class PlannerServiceImpl implements PlannerService {
         afspraakData.setBezoekId(0);
         afspraakData.setLaadpaalId(0);
         afspraakData.setStatus(null);
+
+        return afspraakData;
+    }
+    private AfspraakData prepareAfspraakData(long id) {
+
+        AfspraakData afspraakData = new AfspraakData();
+
+        afspraakData.setId(id);
+        afspraakData.setInstallateurId(0);
+        afspraakData.setContractId(0);
+        afspraakData.setBezoekId(0);
+        afspraakData.setLaadpaalId(0);
+        afspraakData.setStatus(null);
+
+        return afspraakData;
+    }
+    private AfspraakData prepareAfspraakData(Afspraak afspraak) {
+
+        AfspraakData afspraakData = new AfspraakData();
+
+        afspraakData.setInstallateurId(afspraak.getId());
+        afspraakData.setContractId(afspraak.getContract().getId());
+        afspraakData.setBezoekId(afspraak.getBezoek().getId());
+        afspraakData.setLaadpaalId(afspraak.getLaadpaal().getId());
+        afspraakData.setStatus(afspraak.getStatus());
 
         return afspraakData;
     }
@@ -105,7 +133,6 @@ public class PlannerServiceImpl implements PlannerService {
         return String.format("Afspraak (id = \"%s\") is verwerkt!", afspraak.getId());
     }
 
-    @Override
     public AfspraakData prepareAfspraakDataToEdit(long id) {
 
         Afspraak deAfspraak = afspraakRepository.findById(id);
@@ -113,14 +140,12 @@ public class PlannerServiceImpl implements PlannerService {
         return deAfspraakData;
     }
 
-    @Override
     public void deleteAfspraak(long id) {
         Afspraak afspraak = afspraakRepository.findById(id);
         afspraakRepository.delete(afspraak);
     }
 
-    @Override
-    public void updateAfspraak(AfspraakData afspraakData) {
+    public AfspraakData updateAfspraak(AfspraakData afspraakData) {
 
         // TODO: Update enkel wat geüpdated moet worden, niet alles
         Afspraak afspraakUpdated = new Afspraak(
@@ -132,5 +157,22 @@ public class PlannerServiceImpl implements PlannerService {
             afspraakData.getStatus()
         );
         afspraakRepository.save(afspraakUpdated);
+        return afspraakData;
+    }
+
+    public Installateur getInstallateurById(long id){
+        return installateurRepository.findById(id);
+    }
+    public Bezoek getBezoekById(long id){
+        return bezoekRepository.findById(id);
+    }
+    public Laadpaal getLaadpaalById(long id){
+        return laadpaalRepository.findById(id);
+    }
+    public Contract getContractById(long id){
+        return contractRepository.findById(id);
+    }
+    public Afspraak getAfspraakById(long id){
+        return afspraakRepository.findById(id);
     }
 }

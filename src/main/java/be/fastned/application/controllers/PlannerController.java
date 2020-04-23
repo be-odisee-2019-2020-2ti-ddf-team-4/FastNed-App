@@ -1,5 +1,6 @@
 package be.fastned.application.controllers;
 
+import be.fastned.application.domain.Afspraak;
 import be.fastned.application.formdata.AfspraakData;
 import be.fastned.application.service.PlannerService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping({"/fastned/afspraak", "/fastNed/update"})
+@RequestMapping("/fastned/afspraak")
 public class PlannerController {
 
     @Autowired
@@ -27,7 +28,7 @@ public class PlannerController {
     @GetMapping()
     public String afspraakCreateForm(Model model) {
         AfspraakData afspraak = plannerService.prepareNewAfspraakData();
-        prepareModel(afspraak, model, "Create");
+        prepareModel(afspraak, model, "create");
         return "afspraak";
     }
 
@@ -36,17 +37,36 @@ public class PlannerController {
      */
     private void prepareModel(AfspraakData afspraakData, Model model, String CRUDType) {
         switch (CRUDType){
-            case "Create":
+            case "create":
                 model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());
                 model.addAttribute("availableLaadpalen", plannerService.getAvailableContracten());
                 model.addAttribute("availableContracten", plannerService.getAvailableContracten());
                 model.addAttribute("afspraakData", afspraakData);
+                model.addAttribute("action", "create");
                 break;
-            case "Update":
+            case "update":
+                model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());
+                model.addAttribute("availableLaadpalen", plannerService.getAvailableContracten());
+                model.addAttribute("availableContracten", plannerService.getAvailableContracten());
+                model.addAttribute("afspraakData", afspraakData);
+                model.addAttribute("action", "update");
                 break;
-            case "Delete":
+            case "delete":
                 break;
-            case "Read":
+            case "read":
+                model.addAttribute("availableAfspraken", plannerService.getAvailableAfspraken());
+                model.addAttribute("afspraakData", afspraakData);
+                model.addAttribute("action", "read");
+                break;
+            case "showItem":
+                model.addAttribute("afspraakId", afspraakData.getId());
+                Afspraak tussenstap = plannerService.getAfspraakById(afspraakData.getId());
+                model.addAttribute("childInstallateur", plannerService.getInstallateurById(tussenstap.getInstallateur().getId()).getVoornaam());
+                model.addAttribute("childLaadpaal", plannerService.getLaadpaalById(tussenstap.getLaadpaal().getId()).getId());
+                model.addAttribute("childContract", plannerService.getContractById(tussenstap.getContract().getId()).getId());
+                model.addAttribute("childBezoek", plannerService.getBezoekById(tussenstap.getBezoek().getId()).getId());
+                model.addAttribute("childStatus", tussenstap.getStatus());
+                model.addAttribute("action", "showItem");
                 break;
         }
     }
@@ -54,54 +74,33 @@ public class PlannerController {
     /**
      * Een GET-request ontvangt via /fastNed/afspraak/X een view (returnwaarde) met model.
      */
-    @GetMapping("/edit")
-    public String afspraakEditCreateForm(AfspraakData afspraakData, Model model) {
-        prepareModel(afspraakData, model, "Create");
-        plannerService.updateAfspraak(afspraakData);
-        return "afspraak";
-    }
-    @GetMapping("/update")
-    public String afspraakUpdateCreateForm(AfspraakData afspraakData, Model model) {
-        prepareModel(afspraakData, model, "Update");
-        plannerService.updateAfspraak(afspraakData);
-        return "afspraak";
-    }
-    @GetMapping("/delete")
-    public String afspraakDeleteCreateForm(AfspraakData afspraakData, Model model) {
-        prepareModel(afspraakData, model, "Delete");
-        plannerService.updateAfspraak(afspraakData);
-        return "afspraak";
-    }
     @GetMapping("/read")
-    public String afspraakReadCreateForm(AfspraakData afspraakData, Model model) {
-        prepareModel(afspraakData, model, "Read");
+    public String afspraakCreateAfspraakSelectieForm(AfspraakData afspraakData, Model model) {
+        prepareModel(afspraakData, model, "read");
+        return "afspraak";
+    }
+    @GetMapping("/showItem")
+    public String afspraakCreateShowAfspraakForm(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
+        AfspraakData afspraakDataNew = plannerService.prepareNewAfspraakData(id);
+        prepareModel(afspraakDataNew, model, "showItem");
+        return "afspraak";
+    }
+    @PostMapping("/showUpdate")
+    public String afspraakCreateUpdateForm(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
+        AfspraakData afspraakDataNew = plannerService.prepareNewAfspraakData(plannerService.getAfspraakById(afspraakData.getId()));
+        prepareModel(afspraakDataNew, model, "update");
+        return "afspraak";
+    }
+    @PostMapping("/update")
+    public String afspraakUpdateAfspraak(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
         plannerService.updateAfspraak(afspraakData);
-        return "afspraak";
+        return "redirect:/fastned/afspraak";
     }
-
-    /**
-     * Een POST-request ontvangt via /fastNed/afspraak/X een view (returnwaarde) met model.
-     */
-    @PostMapping(params = "submit")
-    public String afspraakExecuteEdit(AfspraakData afspraakData, Model model) {
-        System.out.println("TEST ");
-        //prepareModel(afspraakData, model, "Update");
-        //plannerService.updateAfspraak(afspraakData);
-        return "afspraak";
+    @PostMapping("/delete")
+    public String afspraakDeleteAfspraak(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
+        plannerService.deleteAfspraak(afspraakData.getId());
+        return "redirect:/fastned/afspraak";
     }
-//    @PostMapping("/delete")
-//    public String afspraakExecuteDelete(AfspraakData afspraakData, Model model) {
-//        prepareModel(afspraakData, model, "Delete");
-//        plannerService.updateAfspraak(afspraakData);
-//        return "afspraak";
-//    }
-//    @PostMapping("/read")
-//    public String afspraakExecuteRead(AfspraakData afspraakData, Model model) {
-//        prepareModel(afspraakData, model, "Read");
-//        plannerService.updateAfspraak(afspraakData);
-//        return "afspraak";
-//    }
-
     /**
      * Verwerk het formulier
      * @param afspraakData De data voor te te-verwerken afspraak uit het formulier.
@@ -131,57 +130,8 @@ public class PlannerController {
             // Nothing special needs to be done
         }
 
-        prepareModel(afspraakData, model, "Create");
+        prepareModel(afspraakData, model, "create");
         model.addAttribute("message", message);
         return "afspraak";
     }
-
-//    @GetMapping("/fastNed/update?")
-//    public String entryDEditFormTest(Model model) {
-//
-//        AfspraakData entryData = plannerService.prepareNewAfspraakData();
-//        prepareForm(entryData, model);
-//        // TODO: (Tibo) Niet zeker of dit nog iets te maken heeft met onze afspraak tov het voorbeeld zijn "Entry"
-//        model.addAttribute("message", "Update of Verwijder deze afspraak a.u.b. - of Cancel");
-//        return "update";
-//    }
-
-//    /**
-//     * Prepare form for update or delete
-//     * @param id - the id of the entry to be updated or deleted
-//     * @param model
-//     * @return
-//     */
-//    @GetMapping("/edit")
-//    public String entryEditForm(@RequestParam("id") long id, Model model) {
-//
-//        AfspraakData entryData = plannerService.prepareAfspraakDataToEdit(id);
-//        prepareModel(entryData, model);
-//        // TODO: (Tibo) Niet zeker of dit nog iets te maken heeft met onze afspraak tov het voorbeeld zijn "Entry"
-//        model.addAttribute("message", "Update of Verwijder deze afspraak a.u.b. - of Cancel");
-//        return "afspraak";
-//    }
-//
-//    /**
-//     * Delete the entry and prepare for creation of a new one
-//     * @return
-//     */
-//    @PostMapping(params = "delete")
-//    public String deleteEntry(AfspraakData afspraakData, Model model) {
-//
-//        plannerService.deleteAfspraak(afspraakData.getId());
-//        AfspraakData afspraakDataNieuw = plannerService.prepareNewAfspraakData();
-//        prepareModel(afspraakDataNieuw, model);
-//        model.addAttribute("message", String.format("Afspraak succesvol verwijderd met id \"%s\"", afspraakData.getId()));
-//        return "afspraak";
-//    }
-//
-//    /**
-//     * If user does not want to update or delete, he will be redirect to create
-//     * @return
-//     */
-//    @PostMapping(params = "cancel")
-//    public String redirectToCreate() {
-//        return "redirect:/fastNed";
-//    }
 }
