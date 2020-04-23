@@ -16,11 +16,16 @@
 <h1>Welcome to Fastned</h1>
 <img th:src="@{/images/fastned_logo.jpg}" style="float: right"/>
 
+<<<<<<< HEAD
 <form method="POST" th:action="@{/fastned}" th:object="${afspraakData}">
+=======
+<form method="POST" th:action="@{/fastned/afspraak}" th:object="${afspraakData}">
+>>>>>>> master
 
     <input type="hidden" th:field="*{id}" />
 
     <div class="form-group">
+<<<<<<< HEAD
 <!--        <label>Status:&nbsp;</label><input type="text" th:field="*{status}"/> &nbsp;-->
 <!--        <span class="validationError"-->
 <!--              th:if="#{fields.hasErrors('status')}"-->
@@ -30,6 +35,11 @@
         <span>
             <label >Installateurs</label> <br/>
             <select th:field = "*{installateurIds}">
+=======
+        <span class="installateur">>
+            <label >Installateurs</label> <br/>
+            <select th:field = "*{installateurId}">
+>>>>>>> master
                 <option th:each = "installateur : ${availableInstallateurs}" class="installateur"
                         th:value = "${installateur.id}"
                         th:text = "${installateur.voornaam} ">
@@ -37,9 +47,15 @@
             </select>&nbsp;
         </span>
 
+<<<<<<< HEAD
         <span>
             <label >Laadpaal</label> <br/>
             <select th:field = "*{laadpaalIds}">
+=======
+        <span class="laadpaal">
+            <label >Laadpaal</label> <br/>
+            <select th:field = "*{laadpaalId}">
+>>>>>>> master
                 <option th:each = "laadpaal : ${availableLaadpalen}" class="laadpaal"
                         th:value = "${laadpaal.id}"
                         th:text = "${laadpaal.id}">
@@ -47,15 +63,22 @@
             </select>&nbsp;
         </span>
 
+<<<<<<< HEAD
         <span>
             <label >Contract</label> <br/>
             <select th:field = "*{contractIds}">
+=======
+        <span class="contract">
+            <label >Contract</label> <br/>
+            <select th:field = "*{contractId}">
+>>>>>>> master
                 <option th:each = "contract : ${availableContracten}" class="contract"
                         th:value = "${contract.id}"
                         th:text = "${contract.id}">
                 </option>
             </select>&nbsp;
         </span>
+<<<<<<< HEAD
     </div>
 
     <div th:if="${afspraakData.getId()}==0" class="form-group">
@@ -134,5 +157,25 @@
         </tr>
     </table>
 </div>
+=======
+
+        <label>Status:&nbsp;</label>
+        <input type="text" th:field="*{status}"/>
+
+        <ul th:if="${#fields.hasErrors('*')}">
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+        </ul>
+    </div>
+
+    <div th:if="${afspraakData.getId()}==0" class="form-group">
+        <button class="btn btn-success btn-md" type="submit" name="action" value="test">Start=Now</button>
+    </div>
+
+    <div th:if="${afspraakData.getId()}!=0" class="form-group">
+        <button type="submit" name="action" value="delete">Delete</button>
+        <button type="submit" name="action" value="update">Update</button>
+    </div>
+</form>
+>>>>>>> master
 </body>
 </html>
