@@ -118,4 +118,19 @@ public class PlannerServiceImpl implements PlannerService {
         Afspraak afspraak = afspraakRepository.findById(id);
         afspraakRepository.delete(afspraak);
     }
+
+    @Override
+    public void updateAfspraak(AfspraakData afspraakData) {
+
+        // TODO: Update enkel wat geüpdated moet worden, niet alles
+        Afspraak afspraakUpdated = new Afspraak(
+            afspraakData.getId(),
+            installateurRepository.findById(afspraakData.getInstallateurId()),
+            laadpaalRepository.findById(afspraakData.getLaadpaalId()),
+            contractRepository.findById(afspraakData.getContractId()),
+            bezoekRepository.findById(afspraakData.getBezoekId()),
+            afspraakData.getStatus()
+        );
+        afspraakRepository.save(afspraakUpdated);
+    }
 }

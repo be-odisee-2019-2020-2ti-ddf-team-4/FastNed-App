@@ -27,6 +27,8 @@ public interface PlannerService {
 
     void deleteAfspraak(long id);
 
+    void updateAfspraak(AfspraakData afspraakData);
+
 //    public Object getObjectives();
 //
 
