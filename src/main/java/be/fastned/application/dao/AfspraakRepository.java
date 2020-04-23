@@ -13,6 +13,8 @@ public interface AfspraakRepository extends CrudRepository<Afspraak, String> {
      * @param id
      * @return
      */
+
+    //hans zoekt afspraken bij id op een andere manier ???
     Afspraak findById(long id);
 
     /**

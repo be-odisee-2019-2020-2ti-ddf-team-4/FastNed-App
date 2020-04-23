@@ -1,21 +1,21 @@
 package be.fastned.application.controllers;
 
+import be.fastned.application.domain.Afspraak;
 import be.fastned.application.formdata.AfspraakData;
 import be.fastned.application.service.PlannerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping("/fastNed")
+@RequestMapping("/afspraak.html")
 public class PlannerController {
 
     @Autowired
@@ -135,4 +135,15 @@ public class PlannerController {
     public String redirectToCreate() {
         return "redirect:/fastNed";
     }
+
+    @RequestMapping(value = {"/afspraakInfo.html"},method = RequestMethod.GET)
+    public String afspraakDetail(@RequestParam("id") Integer id, ModelMap model){
+        Afspraak afspraak = plannerService.searchById(id);
+        model.addAttribute("afspraak", afspraak);
+        return "/afspraakInfo";
+    }
+
+
+
 }
+

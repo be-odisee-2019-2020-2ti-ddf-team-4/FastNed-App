@@ -69,11 +69,14 @@
 <table style="width:60%">
 
     <tr th:each="afspraak : ${afspraken}">
+        <a th:href="@{/afspraakInfo.html.html(id=${afspraak.id})}">
         <td th:text="${afspraak.id}"></td>
         <td th:text="${afspraak.contract.getContractDatum()}">...</td>
         <td th:text="${afspraak.status}">...</td>
+        </a>
+
         <td><button>info</button></td>
-        <td><button>delete</button></td>
+        <td><button >delete</button></td>
 
     </tr>
 

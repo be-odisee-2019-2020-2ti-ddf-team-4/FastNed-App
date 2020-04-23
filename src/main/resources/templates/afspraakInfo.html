@@ -7,8 +7,17 @@
 </head>
 <body>
     <h1>Welcome to FastNed</h1>
+
+
+
 <!--    TODO: (Niels) Waarom laadt deze jpg niet-->
     <img th:src="@{/images/fastned_logo.jpg}" />
-    <a href="/afspraak.html">Linkje</a>
+
+
+
+    <p><b>Id:</b> <span th:text="${afspraak.id}">id</span> </p>
+
+
+    <a href="/fastNed">Linkje</a>
 </body>
 </html>
