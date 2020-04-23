@@ -18,7 +18,10 @@ import java.time.LocalDateTime;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor(force=true)
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 
 public class Contract {
 
@@ -29,9 +32,15 @@ public class Contract {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private final long id;
+<<<<<<< HEAD
 
 
 	private final LocalDateTime contractDatum, uitvoeringsDatum;
 
 
+
+=======
+
+	private final LocalDateTime contractDatum, uitvoeringsDatum;
+>>>>>>> master
 }
