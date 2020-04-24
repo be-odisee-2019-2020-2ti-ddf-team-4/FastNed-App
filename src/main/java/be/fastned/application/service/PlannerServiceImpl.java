@@ -114,7 +114,6 @@ public class PlannerServiceImpl implements PlannerService {
 
         Afspraak afspraak;
 
-        // Dit kon een update zijn (zie prepareNewAfspraakData)
         if (afspraakData.getId() == 0) {
 
             Installateur installateur = installateurRepository.findById(afspraakData.getInstallateurId());
