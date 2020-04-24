@@ -105,7 +105,7 @@ public class PlannerServiceImpl implements PlannerService {
 
         afspraakData.setInstallateurId(afspraak.getId());
         afspraakData.setContractId(afspraak.getContract().getId());
-        afspraakData.setBezoekId(afspraak.getBezoek().getId());
+//        afspraakData.setBezoekId(afspraak.getBezoek().getId());
         afspraakData.setLaadpaalId(afspraak.getLaadpaal().getId());
         afspraakData.setStatus(afspraak.getStatus());
 
@@ -117,7 +117,6 @@ public class PlannerServiceImpl implements PlannerService {
 
         Afspraak afspraak;
 
-        // Dit kon een update zijn (zie prepareNewAfspraakData)
         if (afspraakData.getId() == 0) {
 
             Installateur installateur = installateurRepository.findById(afspraakData.getInstallateurId());
@@ -147,33 +146,17 @@ public class PlannerServiceImpl implements PlannerService {
         Afspraak afspraak = afspraakRepository.findById(id);
         afspraakRepository.delete(afspraak);
     }
-    private String getAuthenticatedUsername() {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        return currentPrincipalName;
-    }
-    private User findAuthenticatedUser() {
-
-        String username = getAuthenticatedUsername();
-        return userRepository.findByUsername(username);
-    }
-    @Override
-    public String getAuthenticatedFullname() {
-        User theUser = findAuthenticatedUser();
-        return theUser.getFirstName() +' '+ theUser.getLastName();
-    }
 
     public AfspraakData updateAfspraak(AfspraakData afspraakData) {
 
         // TODO: Update enkel wat geüpdated moet worden, niet alles
         Afspraak afspraakUpdated = new Afspraak(
-            afspraakData.getId(),
-            installateurRepository.findById(afspraakData.getInstallateurId()),
-            laadpaalRepository.findById(afspraakData.getLaadpaalId()),
-            contractRepository.findById(afspraakData.getContractId()),
-            bezoekRepository.findById(afspraakData.getBezoekId()),
-            afspraakData.getStatus()
+                afspraakData.getId(),
+                installateurRepository.findById(afspraakData.getInstallateurId()),
+                laadpaalRepository.findById(afspraakData.getLaadpaalId()),
+                contractRepository.findById(afspraakData.getContractId()),
+                bezoekRepository.findById(afspraakData.getBezoekId()),
+                afspraakData.getStatus()
         );
         afspraakRepository.save(afspraakUpdated);
         return afspraakData;
@@ -193,5 +176,22 @@ public class PlannerServiceImpl implements PlannerService {
     }
     public Afspraak getAfspraakById(long id){
         return afspraakRepository.findById(id);
+    }
+
+    private String getAuthenticatedUsername() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        return currentPrincipalName;
+    }
+    private User findAuthenticatedUser() {
+
+        String username = getAuthenticatedUsername();
+        return userRepository.findByUsername(username);
+    }
+    @Override
+    public String getAuthenticatedFullname() {
+        User theUser = findAuthenticatedUser();
+        return theUser.getFirstName() +' '+ theUser.getLastName();
     }
 }

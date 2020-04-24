@@ -28,6 +28,7 @@ public class Installateur extends Persoon {
 
 	public Installateur(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord, User user){
 		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord, user);
+		this.test = naam;
 	}
 
 //	@Id

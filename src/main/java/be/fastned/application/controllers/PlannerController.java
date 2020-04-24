@@ -11,10 +11,14 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 @Slf4j
 @Controller
-@RequestMapping("/fastned")
+@RequestMapping("/fastned/afspraak")
 public class PlannerController {
 
     @Autowired
