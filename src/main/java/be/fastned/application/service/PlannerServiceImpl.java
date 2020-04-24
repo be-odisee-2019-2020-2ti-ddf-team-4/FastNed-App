@@ -1,81 +1,177 @@
 package be.fastned.application.service;
 
-import be.fastned.application.dao.form.EntryAfspraakRepository;
-import be.fastned.application.domain.OtherImpl.Contract;
-import be.fastned.application.domain.OtherImpl.Laadpaal;
-import be.fastned.application.domain.Personen.Installateur;
-import be.fastned.application.domain.Technisch.Bezoek;
-import be.fastned.application.domain.form.EntryAfspraak;
-import be.fastned.application.formdata.EntryDataAfspraak;
+import be.fastned.application.dao.*;
+import be.fastned.application.domain.*;
+import be.fastned.application.formdata.AfspraakData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class PlannerServiceImpl {
+import java.util.List;
+
+@Slf4j
+@Service
+public class PlannerServiceImpl implements PlannerService {
+
     @Autowired
-    EntryAfspraakRepository entryAfspraakRepository;
+    AfspraakRepository afspraakRepository;
+    @Autowired
+    InstallateurRepository installateurRepository;
+    @Autowired
+    LocatietoestemmingRepository locatietoestemmingRepository;
+    @Autowired
+    ProbleemRepository probleemRepository;
+    @Autowired
+    LaadpaalRepository laadpaalRepository;
+    @Autowired
+    ContractRepository contractRepository;
+    @Autowired
+    BezoekRepository bezoekRepository;
 
-    /**
-     * Instantiates and initializes new EntryData-object
-     * to be used in the form
-     * @return
-     */
-    public EntryDataAfspraak prepareNewEntryData() {
+    public List<Installateur> getAvailableInstallateurs(){
+        return (List<Installateur>) installateurRepository.findAll();
+    }
 
-        EntryAfspraak lastEntry = entryAfspraakRepository.findFirstByOrderByIdDesc();
-        return prepareEntryData(lastEntry, true);
+    public List<Contract> getAvailableContracten() {
+        return (List<Contract>) contractRepository.findAll();
+    }
+
+    public List<Laadpaal> getAvailableLaadpalen() {
+        return (List<Laadpaal>) laadpaalRepository.findAll();
+    }
+
+    public List<Locatietoestemming> getAvailableLocatietoestemmingen(){
+        return (List<Locatietoestemming>) locatietoestemmingRepository.findAll();
+    }
+
+    public List<Probleem> getAvailableProblemen(){
+        return (List<Probleem>) probleemRepository.findAll();
+    }
+
+    public List<Afspraak> getAvailableAfspraken() {
+        return (List<Afspraak>) afspraakRepository.findAll();
     }
 
     /**
-     * Prepares an EntryData-object based on an Entry-object
-     * @param theEntry the Entry-object
-     * @param timeShift indicates if the startTime needs to be shifted from previous timeTo
-     * @return
+     * Instantieert- en initialiseert een nieuw AfpsraakData object voor gebruik bij een formulier.
+     * @return Een nieuw AfpsraakData-object met mogelijke aanpassingen vs een leeg object.
      */
-    private EntryDataAfspraak prepareEntryData(EntryAfspraak theEntry, boolean timeShift) {
+    public AfspraakData prepareNewAfspraakData() {
+        return prepareAfspraakData();
+    }
 
-        EntryDataAfspraak entryData = new EntryDataAfspraak();
+    public AfspraakData prepareNewAfspraakData(long id) {
+        return prepareAfspraakData(id);
+    }
+    public AfspraakData prepareNewAfspraakData(Afspraak base) {
+        return prepareAfspraakData(base);
+    }
 
-        if (theEntry != null) {
+    /**
+     * Bereidt een nieuw AfpsraakData-object voor op basis van een bestaand AfpsraakData-object. (uit DB)
+     * @return Een nieuw AfpsraakData-object met mogelijke aanpassingen vs een leeg object.
+     */
+    private AfspraakData prepareAfspraakData() {
 
-            // TODO: Null-checks niet nodig bij non-nullable types
-            // TODO: Versimpel codeduplicatie naar methode --> gemeenschappelijke interface met .getId() implementeren in domeinObj
-            // Pick up an entry objective provided there was one
-            Contract lastContract = theEntry.getContract();
+        AfspraakData afspraakData = new AfspraakData();
 
-            String ContractId = ((lastContract==null) ? null : lastContract.getId());
-            entryData.setContractId(ContractId);
+        afspraakData.setInstallateurId(0);
+        afspraakData.setContractId(0);
+        afspraakData.setBezoekId(0);
+        afspraakData.setLaadpaalId(0);
+        afspraakData.setStatus(null);
 
-            // Pick up an entry objective provided there was one
-            Installateur lastInstallateur = theEntry.getInstallateur();
+        return afspraakData;
+    }
+    private AfspraakData prepareAfspraakData(long id) {
 
-            String installateurId = ((lastInstallateur==null) ? null : lastInstallateur.getId());
-            entryData.setInstallateurId(installateurId);
+        AfspraakData afspraakData = new AfspraakData();
 
-            // Pick up an entry objective provided there was one
-            Laadpaal lastLaadpaal = theEntry.getLaadpaal();
+        afspraakData.setId(id);
+        afspraakData.setInstallateurId(0);
+        afspraakData.setContractId(0);
+        afspraakData.setBezoekId(0);
+        afspraakData.setLaadpaalId(0);
+        afspraakData.setStatus(null);
 
-            String laadpaalId = ((lastLaadpaal==null) ? null : lastLaadpaal.getId());
-            entryData.setLaadpaalId(laadpaalId);
+        return afspraakData;
+    }
+    private AfspraakData prepareAfspraakData(Afspraak afspraak) {
 
-            // TODO: .getId() is nu enkel een lijn in de interface --> Kan niet Werken!
-            // Pick up an entry objective provided there was one
-            Bezoek lastBezoek = theEntry.getBezoek();
+        AfspraakData afspraakData = new AfspraakData();
 
-            String bezoekId = ((lastBezoek==null) ? null : lastBezoek.getId());
-            entryData.setBezoekId(bezoekId);
+        afspraakData.setInstallateurId(afspraak.getId());
+        afspraakData.setContractId(afspraak.getContract().getId());
+//        afspraakData.setBezoekId(afspraak.getBezoek().getId());
+        afspraakData.setLaadpaalId(afspraak.getLaadpaal().getId());
+        afspraakData.setStatus(afspraak.getStatus());
 
-            // Pick up an entry objective provided there was one
-            String lastStatus = theEntry.getStatus();
+        return afspraakData;
+    }
 
-            String status = ((lastStatus==null) ? null : lastStatus);
-            entryData.setStatus(status);
+    @Override
+    public String processEntry(AfspraakData afspraakData) {
+
+        Afspraak afspraak;
+
+        if (afspraakData.getId() == 0) {
+
+            Installateur installateur = installateurRepository.findById(afspraakData.getInstallateurId());
+            Laadpaal laadpaal = laadpaalRepository.findById(afspraakData.getLaadpaalId());
+            Contract contract = contractRepository.findById(afspraakData.getContractId());
+            Bezoek bezoek = bezoekRepository.findById(afspraakData.getBezoekId());
+            String status = afspraakData.getStatus();
+
+            afspraak = new Afspraak(0,installateur, laadpaal, contract, bezoek, status);
         }
         else {
-            entryData.setInstallateurId(null);
-            entryData.setContractId(null);
-            entryData.setBezoekId(null);
-            entryData.setLaadpaalId(null);
-            entryData.setStatus(null);
+            afspraak = afspraakRepository.findById( afspraakData.getId());
         }
-        return entryData;
+        // Save the newly created entry
+        afspraakRepository.save(afspraak);
+        return String.format("Afspraak (id = \"%s\") is verwerkt!", afspraak.getId());
+    }
+
+    public AfspraakData prepareAfspraakDataToEdit(long id) {
+
+        Afspraak deAfspraak = afspraakRepository.findById(id);
+        AfspraakData deAfspraakData = prepareAfspraakData(deAfspraak);
+        return deAfspraakData;
+    }
+
+    public void deleteAfspraak(long id) {
+        Afspraak afspraak = afspraakRepository.findById(id);
+        afspraakRepository.delete(afspraak);
+    }
+
+    public AfspraakData updateAfspraak(AfspraakData afspraakData) {
+
+        // TODO: Update enkel wat geüpdated moet worden, niet alles
+        Afspraak afspraakUpdated = new Afspraak(
+            afspraakData.getId(),
+            installateurRepository.findById(afspraakData.getInstallateurId()),
+            laadpaalRepository.findById(afspraakData.getLaadpaalId()),
+            contractRepository.findById(afspraakData.getContractId()),
+            bezoekRepository.findById(afspraakData.getBezoekId()),
+            afspraakData.getStatus()
+        );
+        afspraakRepository.save(afspraakUpdated);
+        return afspraakData;
+    }
+
+    public Installateur getInstallateurById(long id){
+        return installateurRepository.findById(id);
+    }
+    public Bezoek getBezoekById(long id){
+        return bezoekRepository.findById(id);
+    }
+    public Laadpaal getLaadpaalById(long id){
+        return laadpaalRepository.findById(id);
+    }
+    public Contract getContractById(long id){
+        return contractRepository.findById(id);
+    }
+    public Afspraak getAfspraakById(long id){
+        return afspraakRepository.findById(id);
     }
 }

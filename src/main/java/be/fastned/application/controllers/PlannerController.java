@@ -1,151 +1,139 @@
 package be.fastned.application.controllers;
 
-import be.fastned.application.domain.form.EntryAfspraak;
-import be.fastned.application.formdata.EntryDataAfspraak;
-import be.fastned.application.service.Interfaces.PlannerService;
+import be.fastned.application.domain.Afspraak;
+import be.fastned.application.formdata.AfspraakData;
+import be.fastned.application.service.PlannerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 @Slf4j
 @Controller
-@RequestMapping("/timesheet")
+@RequestMapping("/fastned/afspraak")
 public class PlannerController {
 
     @Autowired
     private PlannerService plannerService;
 
     /**
-     * Prepare form for create
+     * Een standaard GET-request ontvangt via /fastNed/afspraak een view (returnwaarde) met model.
+     * @param model Een systeem-gegeven parameter van het type Model dat data van service naar view overdraagt.
+     * @return De naam van de view die getoond moet worden.
      */
-    @GetMapping
-    public String entryCreateForm(Model model) {
-        EntryAfspraak afspraak = plannerService.prepareNewEntryData();
-        prepareForm(afspraak, model);
-        return "entryAfspraak";
+    @GetMapping()
+    public String afspraakCreateForm(Model model) {
+        AfspraakData afspraak = plannerService.prepareNewAfspraakData();
+        prepareModel(afspraak, model, "create");
+        return "afspraak";
     }
 
     /**
-     * Prepares the form with data for projects- and objectives comboboxes
+     * Zet afspraakData + andere formulier-data op het model waaruit een view data maakt.
      */
-//    private void prepareForm(EntryData entryData, Model model) {
-//        model.addAttribute("categoriesWithProjects", timesheetService.getCategoriesWithProjects());
-//        model.addAttribute("objectives",timesheetService.getObjectives() );
-//        model.addAttribute("entryData", entryData );
-//        LocalDate theDatum = LocalDate.parse(entryData.getEntryDatum());
-//        model.addAttribute("entries", timesheetService.getEntriesFromDate(theDatum) );
-//        model.addAttribute("totalDuration", timesheetService.getTotalDuration(timesheetService.getEntriesFromDate(theDatum)));
-//    }
-
-
-    /**
-     * @param entryData to be taken over, except for timeFrom and timeTo, to be set to now
-     */
-//    @PostMapping(params = "startnow")
-//    public String setTimeFromNow(EntryData entryData, Model model) {
-//
-//        entryData.setStartTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
-//        entryData.setEndTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
-//        prepareForm(entryData, model);
-//        return "entry";
-//    }
-
-    /**
-     * @param entryData to be taken over, except for timeTo, to be set to now
-     */
-//    @PostMapping(params = "endnow")
-//    public String setTimeToNow(EntryData entryData, Model model) {
-//
-//        entryData.setEndTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
-//        prepareForm(entryData, model);
-//        return "entry";
-//    }
-
-    /**
-     * Process the form
-     * @param entryData the data for the entry to be saved
-     */
-//    @PostMapping(params = "submit")
-//    public String processEntry(@Valid EntryData entryData, Errors errors, Model model) {
-//
-//        String message="";
-//
-//        try {
-//            // Are there any input validation errors detected by JSR 380 bean validation?
-//            if (errors.hasErrors() ) {
-//                message = "Correct input errors, please";
-//                throw new IllegalArgumentException();
-//            }
-//            // Check how many projects have been selected for this entry
-//            long numberNonzero = Arrays.stream( entryData.getProjectIds()).filter(x -> x>0).count();
-//            // There should have been one and only one project selected, if not throw an exception
-//            if (numberNonzero != 1) {
-//                message = "Unacceptable, there must be 1 and only 1 project";
-//                throw new IllegalArgumentException();
-//            }
-//
-//            // Now that the input seems to be OK, let's create a new entry or update/delete an existing entry
-//            message = timesheetService.processEntry(entryData);
-//
-//            // Prepare form for new data-entry
-//            entryData = timesheetService.prepareNewEntryData();
-//
-//        } catch (IllegalArgumentException e) {
-//            // Nothing special needs to be done
-//        }
-//        prepareForm(entryData, model);
-//        model.addAttribute("message", message);
-//        return "entry";
-//    }
+    private void prepareModel(AfspraakData afspraakData, Model model, String CRUDType) {
+        switch (CRUDType){
+            case "create":
+                model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());
+                model.addAttribute("availableLaadpalen", plannerService.getAvailableContracten());
+                model.addAttribute("availableContracten", plannerService.getAvailableContracten());
+                model.addAttribute("afspraakData", afspraakData);
+                model.addAttribute("action", "create");
+                break;
+            case "update":
+                model.addAttribute("afspraakId", afspraakData.getId());
+                model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());
+                model.addAttribute("availableLaadpalen", plannerService.getAvailableContracten());
+                model.addAttribute("availableContracten", plannerService.getAvailableContracten());
+                model.addAttribute("afspraakData", afspraakData);
+                model.addAttribute("action", "update");
+                break;
+            case "delete":
+                break;
+            case "read":
+                model.addAttribute("availableAfspraken", plannerService.getAvailableAfspraken());
+                model.addAttribute("afspraakData", afspraakData);
+                model.addAttribute("action", "read");
+                break;
+            case "showItem":
+                model.addAttribute("afspraakId", afspraakData.getId());
+                Afspraak tussenstap = plannerService.getAfspraakById(afspraakData.getId());
+                model.addAttribute("childInstallateur", plannerService.getInstallateurById(tussenstap.getInstallateur().getId()).getVoornaam());
+                model.addAttribute("childLaadpaal", plannerService.getLaadpaalById(tussenstap.getLaadpaal().getId()).getId());
+                model.addAttribute("childContract", plannerService.getContractById(tussenstap.getContract().getId()).getId());
+//                model.addAttribute("childBezoek", plannerService.getBezoekById(tussenstap.getBezoek().getId()).getId());
+                model.addAttribute("childStatus", tussenstap.getStatus());
+                model.addAttribute("action", "showItem");
+                break;
+        }
+    }
 
     /**
-     * Prepare form for update or delete
-     * @param id - the id of the entry to be updated or deleted
-     * @param model
-     * @return
+     * Een GET-request ontvangt via /fastNed/afspraak/X een view (returnwaarde) met model.
      */
-//    @GetMapping("/edit")
-//    public String entryEditForm(@RequestParam("id") long id, Model model) {
-//
-//        EntryData entryData = timesheetService.prepareEntryDataToEdit(id);
-//        prepareForm(entryData, model);
-//        model.addAttribute("message", "Update or Delete this entry please - or Cancel");
-//        return "entry";
-//    }
-
+    @GetMapping("/read")
+    public String afspraakCreateAfspraakSelectieForm(AfspraakData afspraakData, Model model) {
+        prepareModel(afspraakData, model, "read");
+        return "afspraak";
+    }
+    @GetMapping("/showItem")
+    public String afspraakCreateShowAfspraakForm(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
+        AfspraakData afspraakDataNew = plannerService.prepareNewAfspraakData(id);
+        prepareModel(afspraakDataNew, model, "showItem");
+        return "afspraak";
+    }
+    @PostMapping("/showUpdate")
+    public String afspraakCreateUpdateForm(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
+        AfspraakData afspraakDataNew = plannerService.prepareNewAfspraakData(plannerService.getAfspraakById(afspraakData.getId()));
+        afspraakDataNew.setId(id);
+        prepareModel(afspraakDataNew, model, "update");
+        return "afspraak";
+    }
+    @PostMapping("/update")
+    public String afspraakUpdateAfspraak(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
+        plannerService.updateAfspraak(afspraakData);
+        return "redirect:/fastned/afspraak";
+    }
+    @PostMapping("/delete")
+    public String afspraakDeleteAfspraak(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
+        plannerService.deleteAfspraak(afspraakData.getId());
+        return "redirect:/fastned/afspraak";
+    }
     /**
-     * Delete the entry and prepare for creation of a new one
-     * @return
+     * Verwerk het formulier
+     * @param afspraakData De data voor te te-verwerken afspraak uit het formulier.
      */
-//    @PostMapping(params = "delete")
-//    public String deleteEntry(EntryData entrydata, Model model) {
-//
-//        timesheetService.deleteEntry(entrydata.getId());
-//        EntryData entryData = timesheetService.prepareNewEntryData();
-//        prepareForm(entryData, model);
-//        model.addAttribute("message", "Successfully deleted entry "+entrydata.getDescription());
-//        return "entry";
-//    }
+    @PostMapping(params = "action")
+    public String processEntry(@Valid AfspraakData afspraakData, Errors errors, Model model) {
 
-    /**
-     * If user does not want to update or delete, he will be redirect to create
-     * @return
-     */
-//    @PostMapping(params = "cancel")
-//    public String redirectToCreate() {
-//
-//        return "redirect:/timesheet";
-//    }
+        System.out.println(String.format(Integer.toString(plannerService.getAvailableAfspraken().size())));
+        String message="";
+
+        try {
+            // Are there any input validation errors detected by JSR 380 bean validation?
+            if (errors.hasErrors() ) {
+                message = "Correct input errors, please";
+                throw new IllegalArgumentException();
+            }
+
+            // Now that the input seems to be OK, let's create a new entry or update/delete an existing entry
+            message = plannerService.processEntry(afspraakData);
+
+            System.out.println(String.format(Integer.toString(plannerService.getAvailableAfspraken().size())));
+
+            // Prepare form for new data-entry
+            afspraakData = plannerService.prepareNewAfspraakData();
+
+        } catch (IllegalArgumentException e) {
+            // Nothing special needs to be done
+        }
+
+        prepareModel(afspraakData, model, "create");
+        model.addAttribute("message", message);
+        return "afspraak";
+    }
 }
