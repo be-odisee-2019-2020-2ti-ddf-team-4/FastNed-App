@@ -20,7 +20,7 @@ public interface PlannerService {
 
     AfspraakData updateAfspraak(AfspraakData base);
     void deleteAfspraak(long id);
-
+    public String getAuthenticatedFullname();
     String processEntry(@Valid AfspraakData afspraakData);
 
     Installateur getInstallateurById(long id);

@@ -15,6 +15,7 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequestMapping("/fastned/afspraak")
+@RequestMapping("/fastned")
 public class PlannerController {
 
     @Autowired
