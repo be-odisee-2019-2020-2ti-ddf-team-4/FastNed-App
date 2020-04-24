@@ -11,18 +11,18 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor(force=true)
 public class AfspraakData {
 
-    private final long id = 0;
+    private long id = 0;
 
-    @NotBlank(message= "contract must be specified!")
-    private long contractId;
-
-    @NotBlank(message= "laadpaal must be specified!")
-    private long laadpaalId;
-
-    @NotBlank(message= "installateur must be specified!")
+    //@NotBlank(message= "installateur must be specified!")
     private long installateurId;
 
-    @NotBlank(message= "bezoek must be specified!")
+    //@NotBlank(message= "laadpaal must be specified!")
+    private long laadpaalId;
+
+    //@NotBlank(message= "contract must be specified!")
+    private long contractId;
+
+    //@NotBlank(message= "bezoek must be specified!")
     private long bezoekId;
 
     @NotBlank(message= "status must be specified!")

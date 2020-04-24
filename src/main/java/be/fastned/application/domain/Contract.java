@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 /**
  * @author TiboVG
  * @version 6.0
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @NoArgsConstructor(force=true)
 
-
 public class Contract {
 
 	/* //----------------// -##########--------------------------------##########- //----------------// */
@@ -30,8 +28,5 @@ public class Contract {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private final long id;
 
-
 	private final LocalDateTime contractDatum, uitvoeringsDatum;
-
-
 }

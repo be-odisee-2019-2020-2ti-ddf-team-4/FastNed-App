@@ -4,11 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Fastned</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+
 </head>
 <body>
-    <h1>Welcome to FastNed</h1>
-<!--    TODO: (Niels) Waarom laadt deze jpg niet-->
-    <img th:src="@{/images/fastned_logo.jpg}" />
-    <a href="/afspraak.html">Linkje</a>
+<div id="homeHeader" class="jumbotron text-center">
+    <h1>Welcome to</h1>
+    <img th:src="@{/images/Fastned-Big-logo.jpg}"  th:width="auto" th:height="auto" />
+
+</div  >
+<div id="homeBody" class="text-center">
+    <a href="/fastned/afspraak"><button id="btnHomeStart">START</button></a>
+</div>
+
+
+
+
 </body>
 </html>

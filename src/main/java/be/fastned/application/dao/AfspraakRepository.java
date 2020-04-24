@@ -13,11 +13,7 @@ public interface AfspraakRepository extends CrudRepository<Afspraak, String> {
      * @param id
      * @return
      */
-
-    //hans zoekt afspraken bij id op een andere manier "findOne???
     Afspraak findById(long id);
-
-
 
     /**
      * @return The entry with the largest id = the most recently added entry
