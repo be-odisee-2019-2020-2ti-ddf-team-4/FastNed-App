@@ -41,31 +41,3 @@ div.table-striped > div:nth-of-type(odd) {
     background-color: white;
 }
 
-div#homeHeader  {
-    background-color: #313236;
-}
-div#homeHeader h1 {
-    color: white;
-
-}
-
-div#homeBody{
-    margin-top: 5em;
-}
-
-button#btnHomeStart{
-    background-color: #313236;
-    border: none;
-
-    color: yellow;
-    padding: 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-
-    font-weight: bold;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 12px;
-}
-
