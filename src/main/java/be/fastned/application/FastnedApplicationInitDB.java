@@ -77,12 +77,12 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
         for (User user: users) {
             // user must be saved for it to have an id
             userRepository.save(user);
-// Installateurs
+            // Installateurs
             List<Installateur> installateurs = Arrays.asList(
-                    new Installateur(11, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", userRepository.findById(11)),
-                    new Installateur(12, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", userRepository.findById(12)),
-                    new Installateur(13, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", userRepository.findById(13)),
-                    new Installateur(14, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww", userRepository.findById(14))
+                    new Installateur(1, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", userRepository.findById(11)),
+                    new Installateur(2, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", userRepository.findById(12)),
+                    new Installateur(3, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", userRepository.findById(13)),
+                    new Installateur(4, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww", userRepository.findById(14))
             );
 
             for (Installateur installateur : installateurs) {
@@ -91,10 +91,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
             // Locatiehouders
             List<Locatiehouder> locatiehouders = Arrays.asList(
-                    new Locatiehouder(31, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(31)),
-                    new Locatiehouder(32, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(32)),
-                    new Locatiehouder(33, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(33)),
-                    new Locatiehouder(34, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(34))
+                    new Locatiehouder(5, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(31)),
+                    new Locatiehouder(6, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(32)),
+                    new Locatiehouder(7, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(33)),
+                    new Locatiehouder(8, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(34))
             );
 
             for (Locatiehouder locatiehouder : locatiehouders) {
@@ -103,10 +103,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
             // Documentaties
             List<Documentatie> documentaties = Arrays.asList(
-                    new Documentatie(41, "A", "installatie", "X installeer je op Y manier"),
-                    new Documentatie(42, "B", "installatie", "X installeer je op Y manier"),
-                    new Documentatie(43, "A", "reparatie", "X fix je op Y manier"),
-                    new Documentatie(44, "B", "reparatie", "X fix je op Y manier")
+                    new Documentatie(1, "A", "installatie", "X installeer je op Y manier"),
+                    new Documentatie(2, "B", "installatie", "X installeer je op Y manier"),
+                    new Documentatie(3, "A", "reparatie", "X fix je op Y manier"),
+                    new Documentatie(4, "B", "reparatie", "X fix je op Y manier")
             );
 
             for (Documentatie documentatie : documentaties) {
@@ -149,10 +149,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
             // Afspraken
             List<Afspraak> afspraken = Arrays.asList(
-                    new Afspraak(51, installateurRepository.findById(11), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
-                    new Afspraak(52, installateurRepository.findById(12), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
-                    new Afspraak(53, installateurRepository.findById(13), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
-                    new Afspraak(54, installateurRepository.findById(14), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
+                    new Afspraak(1, installateurRepository.findById(1), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
+                    new Afspraak(2, installateurRepository.findById(2), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
+                    new Afspraak(3, installateurRepository.findById(3), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
+                    new Afspraak(4, installateurRepository.findById(4), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
             );
 
             for (Afspraak afspraak : afspraken) {
