@@ -1,31 +1,31 @@
 div.ingredient-group:nth-child(odd) {
-	float: left;
-	padding-right: 20px;
+    float: left;
+    padding-right: 20px;
 }
 
 div.ingredient-group:nth-child(even) {
     float: left;
-	padding-right: 0;
+    padding-right: 0;
 }
 
 div.ingredient-group {
-	width: 50%;
+    width: 50%;
 }
 
 .grid:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 
 *, *:after, *:before {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 span.validationError {
-	color: red;
+    color: red;
 }
 
 span.category {
@@ -39,5 +39,33 @@ body {
 
 div.table-striped > div:nth-of-type(odd) {
     background-color: white;
+}
+
+div#homeHeader  {
+    background-color: #313236;
+}
+div#homeHeader h1 {
+    color: white;
+
+}
+
+div#homeBody{
+    margin-top: 5em;
+}
+
+button#btnHomeStart{
+    background-color: #313236;
+    border: none;
+
+    color: yellow;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+
+    font-weight: bold;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
 }
 
