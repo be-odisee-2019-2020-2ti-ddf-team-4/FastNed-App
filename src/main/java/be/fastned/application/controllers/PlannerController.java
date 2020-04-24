@@ -11,10 +11,14 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 @Slf4j
 @Controller
-@RequestMapping("/fastned/afspraak")
+@RequestMapping("/timesheet")
 public class PlannerController {
 
     @Autowired
@@ -36,6 +40,8 @@ public class PlannerController {
      * Zet afspraakData + andere formulier-data op het model waaruit een view data maakt.
      */
     private void prepareModel(AfspraakData afspraakData, Model model, String CRUDType) {
+        model.addAttribute("fullname", plannerService.getAuthenticatedFullname());
+        model.addAttribute("afspraken", plannerService.getAvailableAfspraken());
         switch (CRUDType){
             case "create":
                 model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());

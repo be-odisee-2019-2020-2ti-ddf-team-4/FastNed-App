@@ -5,6 +5,8 @@ import be.fastned.application.domain.*;
 import be.fastned.application.formdata.AfspraakData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +29,8 @@ public class PlannerServiceImpl implements PlannerService {
     ContractRepository contractRepository;
     @Autowired
     BezoekRepository bezoekRepository;
-
+    @Autowired
+    UserRepository userRepository;
     public List<Installateur> getAvailableInstallateurs(){
         return (List<Installateur>) installateurRepository.findAll();
     }
@@ -114,7 +117,8 @@ public class PlannerServiceImpl implements PlannerService {
 
         Afspraak afspraak;
 
-        if (afspraakData.getId() == 0) {
+            String bezoekId = ((lastBezoek==null) ? null : lastBezoek.getId());
+            entryData.setBezoekId(bezoekId);
 
             Installateur installateur = installateurRepository.findById(afspraakData.getInstallateurId());
             Laadpaal laadpaal = laadpaalRepository.findById(afspraakData.getLaadpaalId());
@@ -142,6 +146,22 @@ public class PlannerServiceImpl implements PlannerService {
     public void deleteAfspraak(long id) {
         Afspraak afspraak = afspraakRepository.findById(id);
         afspraakRepository.delete(afspraak);
+    }
+    private String getAuthenticatedUsername() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        return currentPrincipalName;
+    }
+    private User findAuthenticatedUser() {
+
+        String username = getAuthenticatedUsername();
+        return userRepository.findByUsername(username);
+    }
+    @Override
+    public String getAuthenticatedFullname() {
+        User theUser = findAuthenticatedUser();
+        return theUser.getFirstName() +' '+ theUser.getLastName();
     }
 
     public AfspraakData updateAfspraak(AfspraakData afspraakData) {
