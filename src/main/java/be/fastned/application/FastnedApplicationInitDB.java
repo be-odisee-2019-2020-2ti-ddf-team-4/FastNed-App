@@ -7,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -73,6 +72,7 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
                 new User(5, "test",
                         "{noop}test",
                         "ROLE_ADMIN","Hans", "Vandenbogaerde","hans@gmail.com")
+
         );
 
         for (User user: users) {
@@ -80,10 +80,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
             userRepository.save(user);
 // Installateurs
             List<Installateur> installateurs = Arrays.asList(
-                    new Installateur(11, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww"),
-                    new Installateur(12, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww"),
-                    new Installateur(13, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww"),
-                    new Installateur(14, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww")
+                    new Installateur(11, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", userRepository.findById(11)),
+                    new Installateur(12, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", userRepository.findById(12)),
+                    new Installateur(13, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", userRepository.findById(13)),
+                    new Installateur(14, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww", userRepository.findById(14))
             );
 
             for (Installateur installateur : installateurs) {
@@ -92,10 +92,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
             // Locatiehouders
             List<Locatiehouder> locatiehouders = Arrays.asList(
-                    new Locatiehouder(31, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
-                    new Locatiehouder(32, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", "bedrijfsnaam", "btwNummer", "adres"),
-                    new Locatiehouder(33, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", "bedrijfsnaam", "btwNummer", "adres"),
-                    new Locatiehouder(34, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww", "bedrijfsnaam", "btwNummer", "adres")
+                    new Locatiehouder(31, "john.doe@gmail.com", "Doe", "John", "man", "0497618166", "JohnnyDoey", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(31)),
+                    new Locatiehouder(32, "blake.lively@skynet.us", "Lively", "Blake", "vrouw", "0497616166", "Blakey", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(32)),
+                    new Locatiehouder(33, "sasuke.uchiha@konohama.com", "Uchiha", "Sasuke", "man", "0497518166", "Sharingan69", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(33)),
+                    new Locatiehouder(34, "mamamia@konohama.com", "De bakker", "Marie", "vrouw", "0497518156", "mamamia23", "ww", "bedrijfsnaam", "btwNummer", "adres", userRepository.findById(34))
             );
 
             for (Locatiehouder locatiehouder : locatiehouders) {

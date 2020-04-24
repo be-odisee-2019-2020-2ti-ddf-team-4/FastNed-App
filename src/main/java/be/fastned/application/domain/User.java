@@ -33,6 +33,8 @@ public class User implements UserDetails {
 
     private final String email;
 
+
+
     // will be used to recover dateTimeFrom for a new entry
     // so a dummy Entry must be available for each user
     @OneToOne

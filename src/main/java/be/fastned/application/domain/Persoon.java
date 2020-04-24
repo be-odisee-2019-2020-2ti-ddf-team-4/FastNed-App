@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
 
 /**
@@ -31,4 +32,8 @@ public class Persoon {
     private final long id;
 
     private final String emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord;
+
+    // persoon en user gelinked
+    @OneToOne
+    private final User user;
 }
