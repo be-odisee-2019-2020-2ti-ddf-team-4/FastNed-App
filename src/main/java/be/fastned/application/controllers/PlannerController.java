@@ -14,7 +14,6 @@ import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping("/fastned/afspraak")
 @RequestMapping("/fastned")
 public class PlannerController {
 
@@ -37,6 +36,8 @@ public class PlannerController {
      * Zet afspraakData + andere formulier-data op het model waaruit een view data maakt.
      */
     private void prepareModel(AfspraakData afspraakData, Model model, String CRUDType) {
+        model.addAttribute("fullname", plannerService.getAuthenticatedFullname());
+        model.addAttribute("afspraken", plannerService.getAvailableAfspraken());
         switch (CRUDType){
             case "create":
                 model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());
