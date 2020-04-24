@@ -31,4 +31,8 @@ public class Persoon {
     private final long id;
 
     private final String emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord;
+
+    // persoon en user gelinked
+    @OneToOne
+    private final User user;
 }

@@ -1,8 +1,12 @@
 package be.fastned.application.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.Value;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author TiboVG
@@ -22,8 +26,8 @@ public class Laadklant extends Persoon {
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 
-	Laadklant(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord){
-		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord);
+	Laadklant(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord, User user){
+		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord,user);
 	}
 
 //	@Id

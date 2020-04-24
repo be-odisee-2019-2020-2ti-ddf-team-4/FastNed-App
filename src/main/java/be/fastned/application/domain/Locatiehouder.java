@@ -1,8 +1,12 @@
 package be.fastned.application.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.Value;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author TiboVG
@@ -16,14 +20,14 @@ import javax.persistence.*;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
-public class Locatiehouder extends Persoon{
+public class Locatiehouder extends Persoon {
 
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 
-	public Locatiehouder(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord, String bedrijfsnaam, String btwNummer, String adres){
-		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord);
+	public Locatiehouder(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord, String bedrijfsnaam, String btwNummer, String adres, User user){
+		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord, user);
 		this.bedrijfsnaam = bedrijfsnaam;
 		this.btwNummer = btwNummer;
 		this.adres = adres;

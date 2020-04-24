@@ -115,7 +115,7 @@
                 <span class="laadpaal">
                 <label >Laadpaal</label>
                 <select th:field = "*{laadpaalId}" th:selected="${laadpaalId}">
-                    <option th:each = "laadpaal : ${availableLaadpalen}" class="laadpaal"
+                    <option th:each = "laadpaal : ${availableLaadpalen}" th:selected="${laadpaalId}" class="laadpaal"
                             th:value = "${laadpaal.id}"
                             th:text = "${laadpaal.id}">
                     </option>
@@ -126,14 +126,14 @@
                 <span class="contract">
                 <label >Contract</label>
                 <select th:field = "*{contractId}" th:selected="${contractId}">
-                    <option th:each = "contract : ${availableContracten}" class="contract"
+                    <option th:each = "contract : ${availableContracten}"  th:selected="${contractId}" class="contract"
                             th:value = "${contract.id}"
                             th:text = "${contract.id}">
                     </option>
                 </select>&nbsp;
             </span>
                 <label th:width="100px">ID: </label> <label th:text = "${afspraakId}"></label> <br/>
-                <label th:width="100px">Status: </label> <input th:text = "${childStatus}"></input> <br/>
+                <label th:width="100px">Status: </label> <input th:value="${status}"></input> <br/>
             </div>
             <br>
             <button class="btn btn-success btn-md" type="submit" name="action" value="update" formmethod="POST" th:formaction=" @{/fastned/afspraak/update?id={id} (id=${afspraakId}) }">Verwerk Wijzigingen</button>
