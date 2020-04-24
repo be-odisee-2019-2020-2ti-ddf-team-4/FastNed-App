@@ -45,6 +45,7 @@ public class PlannerController {
                 model.addAttribute("action", "create");
                 break;
             case "update":
+                model.addAttribute("afspraakId", afspraakData.getId());
                 model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());
                 model.addAttribute("availableLaadpalen", plannerService.getAvailableContracten());
                 model.addAttribute("availableContracten", plannerService.getAvailableContracten());
