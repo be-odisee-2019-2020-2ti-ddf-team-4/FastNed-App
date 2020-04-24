@@ -116,7 +116,6 @@ public class PlannerController {
     @PostMapping(params = "action")
     public String processEntry(@Valid AfspraakData afspraakData, Errors errors, Model model) {
 
-        System.out.println(String.format(Integer.toString(plannerService.getAvailableAfspraken().size())));
         String message="";
 
         try {

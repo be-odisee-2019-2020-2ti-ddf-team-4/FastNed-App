@@ -1,6 +1,5 @@
 package be.fastned.application.domain;
 
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -39,5 +38,5 @@ public class Afspraak {
 	@OneToOne
 	private final Bezoek bezoek;
 
-	private final String  status;
+	private final String status;
 }

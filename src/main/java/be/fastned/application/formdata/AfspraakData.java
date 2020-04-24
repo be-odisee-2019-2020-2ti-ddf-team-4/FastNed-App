@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
 @RequiredArgsConstructor
@@ -13,19 +14,16 @@ public class AfspraakData {
 
     private long id = 0;
 
-    //@NotBlank(message= "installateur must be specified!")
     private long installateurId;
 
-    //@NotBlank(message= "laadpaal must be specified!")
     private long laadpaalId;
 
-    //@NotBlank(message= "contract must be specified!")
     private long contractId;
 
-    //@NotBlank(message= "bezoek must be specified!")
     private long bezoekId;
 
     @NotBlank(message= "status must be specified!")
+    @Size(min=2, max=240)
     private String status;
 
     private final long[] contractIds, laadpaalIds, installateurIds;

@@ -160,6 +160,5 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
                 afspraakRepository.save(afspraak);
             };
         }
-
     }
 }

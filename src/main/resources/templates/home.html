@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="nl"
       xmlns:th = "http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
-    <title>Fastned</title>
+    <title>Home</title>
 </head>
 <body>
-    <h1>Welcome to FastNed</h1>
-<!--    TODO: (Niels) Waarom laadt deze jpg niet-->
-    <img th:src="@{/images/fastned_logo.jpg}" style="float: right" th:width="100px" th:height="100px"/>
-    <a href="/fastned/afspraak">Linkje</a>
+    <h2># Home #</h2>
+    <img id="logo" th:src="@{/images/fastned_logo.jpg}" style="float: right" th:width="100px" th:height="100px"/>
+<!--    <form th:action = "@{/fastned/afspraak}" th:method="GET">-->
+<!--        <button class="btn btn-success btn-md" type="submit" id="linkBeheerAfspraak">Beheer Afspraken</button>-->
+<!--    </form>-->
+    <a id="linkBeheerAfspraak" href="/fastned/afspraak">Linkje</a>
 </body>
 </html>

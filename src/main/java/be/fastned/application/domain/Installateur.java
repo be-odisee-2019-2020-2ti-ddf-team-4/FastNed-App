@@ -1,5 +1,6 @@
 package be.fastned.application.domain;
 
+import be.fastned.application.dao.ProbleemRepository;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -30,10 +31,6 @@ public class Installateur extends Persoon {
 		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord, user);
 		this.test = naam;
 	}
-
-//	@Id
-//	@GeneratedValue(strategy= GenerationType.IDENTITY)
-//	private final long id;
 
 	private final String test;
 }
