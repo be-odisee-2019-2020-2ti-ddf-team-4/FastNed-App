@@ -11,24 +11,17 @@ public interface PlannerService {
 
     List<Installateur> getAvailableInstallateurs();
     List<Contract> getAvailableContracten();
-    List<Laadpaal> getAvailableLaadpalen();
 
     List<Afspraak> getAvailableAfspraken();
-
-    
 
     AfspraakData prepareNewAfspraakData();
     AfspraakData prepareNewAfspraakData(long id);
     AfspraakData prepareNewAfspraakData(Afspraak base);
 
     AfspraakData updateAfspraak(AfspraakData base);
-    String processEntry(@Valid AfspraakData afspraakData);
-
-    AfspraakData prepareAfspraakDataToEdit(long id);
-    public String getAuthenticatedFullname();
     void deleteAfspraak(long id);
 
-    
+    String processEntry(@Valid AfspraakData afspraakData);
 
     Installateur getInstallateurById(long id);
     Bezoek getBezoekById(long id);
