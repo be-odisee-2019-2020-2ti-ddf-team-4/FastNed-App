@@ -30,7 +30,7 @@ public class Installateur extends Persoon {
 		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord, user);
 		this.test = naam;
 	}
-
+	private final String test;
 //	@Id
 //	@GeneratedValue(strategy= GenerationType.IDENTITY)
 //	private final long id;
