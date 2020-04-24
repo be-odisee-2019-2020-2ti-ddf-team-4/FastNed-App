@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <img th:src="@{/images/Fastned-Logo.jpg}" style="float: right" th:width="100px" th:height="100px"/>
+    <img th:src="@{/images/fastned_logo.jpg}" style="float: right" th:width="100px" th:height="100px"/>
 
     <form method="POST" th:action="@{/fastned/afspraak}" th:object="${afspraakData}">
 
@@ -37,10 +37,6 @@
             </span>
 
             <br>
-            <!--
-                Waarom ?? een nieuze afspraak heeft toch een nieuw contract nodig
-                Dus dan ook nieuw contract ID
-            -->
             <span class="contract">
                 <label >Contract</label>
                 <select th:field = "*{contractId}">
