@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor(force=true)
 public class AfspraakData {
 
-    private long id = 0;
+    private final long id = 0;
 
     //@NotBlank(message= "installateur must be specified!")
     private long installateurId;

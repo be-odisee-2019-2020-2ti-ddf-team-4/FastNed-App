@@ -10,6 +10,12 @@
 <body>
 
     <img th:src="@{/images/Fastned-Logo.jpg}" style="float: right" th:width="100px" th:height="100px"/>
+    <script>
+        function rowClicked(value) {
+            location.href = "/fastned/edit" + value
+        }
+    </script>
+
 
     <form method="POST" th:action="@{/fastned/afspraak}" th:object="${afspraakData}">
 
