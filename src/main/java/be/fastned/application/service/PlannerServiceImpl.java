@@ -102,7 +102,7 @@ public class PlannerServiceImpl implements PlannerService {
 
         afspraakData.setInstallateurId(afspraak.getId());
         afspraakData.setContractId(afspraak.getContract().getId());
-        afspraakData.setBezoekId(afspraak.getBezoek().getId());
+//        afspraakData.setBezoekId(afspraak.getBezoek().getId());
         afspraakData.setLaadpaalId(afspraak.getLaadpaal().getId());
         afspraakData.setStatus(afspraak.getStatus());
 
