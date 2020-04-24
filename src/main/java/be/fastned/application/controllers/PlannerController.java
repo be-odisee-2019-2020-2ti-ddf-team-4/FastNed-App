@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 @Slf4j
 @Controller
-@RequestMapping("/timesheet")
+@RequestMapping("/fastned/afspraak")
 public class PlannerController {
 
     @Autowired
