@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * @author TiboVG
@@ -39,5 +40,7 @@ public class Afspraak {
 	@OneToOne
 	private final Bezoek bezoek;
 
+	@Column
+	@Size(min=1, max = 255, message="Houd de status tussen 1 en 255 tekens aub!")
 	private final String  status;
 }

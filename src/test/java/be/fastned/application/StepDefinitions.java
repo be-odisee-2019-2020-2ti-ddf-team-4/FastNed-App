@@ -10,6 +10,7 @@ import cucumber.api.java.en.*;
 //import jdk.internal.util.xml.impl.Input;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -26,24 +27,21 @@ public class StepDefinitions {
 	
 	WebDriver driver;
 
-	@Given("^Ik ben ingelogd als planner$")
+	@Given("^Ik ben ingelogd als planner en doorverwezen naar Home$")
 	public void IkBenIngelogdAlsPlanner() throws Throwable {
 		System.setProperty("webdriver.chrome.driver", "C:\\applicaties\\chromedriver.exe");
 
 		driver = new ChromeDriver();
 		driver.navigate().to("http://localhost:8080/");
 
-		new WebDriverWait(driver, 60).until(ExpectedConditions
+		new WebDriverWait(driver, 15).until(ExpectedConditions
 				.textToBePresentInElementLocated(By.tagName("body"), "Gebruikersnaam"));
 
 		driver.findElement(By.id("wachtwoord")).sendKeys("test");
 		driver.findElement(By.id("gebruikersnaam")).sendKeys("test");
 		driver.findElement(By.id("login")).click();
-	}
 
-	@And("^Ik bevind me op de Home pagina$")
-	public void IkBevindMeOpDeHomePagina() throws Throwable {
-		driver.getTitle().equals("Home");
+		new WebDriverWait(driver, 15).until(ExpectedConditions.titleIs("Home"));
 	}
 
 	@When("^Ik klik op de \"Beheer Afspraken\" knop$")
@@ -72,30 +70,50 @@ public class StepDefinitions {
 	}
 	@And("^ik afsluit door op de \"Verwerk Nieuwe Afspraak\" knop te klikken$")
 	public void VerwerkNieuweAfspraak() throws Throwable {
+
+
 		driver.findElement(By.id("btnMaakAfspraak")).click();
+		new WebDriverWait(driver, 8);
+		System.out.println("test");
 	}
 
 	@And("^ik naar de nieuwe afspraak navigeer door op de \"Bekijk Afspraak\" knop te klikken$")
 	public void toonNieuweAfspraak() throws Throwable {
-		driver.findElement(By.id("btnBekijkAfspraak")).click();
+		WebDriverWait wait = new WebDriverWait(driver, 3);
+		try{
+			wait.until( ExpectedConditions.titleIs("niets"));
+		}
+		catch(TimeoutException ex){
+			driver.findElement(By.id("btnSelecteerAfspraak")).click();
+		}
 	}
 
 	@Then("^Zie ik de nieuwe afspraak$")
 	public void bekijkNieuweAfspraak() throws Throwable {
+
+		new WebDriverWait(driver, 15).until(ExpectedConditions
+				.textToBePresentInElementLocated(By.id("lblSelecteerAfspraak"), "Afspraken"));
 		Select opties = new Select(driver.findElement(By.id("selectBekijkAfspraak")));
 		opties.selectByIndex(5);
+		driver.findElement(By.id("btnNavigeerNaarAfspraakDetail")).click();
 	}
 
 	@And("^Kan ik op \"Terug naar Home\" klikken$")
 	public void KeerTerugNaarHome() throws Throwable {
-		driver.findElement(By.id("btnHome")).click();
+		WebDriverWait wait = new WebDriverWait(driver, 3);
+		try{
+			wait.until( ExpectedConditions.titleIs("niets"));
+		}
+		catch(TimeoutException ex){
+			driver.findElement(By.id("btnHome")).click();
+		}
 	}
-
-	@And("^Word ik teruggeleid naar de Home Pagina$")
-	public void TeruggeleidNaarHome() throws Throwable {
-		driver.getTitle().equals("Home");
-		driver.quit();
-	}
+//
+//	@And("^Word ik teruggeleid naar de Home Pagina$")
+//	public void TeruggeleidNaarHome() throws Throwable {
+//		driver.getTitle().equals("Home");
+//		driver.quit();
+//	}
 
 	/*@When("^I enter \"([^\"]*)\" in the ([^\"]*) field$")
 	public void i_enter_in_the_firstname_field(String enteredText, String fieldName) throws Throwable {

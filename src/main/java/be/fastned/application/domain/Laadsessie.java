@@ -30,7 +30,10 @@ public class Laadsessie {
 	@ManyToOne
 	private final Laadpaal laadpaal;
 
+	@Column
+	@Temporal(TemporalType.DATE)
 	private final LocalDateTime startSessie;
 
+	@Column
 	private final double startPercentage;
 }
