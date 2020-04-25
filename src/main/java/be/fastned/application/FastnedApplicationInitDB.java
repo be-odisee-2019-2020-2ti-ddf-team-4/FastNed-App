@@ -70,13 +70,13 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Installateurs
         List<Installateur> installateurs = Arrays.asList(
-                new Installateur(11, "john.doe@gmail.com", john.getLastName(), john.getFirstName(), "man", "0497618166",
+                new Installateur(1, "john.doe@gmail.com", john.getLastName(), john.getFirstName(), "man", "0497618166",
                         john.getUsername(), john.getPassword(), john.getRole() ,john.getBeschrijving(), john.getStatus()),
-                new Installateur(12, "blake.lively@skynet.us", blake.getLastName(), blake.getFirstName(), "vrouw", "0497616166",
+                new Installateur(2, "blake.lively@skynet.us", blake.getLastName(), blake.getFirstName(), "vrouw", "0497616166",
                         blake.getUsername(), blake.getPassword(), blake.getRole() ,blake.getBeschrijving(), blake.getStatus()),
-                new Installateur(13, "sasuke.uchiha@konohama.com", sasuke.getLastName(), sasuke.getFirstName(), "man", "0497518166",
+                new Installateur(3, "sasuke.uchiha@konohama.com", sasuke.getLastName(), sasuke.getFirstName(), "man", "0497518166",
                         sasuke.getUsername(), sasuke.getPassword(), sasuke.getRole() ,sasuke.getBeschrijving(), sasuke.getStatus()),
-                new Installateur(14, "mamamia@konohama.com", "De bakker", marie.getFirstName(), marie.getFirstName(), "0497518156",
+                new Installateur(4, "mamamia@konohama.com", "De bakker", marie.getFirstName(), marie.getFirstName(), "0497518156",
                         marie.getUsername(), marie.getPassword(), marie.getRole() ,marie.getBeschrijving(), marie.getStatus())
         );
 
@@ -86,11 +86,11 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Planners
         List<Planner> planners = Arrays.asList(
-                new Planner(22, "tibo.demaster@gmail.be", tibo.getLastName(), tibo.getFirstName(), "DE man", "0497616166",
+                new Planner(5, "tibo.demaster@gmail.be", tibo.getLastName(), tibo.getFirstName(), "DE man", "0497616166",
                         tibo.getUsername(), tibo.getPassword(), tibo.getRole() ,tibo.getBeschrijving(), tibo.getStatus()),
-                new Planner(22, "pieter.demets@skynet.us", pieter.getLastName(), pieter.getFirstName(), "man", "0497616166",
+                new Planner(6, "pieter.demets@skynet.us", pieter.getLastName(), pieter.getFirstName(), "man", "0497616166",
                         pieter.getUsername(), pieter.getPassword(), pieter.getRole() ,pieter.getBeschrijving(), pieter.getStatus()),
-                new Planner(23, "mohammed.deslager@konohama.com", mohammed.getLastName(), mohammed.getFirstName(), "man", "0497518166",
+                new Planner(7, "mohammed.deslager@konohama.com", mohammed.getLastName(), mohammed.getFirstName(), "man", "0497518166",
                         mohammed.getUsername(), mohammed.getPassword(), mohammed.getRole() ,mohammed.getBeschrijving(), mohammed.getStatus())
         );
 
@@ -100,11 +100,11 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Locatiehouders
         List<Locatiehouder> locatiehouders = Arrays.asList(
-                new Locatiehouder(31, "john.doe@gmail.com", kakashi.getLastName(), kakashi.getFirstName(), "man", "0497618166",  "bedrijfsnaam", "btwNummer", "adres",
+                new Locatiehouder(8, "john.doe@gmail.com", kakashi.getLastName(), kakashi.getFirstName(), "man", "0497618166",  "bedrijfsnaam", "btwNummer", "adres",
                         kakashi.getUsername(), kakashi.getPassword(), kakashi.getRole() ,kakashi.getBeschrijving(), kakashi.getStatus()),
-                new Locatiehouder(32, "blake.lively@skynet.us", hanz.getLastName(), hanz.getFirstName(), "vrouw", "0497616166", "bedrijfsnaam", "btwNummer", "adres",
+                new Locatiehouder(9, "blake.lively@skynet.us", hanz.getLastName(), hanz.getFirstName(), "vrouw", "0497616166", "bedrijfsnaam", "btwNummer", "adres",
                         hanz.getUsername(), hanz.getPassword(), hanz.getRole() ,hanz.getBeschrijving(), hanz.getStatus()),
-                new Locatiehouder(33, "sasuke.uchiha@konohama.com", nielz.getLastName(), nielz.getFirstName(), "man", "0497518166","bedrijfsnaam", "btwNummer", "adres",
+                new Locatiehouder(10, "sasuke.uchiha@konohama.com", nielz.getLastName(), nielz.getFirstName(), "man", "0497518166","bedrijfsnaam", "btwNummer", "adres",
                         nielz.getUsername(), nielz.getPassword(), nielz.getRole() ,nielz.getBeschrijving(), nielz.getStatus())
         );
 
@@ -114,10 +114,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Documentaties
         List<Documentatie> documentaties = Arrays.asList(
-                new Documentatie(41, "A", "installatie", "X installeer je op Y manier"),
-                new Documentatie(42, "B", "installatie", "X installeer je op Y manier"),
-                new Documentatie(43, "A", "reparatie", "X fix je op Y manier"),
-                new Documentatie(44, "B", "reparatie", "X fix je op Y manier")
+                new Documentatie(1, "A", "installatie", "X installeer je op Y manier"),
+                new Documentatie(2, "B", "installatie", "X installeer je op Y manier"),
+                new Documentatie(3, "A", "reparatie", "X fix je op Y manier"),
+                new Documentatie(4, "B", "reparatie", "X fix je op Y manier")
         );
 
         for (Documentatie documentatie : documentaties) {
@@ -160,10 +160,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Afspraken
         List<Afspraak> afspraken = Arrays.asList(
-                new Afspraak(51, installateurRepository.findById(11), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
-                new Afspraak(52, installateurRepository.findById(12), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
-                new Afspraak(53, installateurRepository.findById(13), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
-                new Afspraak(54, installateurRepository.findById(14), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
+                new Afspraak(1, installateurRepository.findById(1), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
+                new Afspraak(2, installateurRepository.findById(2), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
+                new Afspraak(3, installateurRepository.findById(3), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
+                new Afspraak(4, installateurRepository.findById(4), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
         );
 
         for (Afspraak afspraak : afspraken) {
