@@ -1,12 +1,12 @@
 package be.fastned.application.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.Value;
+import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  * @author TiboVG
@@ -26,16 +26,28 @@ public class Locatiehouder extends Persoon {
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 
-	public Locatiehouder(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String gebruikersnaam, String wachtwoord, String bedrijfsnaam, String btwNummer, String adres, User user){
-		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord, user);
+	public Locatiehouder(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String bedrijfsnaam, String btwNummer, String adres,
+				   String gebruikersnaam, String wachtwoord, String rol, String beschrijving, String status){
+		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord, rol, beschrijving, status);
 		this.bedrijfsnaam = bedrijfsnaam;
 		this.btwNummer = btwNummer;
 		this.adres = adres;
+		this.test = naam;
 	}
 
-//	@Id
-//	@GeneratedValue(strategy= GenerationType.IDENTITY)
-//	private final long id;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	private final String test;
 
-	private final String bedrijfsnaam, btwNummer, adres;
+	@Column
+	@Size(min=1, max = 64, message="Houd de bedrijfsnaam tussen 1 en 64 tekens aub!")
+	private final String bedrijfsnaam;
+
+	@Column
+	@Size(min=1, max = 64, message="Houd het BTW-nummer tussen 1 en 64 tekens aub!")
+	private final String btwNummer;
+
+	@Column
+	@Size(min=1, max = 64, message="Houd het adres tussen 1 en 64 tekens aub!")
+	private final String adres;
 }

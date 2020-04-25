@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * @author TiboVG
@@ -30,7 +31,16 @@ public class Laadpaal {
 	private final Locatiehouder locatiehouder;
 
 	@OneToOne
-	private final Documentatie installatieDocType, reparatieDocType;
+	private final Documentatie installatieDocType;
 
-	private final String laadpaalType, status;
+	@OneToOne
+	private final Documentatie reparatieDocType;
+
+	@Column
+	@Size(min=1, max = 64, message="Houd het type tussen 1 en 64 tekens aub!")
+	private final String laadpaalType;
+
+	@Column
+	@Size(min=1, max = 255, message="Houd de status tussen 1 en 255 tekens aub!")
+	private final String status;
 }

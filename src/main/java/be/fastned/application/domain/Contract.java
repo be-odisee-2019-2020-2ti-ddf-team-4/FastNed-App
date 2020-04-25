@@ -28,5 +28,7 @@ public class Contract {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private final long id;
 
+	@Column
+	@Temporal(TemporalType.DATE)
 	private final LocalDateTime contractDatum, uitvoeringsDatum;
 }

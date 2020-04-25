@@ -23,8 +23,7 @@ Feature: Maak een Afspraak
   Een knop "Ga terug" moet beschikbaar zijn
 
   Scenario: Een afspraak maken (geen invoerfouten)
-    Given Ik ben ingelogd als planner
-      And Ik bevind me op de Home pagina
+    Given Ik ben ingelogd als planner en doorverwezen naar Home
     When Ik klik op de "Beheer Afspraken" knop
     And Ik een installateur selecteer
     And ik een laadpaal selecteer
@@ -34,7 +33,6 @@ Feature: Maak een Afspraak
     And ik naar de nieuwe afspraak navigeer door op de "Bekijk Afspraak" knop te klikken
     Then Zie ik de nieuwe afspraak
     And Kan ik op "Terug naar Home" klikken
-    And Word ik teruggeleid naar de Home Pagina
 #
 #  Scenario: Een afspraak maken (wel invoerfouten)
 #    Given Ik bevind me op de Home pagina
