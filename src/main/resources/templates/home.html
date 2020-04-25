@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="nl"
       xmlns:th = "http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
-    <title>Fastned</title>
+    <title>Home</title>
 </head>
 <body>
     <h1>Welcome to FastNed</h1>
-<!--    TODO: (Niels) Waarom laadt deze jpg niet-->
-    <img th:src="@{/images/fastned_logo.jpg}" style="float: right" th:width="100px" th:height="100px"/>
-    <a href="/fastned/afspraak">Linkje</a>
+    <!-- FIXED: image wordt geladen -->
+    <img th:src="@{/images/Fastned-Logo.jpg}" style="float: right" th:width="100px" th:height="100px"/>
+    <a id="linkBeheerAfspraak" href="/fastned/afspraak">Linkje</a>
 </body>
 </html>
