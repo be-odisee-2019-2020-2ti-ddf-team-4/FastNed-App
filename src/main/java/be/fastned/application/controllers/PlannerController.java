@@ -11,6 +11,10 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 @Slf4j
 @Controller
@@ -36,6 +40,8 @@ public class PlannerController {
      * Zet afspraakData + andere formulier-data op het model waaruit een view data maakt.
      */
     private void prepareModel(AfspraakData afspraakData, Model model, String CRUDType) {
+        model.addAttribute("fullname", plannerService.getAuthenticatedFullname());
+        model.addAttribute("afspraken", plannerService.getAvailableAfspraken());
         switch (CRUDType){
             case "create":
                 model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());
@@ -45,6 +51,7 @@ public class PlannerController {
                 model.addAttribute("action", "create");
                 break;
             case "update":
+                model.addAttribute("afspraakId", afspraakData.getId());
                 model.addAttribute("availableInstallateurs", plannerService.getAvailableInstallateurs());
                 model.addAttribute("availableLaadpalen", plannerService.getAvailableContracten());
                 model.addAttribute("availableContracten", plannerService.getAvailableContracten());
@@ -64,7 +71,7 @@ public class PlannerController {
                 model.addAttribute("childInstallateur", plannerService.getInstallateurById(tussenstap.getInstallateur().getId()).getVoornaam());
                 model.addAttribute("childLaadpaal", plannerService.getLaadpaalById(tussenstap.getLaadpaal().getId()).getId());
                 model.addAttribute("childContract", plannerService.getContractById(tussenstap.getContract().getId()).getId());
-                model.addAttribute("childBezoek", plannerService.getBezoekById(tussenstap.getBezoek().getId()).getId());
+//                model.addAttribute("childBezoek", plannerService.getBezoekById(tussenstap.getBezoek().getId()).getId());
                 model.addAttribute("childStatus", tussenstap.getStatus());
                 model.addAttribute("action", "showItem");
                 break;
@@ -88,6 +95,7 @@ public class PlannerController {
     @PostMapping("/showUpdate")
     public String afspraakCreateUpdateForm(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
         AfspraakData afspraakDataNew = plannerService.prepareNewAfspraakData(plannerService.getAfspraakById(afspraakData.getId()));
+        afspraakDataNew.setId(id);
         prepareModel(afspraakDataNew, model, "update");
         return "afspraak";
     }

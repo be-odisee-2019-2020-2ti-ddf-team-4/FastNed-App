@@ -8,16 +8,17 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
+<div    class="text-center"><img th:src="@{/images/Fastned-Logo.jpg}"  th:width="100px" th:height="100px"/></div>
 
-    <img th:src="@{/images/Fastned-Logo.jpg}" style="float: right" th:width="100px" th:height="100px"/>
-
+<div class="text-center">
     <form method="POST" th:action="@{/fastned/afspraak}" th:object="${afspraakData}">
+
 
         <div class="form-group" th:if="${action}==create">
             <h3>Maak hier een Afspraak!</h3>
             <span class="installateur">
                 <label >Installateurs</label>
-                <select th:field = "*{installateurId}">
+                <select  th:field = "*{installateurId}">
                     <option th:each = "installateur : ${availableInstallateurs}" class="installateur"
                             th:value = "${installateur.id}"
                             th:text = "${installateur.voornaam} ">
@@ -37,10 +38,6 @@
             </span>
 
             <br>
-            <!--
-                Waarom ?? een nieuze afspraak heeft toch een nieuw contract nodig
-                Dus dan ook nieuw contract ID
-            -->
             <span class="contract">
                 <label >Contract</label>
                 <select th:field = "*{contractId}">
@@ -105,21 +102,45 @@
         <div class="form-group" th:if="${action=='update'}">
             <h3>Update de Afspraakdetails!</h3>
             <div class="form-group" th:if="${action}==update">
-                <label th:width="100px">Installateur: </label> <input th:text = "${childInstallateur}"></input> <br/>
-                <label th:width="100px">Laadpaal: </label> <input th:text = "${childLaadpaal}"></input> <br/>
-                <label th:width="100px">Contract: </label> <input th:text = "${childContract}"></input> <br/>
-                <label th:width="100px">Bezoek: </label> <input th:text = "${childBezoek}"></input> <br/>
-                <label th:width="100px">Status: </label> <input th:text = "${childStatus}"></input> <br/>
+                <span class="installateur">
+                <label >Installateurs</label>
+                <select th:field = "*{installateurId}" th:selected="${installateurId}">
+                    <option th:each = "installateur : ${availableInstallateurs}" class="installateur"
+                            th:value = "${installateur.id}"
+                            th:text = "${installateur.voornaam} ">
+                    </option>
+                </select>&nbsp;
+            </span>
+
+                <br>
+                <span class="laadpaal">
+                <label >Laadpaal</label>
+                <select th:field = "*{laadpaalId}" th:selected="${laadpaalId}">
+                    <option th:each = "laadpaal : ${availableLaadpalen}" th:selected="${laadpaalId}" class="laadpaal"
+                            th:value = "${laadpaal.id}"
+                            th:text = "${laadpaal.id}">
+                    </option>
+                </select>&nbsp;
+            </span>
+
+                <br>
+                <span class="contract">
+                <label >Contract</label>
+                <select th:field = "*{contractId}" th:selected="${contractId}">
+                    <option th:each = "contract : ${availableContracten}"  th:selected="${contractId}" class="contract"
+                            th:value = "${contract.id}"
+                            th:text = "${contract.id}">
+                    </option>
+                </select>&nbsp;
+            </span>
+                <label th:width="100px">ID: </label> <label th:text = "${afspraakId}"></label> <br/>
+                <label th:width="100px">Status: </label> <input th:value="${status}"></input> <br/>
             </div>
             <br>
             <button class="btn btn-success btn-md" type="submit" name="action" value="update" formmethod="POST" th:formaction=" @{/fastned/afspraak/update?id={id} (id=${afspraakId}) }">Verwerk Wijzigingen</button>
         </div>
     </form>
 
-<!--    <div th:if="${action}==showItem" class="form-group">-->
-<!--        <button type="submit" name="action" value="read">Bekijk een Afspraak</button>-->
-<!--        <button type="submit" name="action" value="delete">Verwijderen</button>-->
-<!--        <button type="submit" name="action" value="update">Werk Bij</button>-->
-<!--    </div>-->
+</div>
 </body>
 </html>
