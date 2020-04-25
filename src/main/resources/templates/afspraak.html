@@ -8,11 +8,11 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
+<div    class="text-center"><img th:src="@{/images/Fastned-Logo.jpg}"  th:width="100px" th:height="100px"/></div>
 
-    <h2># Beheer hier een Afspraak #</h2>
-    <img th:src="@{/images/fastned_logo.jpg}" style="float: right" th:width="100px" th:height="100px"/>
+<div class="text-center">
+    <form method="POST" th:action="@{/fastned/afspraak}" th:object="${afspraakData}">
 
-    <form id="formBeheerAfspraak" method="POST" th:action="@{/fastned/afspraak}" th:object="${afspraakData}">
 
         <div id="divMaakAfspraak" class="form-group" th:if="${action}==create">
             <h3>Maak hier een Afspraak!</h3>
@@ -56,7 +56,7 @@
 
             <br>
             <span>
-                <button id="btnMaakAfspraak" class="btn btn-success btn-md" type="submit" name="action" value="create">Verwerk Nieuwe Afspraak</button>
+                <button  id="btnMaakAfspraak" class="btn btn-success btn-md" type="submit" name="action" value="create">Maak Afspraak</button>
                 <button id="btnBekijkAfspraak" class="btn btn-success btn-md" type="submit" name="action" value="read" formmethod="GET" formaction="/fastned/afspraak/read">Bekijk Afspraak</button>
             </span>
 
@@ -70,7 +70,7 @@
             <h3>Selecteer hier een Afspraak!</h3>
             <span class="afspraak">
                 <label >Afspraken</label>
-                <select id="selectBekijkAfspraak" th:field = "*{id}" th:name="selectedId">
+                <select id="selectBekijkAfspraak"  th:field = "*{id}" th:name="selectedId">
                     <option th:each = "afspraak : ${availableAfspraken}" class="afspraak"
                             th:value = "${afspraak.id}"
                             th:text = "${afspraak.id}">
@@ -79,10 +79,8 @@
             </span>
 
             <br>
-            <button class="btn btn-success btn-md" type="submit" name="action" value="showItem" formmethod="GET" th:formaction=" @{/fastned/afspraak/showItem?id={id} (id=${afspraakData.getId()}) }">Open Afspraak</button>
+            <button id="btnHome" class="btn btn-success btn-md" type="submit" name="action" value="showItem" formmethod="GET" th:formaction=" @{/fastned/afspraak/showItem?id={id} (id=${afspraakData.getId()}) }">Open Afspraak</button>
         </div>
-
-        <button class="btn btn-success btn-md" type="submit" id="btnHome" formmethod="GET" th:formaction=" @{/fastned/afspraak}">Ga terug naar Home</button>
 
         <div id="divBekijkAfspraak" class="form-group" th:if="${action=='showItem'}">
             <h3>Bekijk de Afspraakdetails!</h3>
@@ -142,5 +140,7 @@
             <button class="btn btn-success btn-md" type="submit" name="action" value="update" formmethod="POST" th:formaction=" @{/fastned/afspraak/update?id={id} (id=${afspraakId}) }">Verwerk Wijzigingen</button>
         </div>
     </form>
+
+</div>
 </body>
 </html>

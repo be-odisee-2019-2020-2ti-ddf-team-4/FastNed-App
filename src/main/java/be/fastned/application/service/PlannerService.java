@@ -11,7 +11,7 @@ public interface PlannerService {
 
     List<Installateur> getAvailableInstallateurs();
     List<Contract> getAvailableContracten();
-    List<Laadpaal> getAvailableLaadpalen();
+
     List<Afspraak> getAvailableAfspraken();
 
     AfspraakData prepareNewAfspraakData();

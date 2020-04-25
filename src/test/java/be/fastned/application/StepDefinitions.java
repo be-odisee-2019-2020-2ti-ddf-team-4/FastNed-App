@@ -34,7 +34,7 @@ public class StepDefinitions {
 		driver.navigate().to("http://localhost:8080/");
 
 		new WebDriverWait(driver, 60).until(ExpectedConditions
-				.textToBePresentInElementLocated(By.tagName("body"), "# Welkom op de fastned-applicatie! #"));
+				.textToBePresentInElementLocated(By.tagName("body"), "Gebruikersnaam"));
 
 		driver.findElement(By.id("wachtwoord")).sendKeys("test");
 		driver.findElement(By.id("gebruikersnaam")).sendKeys("test");
