@@ -67,12 +67,14 @@ public class PlannerController {
                 break;
             case "showItem":
                 model.addAttribute("afspraakId", afspraakData.getId());
+
                 Afspraak tussenstap = plannerService.getAfspraakById(afspraakData.getId());
                 model.addAttribute("childInstallateur", plannerService.getInstallateurById(tussenstap.getInstallateur().getId()).getVoornaam());
                 model.addAttribute("childLaadpaal", plannerService.getLaadpaalById(tussenstap.getLaadpaal().getId()).getId());
                 model.addAttribute("childContract", plannerService.getContractById(tussenstap.getContract().getId()).getId());
 //                model.addAttribute("childBezoek", plannerService.getBezoekById(tussenstap.getBezoek().getId()).getId());
                 model.addAttribute("childStatus", tussenstap.getStatus());
+                model.addAttribute("childType", tussenstap.getType());
                 model.addAttribute("action", "showItem");
                 break;
         }

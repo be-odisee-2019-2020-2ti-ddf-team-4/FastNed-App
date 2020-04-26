@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * @author TiboVG
@@ -28,10 +27,4 @@ public class Installateur extends Persoon {
 						User user){
 		super(id, emailadres, naam, voornaam, geslacht, gsm, user);
 	}
-
-
-//	@EqualsAndHashCode.Exclude
-//	@ToString.Exclude
-//	@Transient
-//	private String test;
 }

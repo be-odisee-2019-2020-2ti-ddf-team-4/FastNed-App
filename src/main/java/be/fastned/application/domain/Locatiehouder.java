@@ -2,7 +2,10 @@ package be.fastned.application.domain;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 /**
@@ -13,7 +16,7 @@ import javax.validation.constraints.Size;
 @Entity(name = "Locatiehouder")
 @Table(name = "LOCATIEHOUDERS")
 @Data
-@NoArgsConstructor(access = AccessLevel.PUBLIC,force=true)
+@NoArgsConstructor(force=true)
 
 @Value
 @EqualsAndHashCode(callSuper = true)
@@ -24,17 +27,12 @@ public class Locatiehouder extends Persoon {
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 
 	public Locatiehouder(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String bedrijfsnaam, String btwNummer, String adres,
-				   User user){
+						 User user){
 		super(id, emailadres, naam, voornaam, geslacht, gsm, user);
 		this.bedrijfsnaam = bedrijfsnaam;
 		this.btwNummer = btwNummer;
 		this.adres = adres;
 	}
-
-//	@Transient
-//	@EqualsAndHashCode.Exclude
-//	@ToString.Exclude
-//	private final String test;
 
 	@Column
 	@Size(min=1, max = 64, message="Houd de bedrijfsnaam tussen 1 en 64 tekens aub!")

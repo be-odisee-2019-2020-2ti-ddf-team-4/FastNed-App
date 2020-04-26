@@ -26,7 +26,7 @@ public class Persoon {
     /* //----------------// -##########--------------------------------##########- //----------------// */
 
     protected Persoon(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm,
-                   User user){
+                      User user){
         this.id = id;
         this.emailadres = emailadres;
         this.naam = naam;
@@ -60,6 +60,7 @@ public class Persoon {
     @Size(min=1, max = 255, message="Houd de GSM-nummer tussen 1 en 255 tekens aub!")
     private final String gsm;
 
-    @OneToOne
+
+    @OneToOne(cascade=CascadeType.ALL)
     private final User user;
 }

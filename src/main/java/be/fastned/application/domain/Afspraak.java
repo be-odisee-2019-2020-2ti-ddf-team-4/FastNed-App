@@ -28,6 +28,8 @@ public class Afspraak {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private final long id;
 
+	private final String type;
+
 	@ManyToOne
 	private final Installateur installateur;
 
@@ -43,4 +45,6 @@ public class Afspraak {
 	@Column
 	@Size(min=1, max = 255, message="Houd de status tussen 1 en 255 tekens aub!")
 	private final String  status;
+
+
 }

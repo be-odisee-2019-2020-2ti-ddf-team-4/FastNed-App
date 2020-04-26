@@ -13,6 +13,8 @@ public class AfspraakData {
 
     private long id = 0;
 
+    private String type;
+
     //@NotBlank(message= "installateur must be specified!")
     private long installateurId;
 

@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * @author TiboVG
@@ -28,9 +27,4 @@ public class Laadklant extends Persoon {
 			  User user){
 		super(id, emailadres, naam, voornaam, geslacht, gsm, user);
 	}
-
-//	@Transient
-//	@EqualsAndHashCode.Exclude
-//	@ToString.Exclude
-//	private final String test;
 }

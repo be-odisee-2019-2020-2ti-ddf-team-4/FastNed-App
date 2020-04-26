@@ -58,31 +58,19 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
         };
 
         List<User> users = Arrays.asList(
-                new User(1, "pieterPotter", "{bcrypt}$2a$10$hWHIZKKuHpks9Y5FtLzcLeIeixAj7AuMBuQkUPLOt63etFE9Hv16S", "ROLE_PLANNER", "beschr", "Enabled", "Pieter", "Pienter"),
-                new User(2, "mohammed21", "{bcrypt}$2a$10$rXBUOeSeO5Umz6GmucVFweByOBNEAUF63AaBmEkxN/UZ2R8PorcFm", "ROLE_PLANNER", "beschr", "Enabled", "Mohammed", "Sahil"),
-                new User(3, "imperialJohn", "{bcrypt}$2a$10$uU3Ko7KGj5XeEc2Fst/av.Oz3zz5awIge0AKs982my57J6Qhtb6wC", "ROLE_INSTALLATEUR", "beschr", "Enabled", "John", "Doe"),
-                new User(4, "blakey", "{bcrypt}$2a$10$cLg0aj.VKW3RddUaLGSeS.QY4oUhG0cn040qXNgEFDEp6XHPJ33Ce", "ROLE_INSTALLATEUR", "beschr", "Enabled", "Blake", "Lively"),
-                new User(5, "sasukeUchiha", "{bcrypt}$2a$10$IEpxKE7Au1HGZORrLvQGquGDBS0Z81ztbkLK6P4N.QL3ceKTwE9JS", "ROLE_PLANNER", "beschr", "Enabled", "Sasuke", "Uchiha"),
-                new User(6, "tibovg", "{bcrypt}$2a$10$wEEsCIlGs1DS7dWxi58I9OxkC3BE0MuFG34Hy2MwJwylJ7zaDxzv6", "ROLE_ADMIN", "beschr", "Enabled", "Tibo", "Van Gindertaelen"),
-                new User(7, "sensei", "{bcrypt}$2a$10$P0d/MHllKSXSWAzI6C0r/u7hN49ziLER.N3552VeNlKNxpPe8RGZ.", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Kakashi", "Hatake"),
-                new User(8, "hanzdeprofessioneel", "{bcrypt}$2a$10$nuoGyLe3fVwA2.qevR/z/Oh6R6R4ORkHwN3OPUxCB9vzptSi8FdaC", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Hans", "Vandenbogaerde"),
-                new User(9, "nielzatron", "{bcrypt}$2a$10$dJMv9Dfpq3jCaxkdLUUhvOL5Vz5IZQO23O8GDPB60Mv7mjfpLQ0xe", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Niels", "Dejonghe")
+                new User(1, "pieterPotter", "{bcrypt}$2a$10$abpfm2ctiTdTxT1.ehufwuvjFls2EMkmtXP7UKQOQSBfZRoF/ol2S", "ROLE_PLANNER", "beschr", "Enabled", "Pieter", "Pienter"),
+                new User(2, "mohammed21", "{bcrypt}$2a$10$fauMfqKeKFcHNMtdfXV5uuGm0RhP3S/.5sVAIWe139Ek5Mq7k5sMS", "ROLE_PLANNER", "beschr", "Enabled", "Mohammed", "Sahil"),
+                new User(3, "imperialJohn", "{bcrypt}$2a$10$Vs148aoZGcelQo7yk19E4OaD2bGD4v7GGs3UrDZO8QI60EnKtgBrG", "ROLE_INSTALLATEUR", "beschr", "Enabled", "John", "Doe"),
+                new User(4, "blakey", "{bcrypt}$2a$10$rJr2799QYnpGEBJU1TRxg.gzCG0aQuY3MnSIyxUQzptxRkQgS5MTG", "ROLE_INSTALLATEUR", "beschr", "Enabled", "Blake", "Lively"),
+                new User(5, "sasukeUchiha", "{bcrypt}$2a$10$6ZIovt9KSJIBxYFjT1v5Z.o4eWFtSfBvvoTTv1MEq2V/knzkV40Bq", "ROLE_PLANNER", "beschr", "Enabled", "Sasuke", "Uchiha"),
+                new User(6, "tibovg", "{bcrypt}$2a$10$3Gk0gbWpHBpncGGblsGqH.fxNxrjPVe6nqJp.hmxY66HpU66p7S3G", "ROLE_ADMIN", "beschr", "Enabled", "Tibo", "Van Gindertaelen"),
+                new User(7, "sensei", "{bcrypt}$2a$10$Lvu/YbSNgortFgTvoQvnWObqHleJhzpdJ0hYE.Uz6xYHr/7K7tQEm", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Kakashi", "Hatake"),
+                new User(8, "hanzdeprofessioneel", "{bcrypt}$2a$10$QwQ6BhO1p30EPB.EZ2kbrex/tpGoWYCCrbadffTPrWpwJ0KlEGA36", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Hans", "Vandenbogaerde"),
+                new User(9, "nielzatron", "{bcrypt}$2a$10$tCRGYvO.S7D25rDTH3pXvuCH/aPmiI.UmeKbtjTMFpL0dEnkbEn5S", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Niels", "Dejonghe")
         );
         for (User user : users) {
             userRepository.save(user);
         };
-
-        // Dummy-User objecten (versimpelen argumenten aan persoon-constructor meegeven - Personen maken zelf User-objecten aan!)
-//        User pieter = new User(0, "pieterPotter", "{bcrypt}$2a$10$2o9Frax4HHJLEMMb5iKs9ONs8zEmGv51IRIURY8PkBk7GsCxy4ixO", "ROLE_PLANNER", "beschr", "Enabled", "Pieter", "Pienter");
-//        User mohammed = new User(0, "mohammed21", "{bcrypt}$2a$10$vwKk.OxTjqkzVudfuIuUauxmIrcx8Miq6vFgmLF6sgRcu7viIxgGO", "ROLE_PLANNER", "beschr", "Enabled", "Mohammed", "Sahil");
-//        User john = new User(0, "imperialJohn", "{bcrypt}$2a$10$dTj8pIUJCTDi3kr.VnNRye1E7vmG7Yitx3IFFYrqAoEWwHWTJ1Zbu", "ROLE_INSTALLATEUR", "beschr", "Enabled", "John", "Doe");
-//        User blake = new User(0, "blakey", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_INSTALLATEUR", "beschr", "Enabled", "Blake", "Lively");
-//        User marie = new User(0, "marietje", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_INSTALLATEUR", "beschr", "Enabled", "Marie", "De Bakker");
-//        User sasuke = new User(0, "sasukeUchiha", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_PLANNER", "beschr", "Enabled", "Sasuke", "Uchiha");
-//        User tibo = new User(0, "tibovg", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_ADMIN", "beschr", "Enabled", "Tibo", "Van Gindertaelen");
-//        User kakashi = new User(0, "sensei", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Kakashi", "Hatake");
-//        User hanz = new User(0, "hanzdeprofessioneel", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Hans", "Vandenbogaerde");
-//        User nielz = new User(0, "nielzatron", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Niels", "Dejonghe");
 
         // Planners
         List<Planner> planners = Arrays.asList(
@@ -176,16 +164,15 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Afspraken
         List<Afspraak> afspraken = Arrays.asList(
-                new Afspraak(1, installateurRepository.findById(1), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
-                new Afspraak(2, installateurRepository.findById(2), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
-                new Afspraak(3, installateurRepository.findById(3), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
-                new Afspraak(4, installateurRepository.findById(4), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
+                new Afspraak(1,"Installatie", installateurRepository.findById(1), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
+                new Afspraak(2, "Reparatie",installateurRepository.findById(2), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
+                new Afspraak(3,"Reparatie", installateurRepository.findById(3), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
+                new Afspraak(4, "Installatie",installateurRepository.findById(4), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
         );
 
         for (Afspraak afspraak : afspraken) {
             // TODO: (Niels) Error: Een vereiste subklasse "Locatiehouder" was gevraagd, in de plaats kwam "Installateur". (Uncomment & Shift+F10 om te beginnen)
             afspraakRepository.save(afspraak);
         };
-
     }
 }
