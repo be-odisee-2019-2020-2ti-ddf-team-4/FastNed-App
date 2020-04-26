@@ -116,6 +116,32 @@ public class PlannerServiceImpl implements PlannerService {
         return afspraakData;
     }
 
+    public void deleteAfspraak(long id) {
+        Afspraak afspraak = afspraakRepository.findById(id);
+        afspraakRepository.delete(afspraak);
+    }
+
+    public AfspraakData updateAfspraak(AfspraakData afspraakData) {
+
+        // TODO: Update enkel wat geüpdated moet worden, niet alles
+        Afspraak afspraakUpdated = new Afspraak(
+                afspraakData.getId(),
+
+                afspraakData.getType(),
+                installateurRepository.findById(afspraakData.getInstallateurId()),
+                laadpaalRepository.findById(afspraakData.getLaadpaalId()),
+                contractRepository.findById(afspraakData.getContractId()),
+                bezoekRepository.findById(afspraakData.getBezoekId()),
+                afspraakData.getStatus()
+        );
+        afspraakRepository.save(afspraakUpdated);
+        return afspraakData;
+    }
+
+    public Afspraak getAfspraakById(long id){
+        return afspraakRepository.findById(id);
+    }
+
     @Override
     public String processEntry(AfspraakData afspraakData) {
 
@@ -147,27 +173,7 @@ public class PlannerServiceImpl implements PlannerService {
         return deAfspraakData;
     }
 
-    public void deleteAfspraak(long id) {
-        Afspraak afspraak = afspraakRepository.findById(id);
-        afspraakRepository.delete(afspraak);
-    }
 
-    public AfspraakData updateAfspraak(AfspraakData afspraakData) {
-
-        // TODO: Update enkel wat geüpdated moet worden, niet alles
-        Afspraak afspraakUpdated = new Afspraak(
-                afspraakData.getId(),
-
-                afspraakData.getType(),
-                installateurRepository.findById(afspraakData.getInstallateurId()),
-                laadpaalRepository.findById(afspraakData.getLaadpaalId()),
-                contractRepository.findById(afspraakData.getContractId()),
-                bezoekRepository.findById(afspraakData.getBezoekId()),
-                afspraakData.getStatus()
-        );
-        afspraakRepository.save(afspraakUpdated);
-        return afspraakData;
-    }
 
     public Installateur getInstallateurById(long id){
         return installateurRepository.findById(id);
@@ -181,9 +187,7 @@ public class PlannerServiceImpl implements PlannerService {
     public Contract getContractById(long id){
         return contractRepository.findById(id);
     }
-    public Afspraak getAfspraakById(long id){
-        return afspraakRepository.findById(id);
-    }
+
 
     private String getAuthenticatedUsername() {
 

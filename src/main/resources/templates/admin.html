@@ -18,10 +18,17 @@
 
         <img th:src="@{/images/Fastned-Logo.jpg} " th:height="100px" th:width="100px"/>
 
-        <div>U bent duidelijk een Administrator! <br> Helaas heeft die nu nog geen functionaliteit! <br> -Fastned</div>
+        <div>
+            U bent duidelijk een Administrator!
+            <br> Helaas heeft die nu nog geen functionaliteit!
+            <br> -Fastned
+        </div>
 
         <form method="GET" th:action="@{/login}" >
             <button class="btn btn-danger btn-md" name="login" value="Login">Terug naar Login</button>
+        </form>
+        <form method="GET" th:action="@{/}" >
+            <button class="btn btn-danger btn-md"> Terug naar Home</button>
         </form>
     </div>
 

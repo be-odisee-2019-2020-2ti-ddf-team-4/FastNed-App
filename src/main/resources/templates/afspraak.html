@@ -102,7 +102,7 @@
                 <select id="selectAfspraakDetail" th:size="${afspraken.size()}"  th:field = "*{id}" th:name="selectedId">
                     <option th:each = "afspraak : ${availableAfspraken}" class="afspraak"
                             th:value = "${afspraak.id}"
-                            th:text = "${afspraak.id + '   '+ afspraak.type +'   ' + afspraak.contract.contractDatum + '   ' + afspraak.installateur.voornaam + '   ' + afspraak.installateur.naam} ">
+                            th:text = "${afspraak.id + '   '+ afspraak.type +'   ' + afspraak.contract.contractDatum} ">
                     </option>
                 </select>&nbsp;
             </span>
@@ -188,18 +188,18 @@
                 <label class="lblAfspraakDetail">Status: </label> <input [type=text] id="inputUpdateAfspraakId" th:value="${status}"></input> <br/>
                 </span>
 
-
-
             </div>
             <br>
             <button id="btnUpdateAfspraak" class="btn btn-success btn-md" type="submit" name="action" value="update" formmethod="POST" th:formaction=" @{/fastned/afspraak/update?id={id} (id=${afspraakId}) }">Verwerk Wijzigingen</button>
             <br>
             <button id="btnNavigeerNaarBeheerAfspraak" class="btn btn-success btn-md" type="submit" formmethod="GET" formaction="/fastned/afspraak">Ga terug naar afspraakbeheer</button>
 
-
-
         </div>
     </form>
+
+        <form method="GET" th:action="@{/}" >
+            <button class="btn btn-danger btn-md"> Terug naar Home</button>
+        </form>
 
 
     </div>
