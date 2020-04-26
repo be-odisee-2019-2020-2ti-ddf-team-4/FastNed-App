@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="nl"
       xmlns:th = "http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
-    <title>Fastned</title>
+    <title>Home</title>
 </head>
 <body>
-    <h1>Welcome to FastNed</h1>
-<!--    TODO: (Niels) Waarom laadt deze jpg niet-->
+    <h1>Welkom bij onze FastNed services!</h1>
     <!-- FIXED: image wordt geladen -->
     <img th:src="@{/images/Fastned-Logo.jpg}" style="float: right" th:width="100px" th:height="100px"/>
-    <a href="/fastned/afspraak">Linkje</a>
+
+<!--    <p>Afspraakbeheer voor onze planners:-->
+<!--        <a id="linkBeheerAfspraak" href="/fastned/afspraak">Afsprakenplanner</a>-->
+<!--    </p>-->
+    <form method="GET" th:action="@{/fastned/afspraak}" style="float: right">
+        <button class="btn btn-success">Afspraakbeheer voor onze planners</button>
+    </form><br>
+
+    <form method="POST" th:action="@{/logout}" style="float: right">
+        <button class="btn btn-danger btn-md logout" name="logout" value="Logout">Logout</button>
+    </form>
 </body>
 </html>

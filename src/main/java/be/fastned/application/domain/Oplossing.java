@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * @author TiboVG
@@ -26,5 +27,7 @@ public class Oplossing {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private final long id;
 
+	@Column
+	@Size(min=1, max = 510, message="Houd de oplossing beschrijving tussen 1 en 510 tekens aub!")
 	private final String oplossing;
 }
