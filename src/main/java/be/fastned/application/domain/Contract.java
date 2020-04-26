@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author TiboVG
@@ -29,6 +30,6 @@ public class Contract {
 	private final long id;
 
 	@Column
-	//@Temporal(TemporalType.DATE)
-	private final LocalDateTime contractDatum, uitvoeringsDatum;
+	@Temporal(TemporalType.DATE)
+	private final Date contractDatum, uitvoeringsDatum;
 }

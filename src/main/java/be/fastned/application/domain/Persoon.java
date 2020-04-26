@@ -16,8 +16,7 @@ import javax.validation.constraints.Size;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity(name = "Persoon")
 @Table(name = "PERSONEN")
-//@RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force=true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force=true)
 @Data()
 
 public class Persoon {
@@ -27,14 +26,14 @@ public class Persoon {
     /* //----------------// -##########--------------------------------##########- //----------------// */
 
     protected Persoon(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm,
-                   String gebruikersnaam, String wachtwoord, String rol, String beschrijving, String status){
+                      User user){
         this.id = id;
         this.emailadres = emailadres;
         this.naam = naam;
         this.voornaam = voornaam;
         this.geslacht = geslacht;
         this.gsm = gsm;
-        this.user = new User(0, gebruikersnaam, wachtwoord, rol, beschrijving, status, voornaam, naam, this);
+        this.user = user;
     }
 
     @Id
@@ -62,6 +61,6 @@ public class Persoon {
     private final String gsm;
 
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.ALL)
     private final User user;
 }

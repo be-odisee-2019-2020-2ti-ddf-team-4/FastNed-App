@@ -23,13 +23,7 @@ public class Planner extends Persoon {
 	/* //----------------// -##########- &|& INSTANTIE VARIABELEN &|& -##########- //----------------// */
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 
-	public Planner(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm,
-				   String gebruikersnaam, String wachtwoord, String rol, String beschrijving, String status){
-		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord, rol, beschrijving, status);
-		this.test = naam;
+	public Planner(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, User user){
+		super(id, emailadres, naam, voornaam, geslacht, gsm, user);
 	}
-
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
-	private final String test;
 }

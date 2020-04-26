@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author TiboVG
@@ -31,8 +32,8 @@ public class Laadsessie {
 	private final Laadpaal laadpaal;
 
 	@Column
-	//@Temporal(TemporalType.DATE)
-	private final LocalDateTime startSessie;
+	@Temporal(TemporalType.DATE)
+	private final Date startSessie;
 
 	@Column
 	private final double startPercentage;

@@ -45,6 +45,6 @@ public class Bezoek {
 	private final String eindVerslag;
 
 	@Column
-	//@Temporal(TemporalType.DATE)
-	private final LocalDateTime bezoekGestart, bezoekAfgerond;
+	@Temporal(TemporalType.DATE)
+	private final Date bezoekGestart, bezoekAfgerond;
 }
