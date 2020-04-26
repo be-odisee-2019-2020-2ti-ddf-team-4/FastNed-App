@@ -16,7 +16,6 @@ import javax.validation.constraints.Size;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity(name = "Persoon")
 @Table(name = "PERSONEN")
-// @NoArgsConstructor(access = AccessLevel.PROTECTED, force=true)
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force=true)
 @Data()
 
