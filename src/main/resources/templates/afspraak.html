@@ -83,13 +83,13 @@
             </span>
 
             <span id="spanErros" th:if="${#fields.hasErrors('*')}">
-                <br><h3>Er waren een paar fouten met de invoer!</h3>
-                <ul id="ulErrors">
-                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+                <br><h3 class="error">Er waren een paar fouten met de invoer!</h3>
+                <ul id="ulErrors" >
+                    <li class="error" th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
                 </ul>
             </span>
-
-            <form method="POST" th:action="@{/logout}" style="float: right">
+<br>
+            <form method="POST" th:action="@{/logout}" >
                 <button class="btn btn-danger btn-md logout" name="logout" value="Logout">Logout</button>
             </form>
 
@@ -192,8 +192,10 @@
 
             </div>
             <br>
-            <button id="btnNavigeerNaarBeheerAfspraak" class="btn btn-success btn-md" type="submit" formmethod="GET" formaction="/fastned/afspraak">Ga terug naar afspraakbeheer</button>
             <button id="btnUpdateAfspraak" class="btn btn-success btn-md" type="submit" name="action" value="update" formmethod="POST" th:formaction=" @{/fastned/afspraak/update?id={id} (id=${afspraakId}) }">Verwerk Wijzigingen</button>
+            <br>
+            <button id="btnNavigeerNaarBeheerAfspraak" class="btn btn-success btn-md" type="submit" formmethod="GET" formaction="/fastned/afspraak">Ga terug naar afspraakbeheer</button>
+
 
 
         </div>

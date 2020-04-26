@@ -34,7 +34,7 @@ span.category {
 
 body {
 
-    background-color: #f5f5f5;
+    background-color: white;
     height: 100%;
     width: 100%;
 
@@ -155,7 +155,7 @@ select#selectAfspraakDetail {
     padding: 1em;
 
 }
-.afspraakBody, .errorBody{
+.afspraakBody, .errorBody , .homeBody, .byeBody{
     text-align: center;
     background-color: white;
     background-image: url("../images/fastnedb1.jpg");
@@ -168,6 +168,18 @@ select#selectAfspraakDetail {
     width: 100%;
 }
 
+.errorBody{
+    background-image: url("../images/fastnedb3.jpg");
+    background-size: 100% 100%;
+    margin: 0em;
+}
+
+.byeBody{
+    background-image: url("../images/highwayWallpaper3.jpg");
+    background-size: cover;
+
+}
+
 .afspraakContainer, .errorContainer, .homeContainer{
     margin: 1em auto;
     width: 30%;
@@ -176,6 +188,19 @@ select#selectAfspraakDetail {
     border-radius: 1em;
 }
 
+
+
 .homeContainer{
-    height: 15em;
+    position: relative;
+
+}
+.containerObject{
+
+    margin: 1em;
+    width: 100%;
+    text-align: center;
+}
+
+.error{
+    color:  red;
 }

@@ -18,17 +18,30 @@
 </div >
 <div class="errorBody jumbotron ">
 <div class="errorContainer">
-    <p>Het spijt ons, er is ergens iets foutgegaan. (Obviously) </p>
-    <br>
-    <form>
-    <button id="btnNavigeerNaarBeheerAfspraak3" class="btn btn-success btn-md" type="submit" formmethod="GET" formaction="/fastned/afspraak">Ga terug naar afspraakbeheer</button>
-    </form>
-    <div>
-    <form method="POST" th:action="@{/logout}" style="float: right">
-        <button class="btn btn-danger btn-md logout" name="logout" value="Logout">Logout</button>
-    </form>
+    <div class="containerObject">
+        <p>Het spijt ons, er is ergens iets foutgegaan. (Obviously) </p>
     </div>
-      <br>  <img th:src="@{/images/Fastned-Logo.jpg}" th:width="100px" th:height="100px"/>
+
+    <div class="containerObject">
+        <form>
+            <button id="btnNavigeerNaarBeheerAfspraak3" class="btn btn-success btn-md" type="submit" formmethod="GET" formaction="/fastned/afspraak">Ga terug naar afspraakbeheer</button>
+        </form>
+    </div>
+
+    <div class="containerObject">
+        <form method="POST" th:action="@{/logout}" >
+            <button class="btn btn-danger btn-md logout" name="logout" value="Logout">Logout</button>
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
 </div>
 </div>
 
