@@ -31,7 +31,7 @@ public class Laadsessie {
 	private final Laadpaal laadpaal;
 
 	@Column
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private final LocalDateTime startSessie;
 
 	@Column

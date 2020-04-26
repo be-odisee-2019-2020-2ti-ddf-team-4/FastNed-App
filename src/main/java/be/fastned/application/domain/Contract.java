@@ -29,6 +29,6 @@ public class Contract {
 	private final long id;
 
 	@Column
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private final LocalDateTime contractDatum, uitvoeringsDatum;
 }

@@ -38,7 +38,7 @@ public class Persoon {
     }
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.TABLE)
     private final long id;
 
     @Column(unique = true)
@@ -61,6 +61,7 @@ public class Persoon {
     @Size(min=1, max = 255, message="Houd de GSM-nummer tussen 1 en 255 tekens aub!")
     private final String gsm;
 
-    @OneToOne
+
+    @ManyToOne(cascade=CascadeType.ALL)
     private final User user;
 }

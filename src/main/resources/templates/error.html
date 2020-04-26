@@ -11,12 +11,28 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
+<div class="errorHeader jumbotron">
 <h1>Dit is de Fastned-Errorpagina!
-    <span th:text="${fullname}"></span>
+     <!--  <span th:text="${fullname}"></span>   wat is dit ??? -->
 </h1>
+</div >
+<div class="errorBody jumbotron ">
+<div class="errorContainer">
+    <p>Het spijt ons, er is ergens iets foutgegaan. (Obviously) </p>
+    <br>
+    <form>
+    <button id="btnNavigeerNaarBeheerAfspraak3" class="btn btn-success btn-md" type="submit" formmethod="GET" formaction="/fastned/afspraak">Ga terug naar afspraakbeheer</button>
+    </form>
+    <div>
+    <form method="POST" th:action="@{/logout}" style="float: right">
+        <button class="btn btn-danger btn-md logout" name="logout" value="Logout">Logout</button>
+    </form>
+    </div>
+      <br>  <img th:src="@{/images/Fastned-Logo.jpg}" th:width="100px" th:height="100px"/>
+</div>
+</div>
 
-<img th:src="@{/images/Fastned-Logo.jpg}" style="float: right"/>
-<div>Het spijt ons, er is ergens iets foutgegaan. (Obviously) </div>
+
 
 </body>
 </html>

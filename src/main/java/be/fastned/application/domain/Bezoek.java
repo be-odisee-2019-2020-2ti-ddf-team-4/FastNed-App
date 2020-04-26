@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author TiboVG
@@ -44,6 +45,6 @@ public class Bezoek {
 	private final String eindVerslag;
 
 	@Column
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private final LocalDateTime bezoekGestart, bezoekAfgerond;
 }
