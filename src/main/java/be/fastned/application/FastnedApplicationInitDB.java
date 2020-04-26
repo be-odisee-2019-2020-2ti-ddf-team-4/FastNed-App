@@ -59,14 +59,14 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         List<User> users = Arrays.asList(
                 new User(1, "pieterPotter", "{bcrypt}$2a$10$abpfm2ctiTdTxT1.ehufwuvjFls2EMkmtXP7UKQOQSBfZRoF/ol2S", "ROLE_PLANNER", "beschr", "Enabled", "Pieter", "Pienter"),
-                new User(2, "mohammed21", "{bcrypt}$2a$10$fauMfqKeKFcHNMtdfXV5uuGm0RhP3S/.5sVAIWe139Ek5Mq7k5sMS", "ROLE_PLANNER", "beschr", "Enabled", "Mohammed", "Sahil"),
-                new User(3, "imperialJohn", "{bcrypt}$2a$10$Vs148aoZGcelQo7yk19E4OaD2bGD4v7GGs3UrDZO8QI60EnKtgBrG", "ROLE_INSTALLATEUR", "beschr", "Enabled", "John", "Doe"),
-                new User(4, "blakey", "{bcrypt}$2a$10$rJr2799QYnpGEBJU1TRxg.gzCG0aQuY3MnSIyxUQzptxRkQgS5MTG", "ROLE_INSTALLATEUR", "beschr", "Enabled", "Blake", "Lively"),
-                new User(5, "sasukeUchiha", "{bcrypt}$2a$10$6ZIovt9KSJIBxYFjT1v5Z.o4eWFtSfBvvoTTv1MEq2V/knzkV40Bq", "ROLE_PLANNER", "beschr", "Enabled", "Sasuke", "Uchiha"),
-                new User(6, "tibovg", "{bcrypt}$2a$10$3Gk0gbWpHBpncGGblsGqH.fxNxrjPVe6nqJp.hmxY66HpU66p7S3G", "ROLE_ADMIN", "beschr", "Enabled", "Tibo", "Van Gindertaelen"),
-                new User(7, "sensei", "{bcrypt}$2a$10$Lvu/YbSNgortFgTvoQvnWObqHleJhzpdJ0hYE.Uz6xYHr/7K7tQEm", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Kakashi", "Hatake"),
-                new User(8, "hanzdeprofessioneel", "{bcrypt}$2a$10$QwQ6BhO1p30EPB.EZ2kbrex/tpGoWYCCrbadffTPrWpwJ0KlEGA36", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Hans", "Vandenbogaerde"),
-                new User(9, "nielzatron", "{bcrypt}$2a$10$tCRGYvO.S7D25rDTH3pXvuCH/aPmiI.UmeKbtjTMFpL0dEnkbEn5S", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Niels", "Dejonghe")
+                new User(2, "mohammed", "{bcrypt}$2a$10$fauMfqKeKFcHNMtdfXV5uuGm0RhP3S/.5sVAIWe139Ek5Mq7k5sMS", "ROLE_PLANNER", "beschr", "Enabled", "Mohammed", "Sahil"),
+                new User(3, "john", "{bcrypt}$2a$10$Vs148aoZGcelQo7yk19E4OaD2bGD4v7GGs3UrDZO8QI60EnKtgBrG", "ROLE_INSTALLATEUR", "beschr", "Enabled", "John", "Doe"),
+                new User(4, "blake", "{bcrypt}$2a$10$rJr2799QYnpGEBJU1TRxg.gzCG0aQuY3MnSIyxUQzptxRkQgS5MTG", "ROLE_INSTALLATEUR", "beschr", "Enabled", "Blake", "Lively"),
+                new User(5, "sasuke", "{bcrypt}$2a$10$6ZIovt9KSJIBxYFjT1v5Z.o4eWFtSfBvvoTTv1MEq2V/knzkV40Bq", "ROLE_PLANNER", "beschr", "Enabled", "Sasuke", "Uchiha"),
+                new User(6, "tibo", "{bcrypt}$2a$10$3Gk0gbWpHBpncGGblsGqH.fxNxrjPVe6nqJp.hmxY66HpU66p7S3G", "ROLE_ADMIN", "beschr", "Enabled", "Tibo", "Van Gindertaelen"),
+                new User(7, "kakashi", "{bcrypt}$2a$10$Lvu/YbSNgortFgTvoQvnWObqHleJhzpdJ0hYE.Uz6xYHr/7K7tQEm", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Kakashi", "Hatake"),
+                new User(8, "hans", "{bcrypt}$2a$10$QwQ6BhO1p30EPB.EZ2kbrex/tpGoWYCCrbadffTPrWpwJ0KlEGA36", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Hans", "Vandenbogaerde"),
+                new User(9, "niels", "{bcrypt}$2a$10$tCRGYvO.S7D25rDTH3pXvuCH/aPmiI.UmeKbtjTMFpL0dEnkbEn5S", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Niels", "Dejonghe")
         );
         for (User user : users) {
             userRepository.save(user);
