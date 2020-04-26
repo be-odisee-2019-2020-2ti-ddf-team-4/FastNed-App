@@ -190,6 +190,7 @@ public class PlannerServiceImpl implements PlannerService {
         String username = getAuthenticatedUsername();
         return userRepository.findByUsername(username);
     }
+
     @Override
     public String getAuthenticatedFullname() {
         User theUser = findAuthenticatedUser();

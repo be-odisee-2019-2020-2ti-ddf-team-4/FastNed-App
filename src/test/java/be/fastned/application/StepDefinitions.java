@@ -37,6 +37,7 @@ public class StepDefinitions {
 		new WebDriverWait(driver, 15).until(ExpectedConditions
 				.textToBePresentInElementLocated(By.tagName("body"), "Gebruikersnaam"));
 
+		// TODO Niels
 		driver.findElement(By.id("wachtwoord")).sendKeys("test");
 		driver.findElement(By.id("gebruikersnaam")).sendKeys("test");
 		driver.findElement(By.id("login")).click();

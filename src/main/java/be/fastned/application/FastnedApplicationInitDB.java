@@ -58,7 +58,7 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
         };
 
         List<User> users = Arrays.asList(
-                new User(1, "pieterPotter", "{bcrypt}$2a$10$.U65ZBXnGVXa2E3GmmLfN.mV757eoXACFGkcDwwJKrj13Ofl79roW", "ROLE_PLANNER", "beschr", "Enabled", "Pieter", "Pienter"),
+                new User(1, "pieterPotter", "{bcrypt}$2a$10$hWHIZKKuHpks9Y5FtLzcLeIeixAj7AuMBuQkUPLOt63etFE9Hv16S", "ROLE_PLANNER", "beschr", "Enabled", "Pieter", "Pienter"),
                 new User(2, "mohammed21", "{bcrypt}$2a$10$rXBUOeSeO5Umz6GmucVFweByOBNEAUF63AaBmEkxN/UZ2R8PorcFm", "ROLE_PLANNER", "beschr", "Enabled", "Mohammed", "Sahil"),
                 new User(3, "imperialJohn", "{bcrypt}$2a$10$uU3Ko7KGj5XeEc2Fst/av.Oz3zz5awIge0AKs982my57J6Qhtb6wC", "ROLE_INSTALLATEUR", "beschr", "Enabled", "John", "Doe"),
                 new User(4, "blakey", "{bcrypt}$2a$10$cLg0aj.VKW3RddUaLGSeS.QY4oUhG0cn040qXNgEFDEp6XHPJ33Ce", "ROLE_INSTALLATEUR", "beschr", "Enabled", "Blake", "Lively"),
