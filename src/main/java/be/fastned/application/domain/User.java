@@ -51,16 +51,6 @@ public class User implements UserDetails {
     @Size(min=1, max = 255, message="Houd de naam tussen 1 en 255 tekens aub!")
     private final String lastName;
 
-    @OneToOne
-    private final Persoon persoon;
-
-    // will be used to recover dateTimeFrom for a new entry
-    // so a dummy Entry must be available for each user
-    @OneToOne
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Afspraak afspraak;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority(role));

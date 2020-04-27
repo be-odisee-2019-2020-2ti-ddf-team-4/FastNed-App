@@ -27,17 +27,12 @@ public class Locatiehouder extends Persoon {
 	/* //----------------// -##########--------------------------------##########- //----------------// */
 
 	public Locatiehouder(long id, String emailadres, String naam, String voornaam, String geslacht, String gsm, String bedrijfsnaam, String btwNummer, String adres,
-				   String gebruikersnaam, String wachtwoord, String rol, String beschrijving, String status){
-		super(id, emailadres, naam, voornaam, geslacht, gsm, gebruikersnaam, wachtwoord, rol, beschrijving, status);
+						 User user){
+		super(id, emailadres, naam, voornaam, geslacht, gsm, user);
 		this.bedrijfsnaam = bedrijfsnaam;
 		this.btwNummer = btwNummer;
 		this.adres = adres;
-		this.test = naam;
 	}
-
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
-	private final String test;
 
 	@Column
 	@Size(min=1, max = 64, message="Houd de bedrijfsnaam tussen 1 en 64 tekens aub!")

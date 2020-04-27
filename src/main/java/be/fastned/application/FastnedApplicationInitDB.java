@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -56,42 +57,31 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
             probleemRepository.save(probleem);
         };
 
-        // Dummy-User objecten (versimpelen argumenten aan persoon-constructor meegeven - Personen maken zelf User-objecten aan!)
-        User pieter = new User(0, "pieterPotter", "{bcrypt}$2a$10$2o9Frax4HHJLEMMb5iKs9ONs8zEmGv51IRIURY8PkBk7GsCxy4ixO", "ROLE_PLANNER", "beschr", "Enabled", "Pieter", "Pienter", null);
-        User mohammed = new User(0, "mohammed21", "{bcrypt}$2a$10$vwKk.OxTjqkzVudfuIuUauxmIrcx8Miq6vFgmLF6sgRcu7viIxgGO", "ROLE_PLANNER", "beschr", "Enabled", "Mohammed", "Sahil", null);
-        User john = new User(0, "imperialJohn", "{bcrypt}$2a$10$dTj8pIUJCTDi3kr.VnNRye1E7vmG7Yitx3IFFYrqAoEWwHWTJ1Zbu", "ROLE_INSTALLATEUR", "beschr", "Enabled", "John", "Doe", null);
-        User blake = new User(0, "blakey", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_INSTALLATEUR", "beschr", "Enabled", "Blake", "Lively", null);
-        User marie = new User(0, "marietje", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_INSTALLATEUR", "beschr", "Enabled", "Marie", "De Bakker", null);
-        User sasuke = new User(0, "sasukeUchiha", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_PLANNER", "beschr", "Enabled", "Sasuke", "Uchiha", null);
-        User tibo = new User(0, "tibovg", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_ADMIN", "beschr", "Enabled", "Tibo", "Van Gindertaelen", null);
-        User kakashi = new User(0, "sensei", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Kakashi", "Hatake", null);
-        User hanz = new User(0, "hanzdeprofessioneel", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Hans", "Vandenbogaerde", null);
-        User nielz = new User(0, "nielzatron", "{bcrypt}$2a$10$6OnHGe1AvHhR0vTRED7Obeh02YnQlUBEXENHoXsZ7v5EFigcVWrTm", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Niels", "Dejonghe", null);
-
-        // Installateurs
-        List<Installateur> installateurs = Arrays.asList(
-                new Installateur(1, "john.doe@gmail.com", john.getLastName(), john.getFirstName(), "man", "0497618166",
-                        john.getUsername(), john.getPassword(), john.getRole() ,john.getBeschrijving(), john.getStatus()),
-                new Installateur(2, "blake.lively@skynet.us", blake.getLastName(), blake.getFirstName(), "vrouw", "0497616166",
-                        blake.getUsername(), blake.getPassword(), blake.getRole() ,blake.getBeschrijving(), blake.getStatus()),
-                new Installateur(3, "sasuke.uchiha@konohama.com", sasuke.getLastName(), sasuke.getFirstName(), "man", "0497518166",
-                        sasuke.getUsername(), sasuke.getPassword(), sasuke.getRole() ,sasuke.getBeschrijving(), sasuke.getStatus()),
-                new Installateur(4, "mamamia@konohama.com", "De bakker", marie.getFirstName(), marie.getFirstName(), "0497518156",
-                        marie.getUsername(), marie.getPassword(), marie.getRole() ,marie.getBeschrijving(), marie.getStatus())
+        List<User> users = Arrays.asList(
+                new User(1, "pieterPotter", "{bcrypt}$2a$10$abpfm2ctiTdTxT1.ehufwuvjFls2EMkmtXP7UKQOQSBfZRoF/ol2S", "ROLE_PLANNER", "beschr", "Enabled", "Pieter", "Pienter"),
+                new User(2, "mohammed", "{bcrypt}$2a$10$fauMfqKeKFcHNMtdfXV5uuGm0RhP3S/.5sVAIWe139Ek5Mq7k5sMS", "ROLE_PLANNER", "beschr", "Enabled", "Mohammed", "Sahil"),
+                new User(3, "john", "{bcrypt}$2a$10$Vs148aoZGcelQo7yk19E4OaD2bGD4v7GGs3UrDZO8QI60EnKtgBrG", "ROLE_INSTALLATEUR", "beschr", "Enabled", "John", "Doe"),
+                new User(4, "blake", "{bcrypt}$2a$10$rJr2799QYnpGEBJU1TRxg.gzCG0aQuY3MnSIyxUQzptxRkQgS5MTG", "ROLE_INSTALLATEUR", "beschr", "Enabled", "Blake", "Lively"),
+                new User(5, "sasuke", "{bcrypt}$2a$10$6ZIovt9KSJIBxYFjT1v5Z.o4eWFtSfBvvoTTv1MEq2V/knzkV40Bq", "ROLE_PLANNER", "beschr", "Enabled", "Sasuke", "Uchiha"),
+                new User(6, "tibo", "{bcrypt}$2a$10$3Gk0gbWpHBpncGGblsGqH.fxNxrjPVe6nqJp.hmxY66HpU66p7S3G", "ROLE_ADMIN", "beschr", "Enabled", "Tibo", "Van Gindertaelen"),
+                new User(7, "kakashi", "{bcrypt}$2a$10$Lvu/YbSNgortFgTvoQvnWObqHleJhzpdJ0hYE.Uz6xYHr/7K7tQEm", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Kakashi", "Hatake"),
+                new User(8, "hans", "{bcrypt}$2a$10$QwQ6BhO1p30EPB.EZ2kbrex/tpGoWYCCrbadffTPrWpwJ0KlEGA36", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Hans", "Vandenbogaerde"),
+                new User(9, "niels", "{bcrypt}$2a$10$tCRGYvO.S7D25rDTH3pXvuCH/aPmiI.UmeKbtjTMFpL0dEnkbEn5S", "ROLE_LOCATIEHOUDER", "beschr", "Enabled", "Niels", "Dejonghe")
         );
-
-        for (Installateur installateur : installateurs) {
-            installateurRepository.save(installateur);
+        for (User user : users) {
+            userRepository.save(user);
         };
 
         // Planners
         List<Planner> planners = Arrays.asList(
-                new Planner(5, "tibo.demaster@gmail.be", tibo.getLastName(), tibo.getFirstName(), "DE man", "0497616166",
-                        tibo.getUsername(), tibo.getPassword(), tibo.getRole() ,tibo.getBeschrijving(), tibo.getStatus()),
-                new Planner(6, "pieter.demets@skynet.us", pieter.getLastName(), pieter.getFirstName(), "man", "0497616166",
-                        pieter.getUsername(), pieter.getPassword(), pieter.getRole() ,pieter.getBeschrijving(), pieter.getStatus()),
-                new Planner(7, "mohammed.deslager@konohama.com", mohammed.getLastName(), mohammed.getFirstName(), "man", "0497518166",
-                        mohammed.getUsername(), mohammed.getPassword(), mohammed.getRole() ,mohammed.getBeschrijving(), mohammed.getStatus())
+                new Planner(5, "tibo.demaster@gmail.be", userRepository.findById(6).getLastName(), userRepository.findById(6).getFirstName(), "DE man", "0497616166",
+                        userRepository.findById(6)),
+                new Planner(6, "pieter.demets@skynet.us", userRepository.findById(1).getLastName(), userRepository.findById(1).getFirstName(), "man", "0497616166",
+                        userRepository.findById(1)),
+                new Planner(7, "mohammed.deslager@konohama.com", userRepository.findById(2).getLastName(), userRepository.findById(2).getFirstName(), "man", "0497518166",
+                        userRepository.findById(2)),
+                new Planner(8, "hans.depro@docent.odisee.be", userRepository.findById(5).getLastName(), userRepository.findById(5).getFirstName(), "man", "0497518166",
+                        userRepository.findById(5))
         );
 
         for (Planner planner : planners) {
@@ -100,16 +90,28 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Locatiehouders
         List<Locatiehouder> locatiehouders = Arrays.asList(
-                new Locatiehouder(8, "john.doe@gmail.com", kakashi.getLastName(), kakashi.getFirstName(), "man", "0497618166",  "bedrijfsnaam", "btwNummer", "adres",
-                        kakashi.getUsername(), kakashi.getPassword(), kakashi.getRole() ,kakashi.getBeschrijving(), kakashi.getStatus()),
-                new Locatiehouder(9, "blake.lively@skynet.us", hanz.getLastName(), hanz.getFirstName(), "vrouw", "0497616166", "bedrijfsnaam", "btwNummer", "adres",
-                        hanz.getUsername(), hanz.getPassword(), hanz.getRole() ,hanz.getBeschrijving(), hanz.getStatus()),
-                new Locatiehouder(10, "sasuke.uchiha@konohama.com", nielz.getLastName(), nielz.getFirstName(), "man", "0497518166","bedrijfsnaam", "btwNummer", "adres",
-                        nielz.getUsername(), nielz.getPassword(), nielz.getRole() ,nielz.getBeschrijving(), nielz.getStatus())
+                new Locatiehouder(9, "kakashi.hatake@gmail.com", userRepository.findById(7).getLastName(), userRepository.findById(7).getFirstName(), "man", "0497618166",  "bedrijfsnaam", "btwNummer", "adres",
+                        userRepository.findById(7)),
+                new Locatiehouder(10, "hans.depro@docent.odisee.be", userRepository.findById(8).getLastName(), userRepository.findById(8).getFirstName(), "man", "0497616166", "bedrijfsnaam", "btwNummer", "adres",
+                        userRepository.findById(8)),
+                new Locatiehouder(10, "niels.dejonghe@skynet.be", userRepository.findById(9).getLastName(), userRepository.findById(9).getFirstName(), "man", "0497616166", "bedrijfsnaam", "btwNummer", "adres",
+                        userRepository.findById(9))
         );
 
         for (Locatiehouder locatiehouder : locatiehouders) {
             locatiehouderRepository.save(locatiehouder);
+        };
+
+        // Installateurs
+        List<Installateur> installateurs = Arrays.asList(
+                new Installateur(1, "john.doe@gmail.com", userRepository.findById(3).getLastName(), userRepository.findById(3).getFirstName(), "man", "0497618166",
+                        userRepository.findById(3)),
+                new Installateur(2, "blake.lively@skynet.us", userRepository.findById(4).getLastName(), userRepository.findById(4).getFirstName(), "vrouw", "0497616166",
+                        userRepository.findById(4))
+        );
+
+        for (Installateur installateur : installateurs) {
+            installateurRepository.save(installateur);
         };
 
         // Documentaties
@@ -136,10 +138,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Contracten
         List<Contract> contracten = Arrays.asList(
-                new Contract(1, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Contract(2, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Contract(3, LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Contract(4, LocalDateTime.now(), LocalDateTime.now().plusDays(5))
+                new Contract(1, new Date(2020, 15,4), new Date(2020, 15,10)),
+                new Contract(2, new Date(2020, 15,4), new Date(2020, 15,10)),
+                new Contract(3, new Date(2020, 15,4), new Date(2020, 15,10)),
+                new Contract(4, new Date(2020, 15,4), new Date(2020, 15,10))
         );
 
         for (Contract contract : contracten) {
@@ -148,10 +150,10 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Bezoeken
         List<Bezoek> bezoeken = Arrays.asList(
-                new Bezoek(1, probleemRepository.findById(1), documentatieRepository.findById(1), "Installatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Bezoek(2, probleemRepository.findById(2), documentatieRepository.findById(2), "Installatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Bezoek(3, probleemRepository.findById(3), documentatieRepository.findById(3), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5)),
-                new Bezoek(4, null, documentatieRepository.findById(1), "Reparatie", "alles OK verlopen", LocalDateTime.now(), LocalDateTime.now().plusDays(5))
+                new Bezoek(1, probleemRepository.findById(1), documentatieRepository.findById(1), "Installatie", "alles OK verlopen", new Date(2020, 15,10), new Date(2020, 15,10)),
+                new Bezoek(2, probleemRepository.findById(2), documentatieRepository.findById(2), "Installatie", "alles OK verlopen", new Date(2020, 15,10), new Date(2020, 15,10)),
+                new Bezoek(3, probleemRepository.findById(3), documentatieRepository.findById(3), "Reparatie", "alles OK verlopen", new Date(2020, 15,10), new Date(2020, 15,10)),
+                new Bezoek(4, null, documentatieRepository.findById(1), "Reparatie", "alles OK verlopen", new Date(2020, 15,10), new Date(2020, 15,10))
         );
 
         for (Bezoek bezoek : bezoeken) {
@@ -160,16 +162,13 @@ public class FastnedApplicationInitDB implements CommandLineRunner {
 
         // Afspraken
         List<Afspraak> afspraken = Arrays.asList(
-                new Afspraak(1, installateurRepository.findById(1), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
-                new Afspraak(2, installateurRepository.findById(2), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt"),
-                new Afspraak(3, installateurRepository.findById(3), laadpaalRepository.findById(2), contractRepository.findById(3), bezoekRepository.findById(3), "net aangemaakt"),
-                new Afspraak(4, installateurRepository.findById(4), laadpaalRepository.findById(2), contractRepository.findById(4), bezoekRepository.findById(4), "net aangemaakt")
+                new Afspraak(1,"Installatie", installateurRepository.findById(1), laadpaalRepository.findById(1), contractRepository.findById(1), bezoekRepository.findById(1), "net aangemaakt"),
+                new Afspraak(2, "Reparatie",installateurRepository.findById(2), laadpaalRepository.findById(1), contractRepository.findById(2), bezoekRepository.findById(2), "net aangemaakt")
         );
 
         for (Afspraak afspraak : afspraken) {
             // TODO: (Niels) Error: Een vereiste subklasse "Locatiehouder" was gevraagd, in de plaats kwam "Installateur". (Uncomment & Shift+F10 om te beginnen)
             afspraakRepository.save(afspraak);
         };
-
     }
 }

@@ -4,21 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
+<div class="errorHeader jumbotron">
     <h1>Welkom bij onze FastNed services!</h1>
-    <!-- FIXED: image wordt geladen -->
-    <img th:src="@{/images/Fastned-Logo.jpg}" style="float: right" th:width="100px" th:height="100px"/>
+</div >
+  <div class="homeBody ">
+      <div class="homeContainer">
 
-<!--    <p>Afspraakbeheer voor onze planners:-->
-<!--        <a id="linkBeheerAfspraak" href="/fastned/afspraak">Afsprakenplanner</a>-->
-<!--    </p>-->
-    <form method="GET" th:action="@{/fastned/afspraak}" style="float: right">
-        <button class="btn btn-success">Afspraakbeheer voor onze planners</button>
-    </form><br>
+          <div class="containerObject" style="height: 100px">
 
-    <form method="POST" th:action="@{/logout}" style="float: right">
-        <button class="btn btn-danger btn-md logout" name="logout" value="Logout">Logout</button>
-    </form>
+              <img th:src="@{/images/Fastned-Logo.jpg}"  th:width="100px" th:height="100px"/> <br>
+
+          </div>
+
+
+          <div class="containerObject">
+              <form method="GET" th:action="@{/fastned/afspraak}">
+                  <button class="btn btn-success">Afspraakbeheer voor onze planners</button>
+              </form>
+              <form method="GET" th:action="@{/admin}">
+                  <button class="btn btn-success">Testpagina voor onze administrators</button>
+              </form>
+          </div>
+
+       <div class="containerObject">
+           <form method="POST" th:action="@{/logout}" >
+               <button class="btn btn-danger btn-md logout" name="logout" value="Logout">Logout</button>
+           </form>
+       </div>
+
+      </div>
+  </div>
 </body>
 </html>
