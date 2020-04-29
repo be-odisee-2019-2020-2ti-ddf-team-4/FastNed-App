@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="nl"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <div class="jumbotron loginHeader">
+
+        <img th:src="@{/images/Fastned-Big-logo.jpg}"  />
+    </div>
+
+    <div class="loginBody">
+        <div class="loginContainer">
+                <div id="foutmeldingLogin" class="loginError" th:if="${error}" >
+                    Inloggen mislukt, gebruik de juiste gebruikersnaam-wachtwoord combinatie!
+                </div><br/>
+
+                <form id="loginForm" method="POST" th:action="@{/login}">
+                    <div >
+                        <div>
+                            <label for="gebruikersnaam">Gebruikersnaam</label>
+                        </div>
+                        <div>
+                            <input id="gebruikersnaam" type="text" name="username"/>
+                        </div>
+                        <div>
+                            <label for="wachtwoord">Wachtwoord</label>
+                        </div>
+                        <div>
+                            <input id="wachtwoord" type="password" name="password"/>
+                        </div>
+                        <div>
+                            <input id="login" type="submit" value="Login"/>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+
+
+</body>
+</html>
