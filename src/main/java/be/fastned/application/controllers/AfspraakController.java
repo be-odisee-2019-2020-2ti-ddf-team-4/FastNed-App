@@ -2,7 +2,7 @@ package be.fastned.application.controllers;
 
 import be.fastned.application.domain.Afspraak;
 import be.fastned.application.formdata.AfspraakData;
-import be.fastned.application.service.PlannerService;
+import be.fastned.application.service.AfspraakService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,18 +11,14 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 @Slf4j
 @Controller
 @RequestMapping("/fastned/afspraak")
-public class PlannerController {
+public class AfspraakController {
 
     @Autowired
-    private PlannerService plannerService;
+    private AfspraakService plannerService;
 
     /**
      * Een standaard GET-request ontvangt via /fastNed/afspraak een view (returnwaarde) met model.
@@ -60,12 +56,12 @@ public class PlannerController {
                 break;
             case "delete":
                 break;
-            case "read":
+            case "afspraakSelectie":
                 model.addAttribute("availableAfspraken", plannerService.getAvailableAfspraken());
                 model.addAttribute("afspraakData", afspraakData);
-                model.addAttribute("action", "read");
+                model.addAttribute("action", "selectAfspraakDetail");
                 break;
-            case "showItem":
+            case "afspraakDetail":
                 model.addAttribute("afspraakId", afspraakData.getId());
 
                 Afspraak tussenstap = plannerService.getAfspraakById(afspraakData.getId());
@@ -75,26 +71,50 @@ public class PlannerController {
 //                model.addAttribute("childBezoek", plannerService.getBezoekById(tussenstap.getBezoek().getId()).getId());
                 model.addAttribute("childStatus", tussenstap.getStatus());
                 model.addAttribute("childType", tussenstap.getType());
-                model.addAttribute("action", "showItem");
+                model.addAttribute("action", "afspraakDetail");
                 break;
         }
     }
 
-    /**
-     * Een GET-request ontvangt via /fastNed/afspraak/X een view (returnwaarde) met model.
-     */
-    @GetMapping("/read")
+    @GetMapping("/afspraakSelectie")
     public String afspraakCreateAfspraakSelectieForm(AfspraakData afspraakData, Model model) {
-        prepareModel(afspraakData, model, "read");
+        prepareModel(afspraakData, model, "afspraakSelectie");
         return "afspraak";
     }
-    @GetMapping("/showItem")
+
+    @PostMapping("/create")
+    public String processEntry(@Valid AfspraakData afspraakData, Errors errors, Model model) {
+
+        System.out.println(String.format(Integer.toString(plannerService.getAvailableAfspraken().size())));
+        String message="";
+
+        try {
+            if (errors.hasErrors() ) {
+                message = "Correct input errors, please";
+                throw new IllegalArgumentException();
+            }
+            else{
+                message = plannerService.processEntry(afspraakData);
+                afspraakData = plannerService.prepareNewAfspraakData();
+            }
+        }
+        catch (IllegalArgumentException ex) {
+            System.out.println("Mistakes were made and intercepted when creating an \"Afspraak\"");
+            System.out.println(String.format("Interception error goes as follows: %s", ex.getMessage()));
+        }
+
+        prepareModel(afspraakData, model, "create");
+        model.addAttribute("message", message);
+        return "afspraak";
+    }
+
+    @GetMapping("/afspraakDetail")
     public String afspraakCreateShowAfspraakForm(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
         AfspraakData afspraakDataNew = plannerService.prepareNewAfspraakData(id);
-        prepareModel(afspraakDataNew, model, "showItem");
+        prepareModel(afspraakDataNew, model, "afspraakDetail");
         return "afspraak";
     }
-    @PostMapping("/showUpdate")
+    @GetMapping("/update")
     public String afspraakCreateUpdateForm(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
         AfspraakData afspraakDataNew = plannerService.prepareNewAfspraakData(plannerService.getAfspraakById(afspraakData.getId()));
         afspraakDataNew.setId(id);
@@ -108,40 +128,7 @@ public class PlannerController {
     }
     @PostMapping("/delete")
     public String afspraakDeleteAfspraak(AfspraakData afspraakData, Model model, @RequestParam("id") long id) {
-        plannerService.deleteAfspraak(afspraakData.getId());
+        plannerService.deleteAfspraak(id);
         return "redirect:/fastned/afspraak";
-    }
-    /**
-     * Verwerk het formulier
-     * @param afspraakData De data voor te te-verwerken afspraak uit het formulier.
-     */
-    @PostMapping(params = "action")
-    public String processEntry(@Valid AfspraakData afspraakData, Errors errors, Model model) {
-
-        System.out.println(String.format(Integer.toString(plannerService.getAvailableAfspraken().size())));
-        String message="";
-
-        try {
-            // Are there any input validation errors detected by JSR 380 bean validation?
-            if (errors.hasErrors() ) {
-                message = "Correct input errors, please";
-                throw new IllegalArgumentException();
-            }
-
-            // Now that the input seems to be OK, let's create a new entry or update/delete an existing entry
-            message = plannerService.processEntry(afspraakData);
-
-            System.out.println(String.format(Integer.toString(plannerService.getAvailableAfspraken().size())));
-
-            // Prepare form for new data-entry
-            afspraakData = plannerService.prepareNewAfspraakData();
-
-        } catch (IllegalArgumentException e) {
-            // Nothing special needs to be done
-        }
-
-        prepareModel(afspraakData, model, "create");
-        model.addAttribute("message", message);
-        return "afspraak";
     }
 }

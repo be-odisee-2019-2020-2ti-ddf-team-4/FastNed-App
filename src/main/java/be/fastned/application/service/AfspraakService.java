@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import java.util.List;
 
-public interface PlannerService {
+public interface AfspraakService {
 
     List<Installateur> getAvailableInstallateurs();
     List<Contract> getAvailableContracten();

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class PlannerServiceImpl implements PlannerService {
+public class AfspraakServiceImpl implements AfspraakService {
 
     @Autowired
     AfspraakRepository afspraakRepository;
