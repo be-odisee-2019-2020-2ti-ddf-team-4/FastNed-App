@@ -1,5 +1,5 @@
 package be.fastned.application;
-D
+
 import java.util.List;
 
 import be.fastned.application.service.PlannerService;
@@ -37,8 +37,8 @@ public class StepDefinitions {
 		new WebDriverWait(driver, 15).until(ExpectedConditions
 				.textToBePresentInElementLocated(By.tagName("body"), "Gebruikersnaam"));
 
-		driver.findElement(By.id("wachtwoord")).sendKeys("test");
-		driver.findElement(By.id("gebruikersnaam")).sendKeys("test");
+		driver.findElement(By.id("wachtwoord")).sendKeys("tibo");
+		driver.findElement(By.id("gebruikersnaam")).sendKeys("tibo");
 		driver.findElement(By.id("login")).click();
 
 		new WebDriverWait(driver, 15).until(ExpectedConditions.titleIs("Home"));

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="nl"
+      xmlns:th = "http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Afspraak</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<div class="afspraakHeader ">
+    <img th:src="@{/images/Fastned-Big-Logo.jpg}"  th:height="100px"/>
+</div>
+
+<div class="afspraakBody text-center">
+    <div class="afspraakContainer">
+    <form id="formAlgemeen" method="POST" th:action="@{/fastned/afspraak}" th:object="${afspraakData}">
+
+        <div id="divMaakofOpenAfspraak" class="form-group" th:if="${action}==create">
+            <h3>Bekijk hier een Afspraak!</h3>
+            <button id="btnNavigeerNaarAfspraakDetailSelectie" class="btn btn-success btn-md" type="submit" name="action" value="read" formmethod="GET" formaction="/fastned/afspraak/read">Bekijk Afspraak</button>
+
+            <h3>Maak hier een Afspraak!</h3>
+            <span class="installateur">
+                <label >Installateurs</label>
+                <select id="selectAfspraakInstallateur" th:field = "*{installateurId}">
+                    <option th:each = "installateur : ${availableInstallateurs}" class="installateur"
+                            th:value = "${installateur.id}"
+                            th:text = "${installateur.voornaam + ' ' + installateur.naam} ">
+                    </option>
+                </select>&nbsp;
+            </span>
+
+            <br>
+            <span class="laadpaal">
+                <label >Laadpaal</label>
+                <select id="selectAfspraakLaadpaal" th:field = "*{laadpaalId}">
+                    <option th:each = "laadpaal : ${availableLaadpalen}" class="laadpaal"
+                            th:value = "${laadpaal.id}"
+                            th:text = "${laadpaal.id}">
+                    </option>
+                </select>&nbsp;
+            </span>
+
+            <br>
+            <span class="contract">
+                <label >Contract</label>
+                <select id="selectAfspraakContract" th:field = "*{contractId}">
+                    <option th:each = "contract : ${availableContracten}" class="contract"
+                            th:value = "${contract.id}"
+                            th:text = "${contract.id}">
+                    </option>
+                </select>&nbsp;
+            </span>
+
+            <br>
+            <span>
+                <label>Status:&nbsp;</label>
+                <input id="inputAfspraakStatus" type="text" th:field="*{status}"/>
+            </span>
+
+            <br>
+
+            <span>
+                <label>Type:&nbsp;</label>
+                <select id="inputAfspraakType" type="text" th:field="*{type}">
+                    <option th:value="Installatie"
+                            th:text = "Installatie">
+
+                    </option>
+
+                    <option th:value="Reparatie"
+                            th:text = "Reparatie">
+
+                    </option>
+                </select>
+
+            </span>
+
+            <br>
+            <span>
+                <button  id="btnMaakAfspraak" class="btn btn-success btn-md" type="submit" name="action" value="create">Maak Afspraak</button>
+            </span>
+
+            <span id="spanErros" th:if="${#fields.hasErrors('*')}">
+                <br><h3 class="error">Er waren een paar fouten met de invoer!</h3>
+                <ul id="ulErrors" >
+                    <li class="error" th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+                </ul>
+            </span>
+<br>
+            <form method="POST" th:action="@{/logout}" >
+                <button class="btn btn-danger btn-md logout" name="logout" value="Logout">Logout</button>
+            </form>
+
+        </div>
+
+        <div id="divSelecteerAfspraak" class="form-group" th:if="${action=='read'}">
+            <h3>Selecteer hier een Afspraak!</h3>
+            <span class="afspraak">
+
+                <select id="selectAfspraakDetail" th:size="${afspraken.size()}"  th:field = "*{id}" th:name="selectedId">
+                    <option th:each = "afspraak : ${availableAfspraken}" class="afspraak"
+                            th:value = "${afspraak.id}"
+                            th:text = "${afspraak.id + '   '+ afspraak.type +'   ' + afspraak.contract.contractDatum} ">
+                    </option>
+                </select>&nbsp;
+            </span>
+
+            <br><button id="btnNavigeerNaarAfspraakDetail" class="btn btn-success btn-md" type="submit" name="action" value="showItem" formmethod="GET" th:formaction=" @{/fastned/afspraak/showItem?id={id} (id=${afspraakData.getId()}) }">Open Afspraak</button>
+            <br>
+            <button id="btnNavigeerNaarBeheerAfspraak3" class="btn btn-success btn-md" type="submit" formmethod="GET" formaction="/fastned/afspraak">Ga terug naar afspraakbeheer</button>
+
+        </div>
+
+        <div id="divAfspraakDetail" class="form-group" th:if="${action=='showItem'}">
+            <h3>Bekijk de Afspraakdetails!</h3>
+            <div class="form-group " th:if="${action}==showItem">
+                <label class="lblAfspraakDetail">ID: </label> <label id="lblAfspraakDetailId" th:text = "${afspraakId}"></label> <br/>
+                <label class="lblAfspraakDetail">Type:</label> <label id="lblAfspraakDetailType" th:text="${childType}"></label><br/>
+                <label class="lblAfspraakDetail">Installateur: </label> <label id="lblAfspraakDetailInstallateur" th:text = "${childInstallateur}"></label> <br/>
+                <label class="lblAfspraakDetail">Laadpaal: </label> <label id="lblAfspraakDetailLaadpaal" th:text = "${childLaadpaal}"></label> <br/>
+                <label class="lblAfspraakDetail">Contract: </label> <label id="lblAfspraakDetailContract" th:text = "${childContract}"></label> <br/>
+                <label class="lblAfspraakDetail">Status: </label> <label id="lblAfspraakDetailStatus" th:text = "${childStatus}"></label> <br/>
+            </div>
+
+            <br>
+            <button id="btnNavigeerNaarUpdateAfspraak" class="btn btn-success btn-md" type="submit" name="action" value="showUpdate" formmethod="POST" th:formaction=" @{/fastned/afspraak/showUpdate?id={id} (id=${afspraakId}) }">Update Afspraak</button>
+            <button id="btnDeleteAfspraak" class="btn btn-success btn-md" type="submit" name="action" value="delete" formmethod="POST" th:formaction=" @{/fastned/afspraak/delete?id={id} (id=${afspraakId}) }">Delete Afspraak</button>
+            <br>
+            <button id="btnNavigeerNaarBeheerAfspraak2" class="btn btn-success btn-md" type="submit" formmethod="GET" formaction="/fastned/afspraak">Ga terug naar afspraakbeheer</button>
+
+        </div>
+
+        <div id="divUpdateAfspraak" class="form-group" th:if="${action=='update'}">
+            <h3>Update de Afspraakdetails!</h3>
+            <div class="form-group" th:if="${action}==update">
+                <span><label class="lblAfspraakDetail">ID: </label> <label id="inputUpdateAfspraakStatus" th:text = "${afspraakId}"></label> </span>
+                <br>
+                 <span>
+                <label>Type:&nbsp;</label>
+                <select id="updateAfspraakType" type="text" th:field="*{type}">
+                    <option th:value="Installatie"
+                            th:text = "Installatie">
+
+                    </option>
+
+                    <option th:value="Reparatie"
+                            th:text = "Reparatie">
+
+                    </option>
+                </select>
+
+            </span>
+                <br>
+                <span class="installateur">
+                <label>Installateurs</label>
+                <select id="selectUpdateAfspraakDetailInstallateur" th:field = "*{installateurId}" th:selected="${installateurId}">
+                    <option th:each = "installateur : ${availableInstallateurs}" class="installateur"
+                            th:value = "${installateur.id}"
+                            th:text = "${installateur.voornaam + ' ' + installateur.naam} ">
+                    </option>
+                </select>&nbsp;
+            </span>
+
+                <br>
+                <span class="laadpaal">
+                <label >Laadpaal</label>
+                <select id="selectUpdateAfspraakDetailLaadpaal" th:field = "*{laadpaalId}" th:selected="${laadpaalId}">
+                    <option th:each = "laadpaal : ${availableLaadpalen}" th:selected="${laadpaalId}" class="laadpaal"
+                            th:value = "${laadpaal.id}"
+                            th:text = "${laadpaal.id}">
+                    </option>
+                </select>&nbsp;
+            </span>
+
+                <br>
+                <span class="contract">
+                <label >Contract</label>
+                <select id="selectUpdateAfspraakDetailContract" th:field = "*{contractId}" th:selected="${contractId}">
+                    <option th:each = "contract : ${availableContracten}"  th:selected="${contractId}" class="contract"
+                            th:value = "${contract.id}"
+                            th:text = "${contract.id}">
+                    </option>
+                </select>&nbsp;<br>
+            </span>
+                <span>
+                <label class="lblAfspraakDetail">Status: </label> <input [type=text] id="inputUpdateAfspraakId" th:value="${status}"></input> <br/>
+                </span>
+
+            </div>
+            <br>
+            <button id="btnUpdateAfspraak" class="btn btn-success btn-md" type="submit" name="action" value="update" formmethod="POST" th:formaction=" @{/fastned/afspraak/update?id={id} (id=${afspraakId}) }">Verwerk Wijzigingen</button>
+            <br>
+            <button id="btnNavigeerNaarBeheerAfspraak" class="btn btn-success btn-md" type="submit" formmethod="GET" formaction="/fastned/afspraak">Ga terug naar afspraakbeheer</button>
+
+        </div>
+    </form>
+
+        <form method="GET" th:action="@{/}" >
+            <button class="btn btn-danger btn-md"> Terug naar Home</button>
+        </form>
+
+
+    </div>
+</div>
+</body>
+</html>

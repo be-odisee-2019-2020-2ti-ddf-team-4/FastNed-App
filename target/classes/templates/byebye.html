@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="nl"
+      xmlns:th = "http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Fastned</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<div    class="jumbotron errorHeader ">
+    <h1>Tot de volgende keer!</h1>
+</div>
+<div class="byeBody">
+    <div    class="errorContainer">
+
+    <div class="containerObject">
+
+        <img th:src="@{/images/Fastned-Logo.jpg} " th:height="100px" th:width="100px"/>
+
+        <div>Bedankt om gebruik te maken van onze services <br> -Fastned</div>
+
+        <form method="GET" th:action="@{/login}" >
+            <button class="btn btn-danger btn-md" name="login" value="Login">Terug naar Login</button>
+        </form>
+    </div>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>
