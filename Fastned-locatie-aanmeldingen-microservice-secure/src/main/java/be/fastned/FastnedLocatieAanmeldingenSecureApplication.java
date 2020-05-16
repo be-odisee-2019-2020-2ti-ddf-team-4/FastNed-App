@@ -4,7 +4,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Component;
@@ -24,11 +23,7 @@ public class FastnedLocatieAanmeldingenSecureApplication extends RepositoryRestC
 	
 	
 
-	 @Override
-	 public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-	    config.getCorsRegistry().addMapping("/**")
-	            .allowedOrigins("http://localhost:8888","http://localhost:8889");
-	  }
+	
 	
 	// locatie initaties
 		@Bean
