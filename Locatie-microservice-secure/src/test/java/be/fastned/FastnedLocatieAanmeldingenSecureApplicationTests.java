@@ -8,6 +8,7 @@ class FastnedLocatieAanmeldingenSecureApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

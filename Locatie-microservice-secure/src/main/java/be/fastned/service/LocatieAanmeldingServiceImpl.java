@@ -7,7 +7,7 @@ import be.fastned.dao.LocatieAanmeldingRepository;
 import be.fastned.domain.LocatieAanmelding;
 
 @Service
-public class LocatieAanmeldingServiceImpl implements LocatieAanmeldingService {
+public class LocatieAanmeldingServiceImpl implements be.fastned.service.LocatieAanmeldingService {
 
 	@Autowired
 	private LocatieAanmeldingRepository locatieAanmeldingRepository = null;
